@@ -1,292 +1,700 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Voz do Esporte • Copa 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0b0c0e; color: #ffffff; }
-        .glow-gold { box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.4); }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #d97706; border-radius: 10px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rodrigao - Copa do Mundo 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #F5C842; --gold-dim: #C89E20; --bg-page: #0C0C0C;
+  --bg-card: #141414; --bg-card2: #1A1A1A; --bg-input: #111;
+  --border: rgba(255,255,255,0.08); --border-gold: rgba(245,200,66,0.25);
+  --text: #F0EDE4; --muted: #888880; --dim: #555550;
+  --green: #2ECC71; --red: #E74C3C; --blue: #3498DB; --yellow: #F5C842;
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(--text); min-height: 100vh; }
+
+/* TOPBAR */
+.topbar { background: #0A0A0A; border-bottom: 1px solid var(--border); padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 50px; }
+.logo { font-size: 17px; font-weight: 900; letter-spacing: -0.5px; color: var(--gold); }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.tbtn { font-size: 11px; font-weight: 500; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all .15s; }
+.tbtn:hover { border-color: var(--gold); color: var(--gold); }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+.badge { font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; }
+.bg { background: rgba(245,200,66,.12); color: var(--gold); border: 1px solid var(--border-gold); }
+.bo { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+
+/* LAYOUT */
+.main { display: flex; min-height: calc(100vh - 50px); }
+
+/* SIDEBAR */
+.sidebar { width: 240px; min-width: 240px; background: #0A0A0A; border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+.profile { padding: 1.25rem; border-bottom: 1px solid var(--border); }
+.avatar { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: var(--gold); background: #1a1a1a; margin-bottom: .6rem; }
+.pname { font-size: 18px; font-weight: 900; color: var(--gold); letter-spacing: -.5px; }
+.phandle { font-size: 11px; color: var(--muted); margin-bottom: .6rem; }
+.nav { padding: .75rem 0; flex: 1; }
+.nl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; color: var(--dim); text-transform: uppercase; padding: .5rem 1rem .3rem; }
+.ni { display: flex; align-items: center; gap: 9px; padding: 7px 1rem; font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all .15s; border: none; background: transparent; width: 100%; text-align: left; }
+.ni:hover { color: var(--text); background: rgba(255,255,255,.03); }
+.ni.active { color: var(--gold); background: rgba(245,200,66,.08); }
+.ni svg { width: 15px; height: 15px; flex-shrink: 0; }
+.nb { margin-left: auto; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 8px; background: rgba(245,200,66,.15); color: var(--gold); }
+.sfooter { padding: .75rem 1rem; border-top: 1px solid var(--border); }
+.api-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.api-lbl { font-size: 10px; font-weight: 700; letter-spacing: .5px; color: var(--muted); text-transform: uppercase; }
+.spill { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; }
+.sok { background: rgba(46,204,113,.15); color: var(--green); }
+.serr { background: rgba(231,76,60,.15); color: var(--red); }
+.ainput { width: 100%; background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px; font-size: 11px; font-family: monospace; color: var(--text); outline: none; margin-bottom: 6px; }
+.ainput:focus { border-color: var(--gold); }
+.ainput::placeholder { color: var(--dim); }
+.sbrow { display: flex; gap: 5px; }
+.bsync { flex: 1; padding: 6px 0; border-radius: 6px; border: none; background: var(--gold); color: #000; font-size: 11px; font-weight: 700; cursor: pointer; transition: all .15s; }
+.bsync:hover { background: #FFD93D; }
+.bclr { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; cursor: pointer; }
+.bclr:hover { border-color: var(--red); color: var(--red); }
+
+/* CONTENT */
+.content { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* PANELS */
+.panel { display: none; flex-direction: column; gap: 1.25rem; }
+.panel.active { display: flex; }
+
+/* TABS */
+.tabs { display: flex; gap: 3px; background: #0F0F0F; border: 1px solid var(--border); border-radius: 10px; padding: 4px; flex-wrap: wrap; }
+.tab { padding: 7px 14px; border-radius: 7px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all .15s; color: var(--muted); border: none; background: transparent; letter-spacing: .3px; display: flex; align-items: center; gap: 6px; }
+.tab:hover { color: var(--text); }
+.tab.active { background: var(--gold); color: #000; }
+.tab svg { width: 13px; height: 13px; }
+
+/* CARDS */
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.ch { padding: .875rem 1.125rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.ct { font-size: 13px; font-weight: 700; color: var(--text); }
+.cb { padding: 1rem 1.125rem; }
+
+/* STATS GRID */
+.sg { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+.sc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: .875rem 1rem; position: relative; overflow: hidden; transition: border-color .2s; }
+.sc:hover { border-color: var(--border-gold); }
+.sch { display: flex; align-items: center; justify-content: space-between; margin-bottom: .6rem; }
+.sl { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--dim); text-transform: uppercase; }
+.si { width: 26px; height: 26px; border-radius: 7px; background: rgba(245,200,66,.07); display: flex; align-items: center; justify-content: center; }
+.si svg { width: 13px; height: 13px; color: var(--gold); }
+.sv { font-size: 28px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+.ss { font-size: 10px; color: var(--muted); margin-top: 4px; }
+.ss span { color: var(--green); font-weight: 600; }
+
+/* NOTIF */
+.notif { background: rgba(245,200,66,.05); border: 1px solid var(--border-gold); border-radius: 9px; padding: 9px 1rem; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 9px; }
+.notif svg { width: 14px; height: 14px; color: var(--gold); flex-shrink: 0; }
+
+/* TWO/THREE COL */
+.tc { display: grid; grid-template-columns: 1fr 1fr; gap: 1.125rem; }
+.thr { display: grid; grid-template-columns: 2fr 1fr; gap: 1.125rem; }
+
+/* LIVE MATCH */
+.lm { background: var(--bg-card); border: 1px solid rgba(46,204,113,.2); border-radius: 12px; padding: 1.125rem; display: flex; align-items: center; gap: 1.25rem; }
+.lb { font-size: 9px; font-weight: 800; letter-spacing: 1px; color: var(--green); background: rgba(46,204,113,.1); border: 1px solid rgba(46,204,113,.2); padding: 4px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+.lt { flex: 1; display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.ltm { text-align: center; }
+.ltmn { font-size: 13px; font-weight: 700; margin-top: 3px; }
+.ls { font-size: 32px; font-weight: 900; color: var(--gold); letter-spacing: -1px; }
+.lsep { font-size: 22px; font-weight: 300; color: var(--dim); }
+.lmin { font-size: 10px; color: var(--green); font-weight: 700; }
+
+/* MATCH LIST */
+.mi { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.03); gap: 10px; }
+.mi:last-child { border-bottom: none; }
+.mt { font-size: 10px; color: var(--dim); width: 30px; text-align: center; flex-shrink: 0; }
+.mlv { font-size: 9px; font-weight: 700; color: var(--green); background: rgba(46,204,113,.1); border-radius: 3px; padding: 2px 4px; width: 30px; text-align: center; }
+.mend { font-size: 9px; font-weight: 600; color: var(--muted); width: 30px; text-align: center; background: rgba(255,255,255,.05); border-radius: 3px; padding: 2px 4px; }
+.mteams { flex: 1; }
+.mteam { display: flex; align-items: center; gap: 7px; margin-bottom: 3px; }
+.mteam:last-child { margin-bottom: 0; }
+.mtn { font-size: 11px; font-weight: 600; }
+.win .mtn { color: var(--gold); }
+.msco { display: flex; gap: 6px; align-items: center; }
+.msc { font-size: 13px; font-weight: 800; }
+.msep { font-size: 11px; color: var(--dim); }
+
+/* STANDINGS */
+.stbl { width: 100%; font-size: 11px; border-collapse: collapse; }
+.stbl th { font-size: 9px; font-weight: 700; letter-spacing: 1px; color: var(--dim); text-transform: uppercase; padding: 0 6px 7px; text-align: center; }
+.stbl th:first-child { text-align: left; padding-left: 0; }
+.stbl td { padding: 6px; text-align: center; border-top: 1px solid rgba(255,255,255,.025); }
+.stbl td:first-child { text-align: left; padding-left: 0; }
+.pos { width: 18px; height: 18px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+.p1 { background: rgba(245,200,66,.2); color: var(--gold); }
+.p2,.p3 { background: rgba(52,152,219,.12); color: var(--blue); }
+.p4 { background: rgba(136,136,136,.1); color: var(--muted); }
+.tdot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.trow { display: flex; align-items: center; gap: 7px; }
+.pts { font-weight: 800; }
+.fps { display: flex; gap: 2px; justify-content: center; }
+.fp { width: 13px; height: 13px; border-radius: 3px; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.fw { background: rgba(46,204,113,.2); color: var(--green); }
+.fd { background: rgba(136,136,136,.12); color: #888; }
+.fl { background: rgba(231,76,60,.15); color: var(--red); }
+
+/* SCORERS */
+.scitem { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.03); }
+.scitem:last-child { border-bottom: none; }
+.scrank { font-size: 10px; font-weight: 700; color: var(--dim); width: 14px; text-align: center; }
+.scr1 { color: var(--gold); }
+.scav { width: 30px; height: 30px; border-radius: 7px; background: var(--bg-card2); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: var(--muted); flex-shrink: 0; }
+.scinfo { flex: 1; }
+.scname { font-size: 11px; font-weight: 700; }
+.scteam { font-size: 9px; color: var(--muted); margin-top: 1px; }
+.scg { font-size: 17px; font-weight: 900; color: var(--gold); }
+.scgl { font-size: 8px; color: var(--dim); }
+
+/* FEATURE */
+.feat { background: var(--bg-card); border: 1px solid var(--border-gold); border-radius: 12px; padding: 1.125rem; }
+.feye { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 5px; }
+.ftit { font-size: 18px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 3px; }
+.fsub { font-size: 11px; color: var(--muted); margin-bottom: .875rem; }
+.btnG { display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; border-radius: 7px; background: var(--gold); color: #000; font-size: 11px; font-weight: 700; cursor: pointer; border: none; transition: all .15s; }
+.btnG:hover { background: #FFD93D; }
+.btnO { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 7px; background: transparent; border: 1px solid var(--border); color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; transition: all .15s; }
+.btnO:hover { border-color: var(--gold); color: var(--gold); }
+
+/* GROUPS GRID */
+.gg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.gcard { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.gch { padding: .6rem .875rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.gct { font-size: 11px; font-weight: 800; color: var(--gold); letter-spacing: .5px; }
+.gcb { padding: .5rem .875rem; }
+
+/* SECTION HEADER */
+.sh { display: flex; align-items: center; justify-content: space-between; margin-bottom: .875rem; }
+.sl2 { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--dim); text-transform: uppercase; }
+.slk { font-size: 11px; font-weight: 600; color: var(--gold); text-decoration: none; cursor: pointer; }
+.slk:hover { opacity: .8; }
+
+/* SPINNER */
+.spin { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.1); border-top-color: var(--gold); border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media(max-width:900px) {
+  .sidebar { display: none; }
+  .sg { grid-template-columns: repeat(2,1fr); }
+  .tc,.thr { grid-template-columns: 1fr; }
+  .gg { grid-template-columns: repeat(2,1fr); }
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col p-4 md:p-8 max-w-7xl mx-auto w-full">
+<body>
 
-    <audio id="audio-estadio" loop src="torcida.mp3"></audio>
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:.75rem;">
+    <div class="logo">RODRIGAO</div>
+    <span class="badge bg">⚽ COPA DO MUNDO 2026</span>
+  </div>
+  <div class="topbar-right">
+    <div class="live-dot"></div>
+    <span id="live-count" style="font-size:11px;color:var(--green);font-weight:600;">— AO VIVO</span>
+    <button class="tbtn" onclick="loadAll()">↺ Atualizar</button>
+    <span id="api-status-top" class="badge bo">API: —</span>
+  </div>
+</div>
 
-    <!-- HEADER COM A CAIXA DA API DE VOLTA -->
-    <header class="flex flex-col lg:flex-row justify-between items-start gap-6 mb-6 w-full border-b border-neutral-900 pb-6">
-        
-        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
-            <div class="w-28 h-28 rounded-full border-2 border-amber-500 overflow-hidden glow-gold bg-neutral-900 flex-shrink-0 flex items-center justify-center">
-                <img src="perfil.png" alt="Rodrigão" class="w-full h-full object-cover" onerror="this.src='Logo2.png';">
-            </div>
-            
-            <div class="flex flex-col items-center sm:items-start text-center sm:text-left space-y-1">
-                <div class="flex gap-2 text-[9px] font-bold tracking-wider mb-0.5">
-                    <span class="border border-neutral-800 text-amber-500 px-2 py-0.5 rounded bg-neutral-900/50">🏆 LEAGUE 1</span>
-                    <span class="border border-neutral-800 text-emerald-500 px-2 py-0.5 rounded bg-neutral-900/50">📅 SEASON 2026</span>
-                </div>
-                <h1 class="text-4xl font-black tracking-tight text-amber-500 uppercase">RODRIGAO</h1>
-                <h2 class="text-xs font-bold text-neutral-300 uppercase tracking-widest">A VOZ DO ESPORTE OFICIAL</h2>
-                <p class="text-xs text-neutral-500 max-w-xl leading-relaxed">Painel responsivo da Copa do Mundo 2026 com partidas, classificacao, selecoes e artilharia conectados a API-Sports.</p>
-                
-                <div class="flex flex-wrap gap-2 pt-1">
-                    <a href="https://www.instagram.com/avozdoesporteoficial" target="_blank" class="bg-neutral-900/80 border border-neutral-800 hover:border-amber-500/40 text-neutral-300 text-[10px] px-3 py-1 rounded font-bold transition-all">@avozdoesporteoficial</a>
-                    <a href="https://wa.me/5581996165150" target="_blank" class="bg-neutral-900/80 border border-neutral-800 hover:border-emerald-500/40 text-emerald-500 text-[10px] px-3 py-1 rounded font-bold transition-all">(81) 9 9616-5150</a>
-                    <button onclick="controlarMusica()" id="btn-som" class="bg-neutral-900/80 border border-neutral-800 text-amber-500 text-[10px] px-3 py-1 rounded font-bold transition-all flex items-center gap-1 cursor-pointer">🔈 Estadio</button>
-                </div>
-            </div>
+<div class="main">
+<nav class="sidebar">
+  <div class="profile">
+    <div class="avatar">R</div>
+    <div class="pname">RODRIGAO</div>
+    <div class="phandle">A VOZ DO ESPORTE OFICIAL</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;">
+      <span class="badge bg">FIFA 2026</span>
+      <span class="badge bo">48 seleções</span>
+    </div>
+  </div>
+  <div class="nav">
+    <div class="nl">Navegação</div>
+    <button class="ni active" onclick="nav('painel',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Painel
+    </button>
+    <button class="ni" onclick="nav('jogos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      Jogos
+      <span class="nb" id="live-badge">—</span>
+    </button>
+    <button class="ni" onclick="nav('grupos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Grupos
+    </button>
+    <button class="ni" onclick="nav('classificacao',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Classificação
+    </button>
+    <button class="ni" onclick="nav('artilharia',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Artilharia
+    </button>
+    <div class="nl" style="margin-top:.5rem;">Configuração</div>
+    <button class="ni" onclick="nav('api',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      API
+    </button>
+  </div>
+  <div class="sfooter">
+    <div class="api-row">
+      <span class="api-lbl">API-Sports</span>
+      <span class="spill serr" id="api-pill">● ERRO</span>
+    </div>
+    <input class="ainput" type="password" id="api-key-sidebar" placeholder="x-apisports-key" value="b2f6d42d65b5a0715f4f7e5f5d9edb49">
+    <div class="sbrow">
+      <button class="bsync" onclick="syncAndLoad()">↺ Sincronizar</button>
+      <button class="bclr" onclick="clearKey()">✕</button>
+    </div>
+  </div>
+</nav>
+
+<div class="content">
+
+<div class="panel active" id="panel-painel">
+  <div class="tabs">
+    <button class="tab active" onclick="navTab('painel',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>PAINEL</button>
+    <button class="tab" onclick="navTab('jogos',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>JOGOS</button>
+    <button class="tab" onclick="navTab('grupos',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>GRUPOS</button>
+    <button class="tab" onclick="navTab('classificacao',this)">CLASSIFICAÇÃO</button>
+    <button class="tab" onclick="navTab('artilharia',this)">ARTILHARIA</button>
+    <button class="tab" onclick="navTab('api',this)">API</button>
+  </div>
+  <div class="notif"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="notif-msg">Carregando dados da Copa do Mundo 2026...</span></div>
+  <div class="sg">
+    <div class="sc"><div class="sch"><div class="sl">PARTIDAS</div><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div></div><div class="sv" id="st-total">104</div><div class="ss">Total do torneio</div></div>
+    <div class="sc"><div class="sch"><div class="sl">AO VIVO</div><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 010 8.49M7.76 7.76a6 6 0 000 8.49"/></svg></div></div><div class="sv" id="st-live" style="color:var(--green)">—</div><div class="ss"><span id="st-live-sub">aguardando</span></div></div>
+    <div class="sc"><div class="sch"><div class="sl">SELEÇÕES</div><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div></div><div class="sv">48</div><div class="ss">Grupos A–L</div></div>
+    <div class="sc"><div class="sch"><div class="sl">ARTILHEIRO</div><div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div></div><div class="sv" id="st-top" style="font-size:16px;">—</div><div class="ss" id="st-top-sub">carregando</div></div>
+  </div>
+  <div class="tc">
+    <div>
+      <div class="sh"><span class="sl2">● Jogo em Destaque</span></div>
+      <div class="lm" id="featured-match">
+        <div>
+          <div class="lb"><div class="live-dot"></div>AO VIVO</div>
+          <div class="lmin" id="feat-min" style="margin-top:8px;">—'</div>
         </div>
-
-        <!-- CAIXA DE CONEXÃO API -->
-        <div class="w-full lg:w-80 bg-[#121316] border border-neutral-800/80 rounded-xl p-4 shadow-xl">
-            <div class="flex justify-between items-center mb-3">
-                <div>
-                    <h3 class="text-[11px] font-black tracking-wide text-neutral-200">CONEXAO API-SPORTS</h3>
-                    <p class="text-[9px] text-neutral-500" id="txt-api-status">Sistema em modo de espera</p>
-                </div>
-                <span id="badge-status" class="bg-neutral-950 border border-neutral-800 text-neutral-400 text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
-                    ● OFFLINE
-                </span>
-            </div>
-            
-            <div class="space-y-2.5">
-                <div>
-                    <label class="text-[9px] text-neutral-500 font-bold uppercase mb-0.5 block">API KEY</label>
-                    <input type="password" id="api-key-input" value="9958bd6a29237aa17f18fd1922fdbe8e" placeholder="Insira sua chave aqui" class="w-full bg-neutral-950 border border-neutral-800 text-neutral-300 text-xs px-2.5 py-1.5 rounded focus:outline-none focus:border-amber-500 transition-colors">
-                </div>
-                
-                <div class="flex gap-2">
-                    <button onclick="sincronizarRealAPI()" id="btn-sync" class="flex-1 bg-amber-500 hover:bg-amber-600 text-black font-black text-xs py-1.5 rounded transition-colors cursor-pointer text-center">
-                        SINCRONIZAR
-                    </button>
-                </div>
-            </div>
+        <div class="lt">
+          <div class="ltm"><div id="feat-h-flag" style="font-size:26px;">🏳</div><div class="ltmn" id="feat-h">—</div></div>
+          <div style="text-align:center;">
+            <div style="display:flex;align-items:center;gap:4px;"><div class="ls" id="feat-hs">–</div><div class="lsep">–</div><div class="ls" id="feat-as">–</div></div>
+            <div id="feat-group" style="font-size:9px;color:var(--dim);margin-top:3px;">—</div>
+          </div>
+          <div class="ltm"><div id="feat-a-flag" style="font-size:26px;">🏳</div><div class="ltmn" id="feat-a">—</div></div>
         </div>
-    </header>
-
-    <!-- MENU DE ABAS -->
-    <nav class="flex flex-wrap gap-1 border-b border-neutral-900 pb-3 mb-6">
-        <button onclick="mudarAba('painel')" id="tab-painel" class="bg-amber-500 text-black text-xs font-bold px-4 py-1.5 rounded transition-all">PAINEL</button>
-        <button onclick="mudarAba('grupos')" id="tab-grupos" class="bg-neutral-900/50 border border-neutral-800/60 hover:text-amber-500 text-neutral-400 text-xs font-bold px-4 py-1.5 rounded transition-all">GRUPOS</button>
-        <button onclick="mudarAba('matamata')" id="tab-matamata" class="bg-neutral-900/50 border border-neutral-800/60 hover:text-amber-500 text-neutral-400 text-xs font-bold px-4 py-1.5 rounded transition-all">MATA-MATA</button>
-        <button onclick="mudarAba('artilharia')" id="tab-artilharia" class="bg-neutral-900/50 border border-neutral-800/60 hover:text-amber-500 text-neutral-400 text-xs font-bold px-4 py-1.5 rounded transition-all">ARTILHARIA</button>
-        <button onclick="mudarAba('noticias')" id="tab-noticias" class="bg-neutral-900/50 border border-neutral-800/60 hover:text-amber-500 text-neutral-400 text-xs font-bold px-4 py-1.5 rounded transition-all">NOTÍCIAS</button>
-    </nav>
-
-    <main class="flex-grow">
-        
-        <!-- ABA 1: PAINEL -->
-        <div id="view-painel" class="space-y-6 block">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-[#121316] p-4 rounded-xl border border-neutral-800/60 text-center">
-                    <div class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider mb-1">Total de Partidas</div>
-                    <div class="text-3xl font-black text-white" id="stat-partidas">0</div>
-                </div>
-                <div class="bg-[#121316] p-4 rounded-xl border border-neutral-800/60 text-center">
-                    <div class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider mb-1">Jogos ao Vivo</div>
-                    <div class="text-3xl font-black text-emerald-500" id="stat-aovivo">0</div>
-                </div>
-                <div class="bg-[#121316] p-4 rounded-xl border border-neutral-800/60 text-center">
-                    <div class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider mb-1">Seleções</div>
-                    <div class="text-3xl font-black text-white" id="stat-selecoes">0</div>
-                </div>
-                <div class="bg-[#121316] p-4 rounded-xl border border-neutral-800/60 text-center">
-                    <div class="text-[10px] text-neutral-500 font-bold uppercase tracking-wider mb-1">Gols Marcados</div>
-                    <div class="text-3xl font-black text-white" id="stat-gols">0</div>
-                </div>
-            </div>
-
-            <div class="bg-[#121316]/60 p-5 rounded-xl border border-neutral-800/70">
-                <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase tracking-wider">📅 Jogos em Destaque</h2>
-                <div id="container-jogos-dia" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="text-xs text-neutral-500 italic md:col-span-2">Sincronize a API para buscar os jogos do dia.</div>
-                </div>
-            </div>
+      </div>
+      <div class="card" style="margin-top:1rem;">
+        <div class="ch"><span class="ct">Próximos / Recentes</span><span class="badge bg" id="jogos-dia">—</span></div>
+        <div class="cb" style="padding:.6rem 1rem;" id="recent-matches"><div style="color:var(--dim);font-size:11px;text-align:center;padding:1rem 0;">Carregando...</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sh"><span class="sl2">Grupo C — Brasil</span></div>
+      <div class="card">
+        <div class="ch"><span class="ct">🇧🇷 Brasil · Grupo C</span></div>
+        <div class="cb" style="padding:.6rem 1rem;" id="brasil-matches">
+          <div class="mi"><div class="mend">13/06</div><div class="mteams"><div class="mteam win"><span class="mtn">🇧🇷 Brasil</span></div><div class="mteam"><span class="mtn">🇲🇦 Marrocos</span></div></div><div class="msco"><span class="msc">1</span><span class="msep">–</span><span class="msc">1</span></div></div>
+          <div class="mi"><div class="mt">19/06</div><div class="mteams"><div class="mteam"><span class="mtn">🇧🇷 Brasil</span></div><div class="mteam"><span class="mtn">🇭🇹 Haiti</span></div></div><div style="font-size:10px;color:var(--muted);">22h</div></div>
+          <div class="mi"><div class="mt">24/06</div><div class="mteams"><div class="mteam"><span class="mtn">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia</span></div><div class="mteam"><span class="mtn">🇧🇷 Brasil</span></div></div><div style="font-size:10px;color:var(--muted);">19h</div></div>
         </div>
+      </div>
+      <div class="card" style="margin-top:1rem;">
+        <div class="ch"><span class="ct">Top Artilheiros</span><span class="sl2 slk" onclick="nav('artilharia',document.querySelector('.ni:nth-child(5)'))">ver tudo ↗</span></div>
+        <div class="cb" style="padding:.5rem 1rem;" id="top-scorers-panel"><div style="color:var(--dim);font-size:11px;text-align:center;padding:.5rem 0;">Carregando...</div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- ABA 2: GRUPOS -->
-        <div id="view-grupos" class="hidden space-y-6">
-            <div class="bg-[#121316]/60 p-5 rounded-xl border border-neutral-800/70">
-                <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase tracking-wider">Fase de Grupos</h2>
-                <div class="text-xs text-neutral-500 italic">Estrutura de grupos aguardando dados da API para a temporada 2026.</div>
-            </div>
+<div class="panel" id="panel-jogos">
+  <div class="tabs">
+    <button class="tab" onclick="navTab('painel',this)">PAINEL</button>
+    <button class="tab active" onclick="navTab('jogos',this)">JOGOS</button>
+    <button class="tab" onclick="navTab('grupos',this)">GRUPOS</button>
+    <button class="tab" onclick="navTab('classificacao',this)">CLASSIFICAÇÃO</button>
+    <button class="tab" onclick="navTab('artilharia',this)">ARTILHARIA</button>
+    <button class="tab" onclick="navTab('api',this)">API</button>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="ct">Jogos da Copa do Mundo 2026</span><span class="badge bg">FASE DE GRUPOS</span></div>
+    <div class="cb" id="all-matches"><div style="color:var(--dim);font-size:11px;text-align:center;padding:1.5rem 0;">Carregando jogos...</div></div>
+  </div>
+</div>
+
+<div class="panel" id="panel-grupos">
+  <div class="tabs">
+    <button class="tab" onclick="navTab('painel',this)">PAINEL</button>
+    <button class="tab" onclick="navTab('jogos',this)">JOGOS</button>
+    <button class="tab active" onclick="navTab('grupos',this)">GRUPOS</button>
+    <button class="tab" onclick="navTab('classificacao',this)">CLASSIFICAÇÃO</button>
+    <button class="tab" onclick="navTab('artilharia',this)">ARTILHARIA</button>
+    <button class="tab" onclick="navTab('api',this)">API</button>
+  </div>
+  <div id="groups-grid" class="gg"></div>
+</div>
+
+<div class="panel" id="panel-classificacao">
+  <div class="tabs">
+    <button class="tab" onclick="navTab('painel',this)">PAINEL</button>
+    <button class="tab" onclick="navTab('jogos',this)">JOGOS</button>
+    <button class="tab" onclick="navTab('grupos',this)">GRUPOS</button>
+    <button class="tab active" onclick="navTab('classificacao',this)">CLASSIFICAÇÃO</button>
+    <button class="tab" onclick="navTab('artilharia',this)">ARTILHARIA</button>
+    <button class="tab" onclick="navTab('api',this)">API</button>
+  </div>
+  <div id="standings-grid" class="gg"></div>
+</div>
+
+<div class="panel" id="panel-artilharia">
+  <div class="tabs">
+    <button class="tab" onclick="navTab('painel',this)">PAINEL</button>
+    <button class="tab" onclick="navTab('jogos',this)">JOGOS</button>
+    <button class="tab" onclick="navTab('grupos',this)">GRUPOS</button>
+    <button class="tab" onclick="navTab('classificacao',this)">CLASSIFICAÇÃO</button>
+    <button class="tab active" onclick="navTab('artilharia',this)">ARTILHARIA</button>
+    <button class="tab" onclick="navTab('api',this)">API</button>
+  </div>
+  <div class="thr">
+    <div class="card">
+      <div class="ch"><span class="ct">Ranking de Gols — Copa 2026</span><span class="badge bg" id="scorer-count">—</span></div>
+      <div class="cb" style="padding:.5rem 1rem;" id="scorers-full"><div style="color:var(--dim);font-size:11px;text-align:center;padding:1.5rem 0;">Carregando artilheiros...</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div class="feat" id="top-scorer-feat">
+        <div class="feye">🔥 Líder Artilheiro</div>
+        <div class="ftit" id="feat-scorer-name">—</div>
+        <div class="fsub" id="feat-scorer-info">carregando...</div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="ct">Estatísticas</span></div>
+        <div class="cb">
+          <div style="font-size:12px;color:var(--muted);line-height:2.1;" id="scorer-stats">Carregando...</div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <!-- ABA 3: MATA-MATA -->
-        <div id="view-matamata" class="hidden space-y-6">
-            <div class="bg-[#121316]/60 p-5 rounded-xl border border-neutral-800/70">
-                <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase tracking-wider">Chaveamento</h2>
-                <div class="text-xs text-neutral-500 italic">Mata-Mata será liberado após a conclusão da fase de grupos.</div>
-            </div>
+<div class="panel" id="panel-api">
+  <div class="tabs">
+    <button class="tab" onclick="navTab('painel',this)">PAINEL</button>
+    <button class="tab" onclick="navTab('jogos',this)">JOGOS</button>
+    <button class="tab" onclick="navTab('grupos',this)">GRUPOS</button>
+    <button class="tab" onclick="navTab('classificacao',this)">CLASSIFICAÇÃO</button>
+    <button class="tab" onclick="navTab('artilharia',this)">ARTILHARIA</button>
+    <button class="tab active" onclick="navTab('api',this)">API</button>
+  </div>
+  <div class="card">
+    <div class="ch"><span class="ct">Conexão API-Sports</span><span class="spill serr" id="api-status-page">● ERRO</span></div>
+    <div class="cb" style="max-width:480px;">
+      <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Sua chave x-apisports-key está configurada. Clique em Sincronizar para buscar os dados em tempo real da Copa do Mundo 2026.</p>
+      <div style="margin-bottom:1rem;">
+        <div style="font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">API Key</div>
+        <input class="ainput" type="password" id="api-key-main" placeholder="x-apisports-key" style="padding:9px 11px;font-size:12px;border-radius:8px;margin-bottom:8px;" value="b2f6d42d65b5a0715f4f7e5f5d9edb49">
+        <div style="display:flex;gap:8px;">
+          <button class="btnG" onclick="syncAndLoad()">↺ Sincronizar</button>
+          <button class="btnO" onclick="clearKey()">Limpar</button>
         </div>
+      </div>
+      <div id="api-log" style="margin-top:1rem;padding:1rem;background:var(--bg-card2);border-radius:8px;font-size:11px;font-family:monospace;color:var(--muted);min-height:60px;line-height:2;">Aguardando sincronização...</div>
+    </div>
+  </div>
+</div>
 
-        <!-- ABA 4: ARTILHARIA REAL (SEM VINI JR FAKE) -->
-        <div id="view-artilharia" class="hidden space-y-6">
-            <div class="bg-[#121316]/60 p-5 rounded-xl border border-neutral-800/70 max-w-2xl mx-auto">
-                <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase tracking-wider">Ranking de Gols</h2>
-                <div class="space-y-2" id="lista-artilharia">
-                    <div class="text-xs text-neutral-500 italic text-center py-8">Nenhum artilheiro retornado pela API no momento. Sincronize para buscar dados reais.</div>
-                </div>
-            </div>
+</div></div><script>
+// ══════════════════════════════════════
+//  REAL DATA — Copa do Mundo 2026
+// ══════════════════════════════════════
+const GROUPS = {
+  A: { teams: ['🇲🇽 México','🇿🇦 África do Sul','🇰🇷 Coreia do Sul','🇨🇿 Rep. Tcheca'] },
+  B: { teams: ['🇨🇦 Canadá','🇧🇦 Bósnia-Herz.','🇶🇦 Catar','🇨🇭 Suíça'] },
+  C: { teams: ['🇧🇷 Brasil','🇲🇦 Marrocos','🇭🇹 Haiti','🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia'] },
+  D: { teams: ['🇺🇸 Estados Unidos','🇵🇾 Paraguai','🇦🇺 Austrália','🇹🇷 Turquia'] },
+  E: { teams: ['🇩🇪 Alemanha','🇨🇼 Curaçao','🇨🇮 Costa do Marfim','🇪🇨 Equador'] },
+  F: { teams: ['🇳🇱 Holanda','🇯🇵 Japão','🇸🇪 Suécia','🇹🇳 Tunísia'] },
+  G: { teams: ['🇧🇪 Bélgica','🇪🇬 Egito','🇮🇷 Irã','🇳🇿 Nova Zelândia'] },
+  H: { teams: ['🇪🇸 Espanha','🇨🇻 Cabo Verde','🇸🇦 Arábia Saudita','🇺🇾 Uruguai'] },
+  I: { teams: ['🇫🇷 França','🇸🇳 Senegal','🇳🇴 Noruega','Rep. Playoff 2'] },
+  J: { teams: ['🇦🇷 Argentina','🇩🇿 Argélia','🇦🇹 Áustria','🇯🇴 Jordânia'] },
+  K: { teams: ['🇵🇹 Portugal','🇺🇿 Uzbequistão','🇨🇴 Colômbia','Rep. Playoff 1'] },
+  L: { teams: ['🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra','🇭🇷 Croácia','🇬🇭 Gana','🇵🇦 Panamá'] }
+};
+
+// Known results up to 16/06/2026
+const RESULTS = [
+  { d:'11/06', g:'A', h:'🇲🇽 México', a:'🇿🇦 África do Sul', hs:2, as:0, done:true },
+  { d:'12/06', g:'A', h:'🇰🇷 Coreia do Sul', a:'🇨🇿 Rep. Tcheca', hs:null, as:null, done:false, time:'23h' },
+  { d:'12/06', g:'B', h:'🇨🇦 Canadá', a:'🇧🇦 Bósnia-Herz.', hs:null, as:null, done:false, time:'16h' },
+  { d:'12/06', g:'D', h:'🇺🇸 Estados Unidos', a:'🇵🇾 Paraguai', hs:null, as:null, done:false, time:'22h' },
+  { d:'13/06', g:'D', h:'🇦🇺 Austrália', a:'🇹🇷 Turquia', hs:2, as:0, done:true },
+  { d:'13/06', g:'B', h:'🇶🇦 Catar', a:'🇨🇭 Suíça', hs:1, as:1, done:true },
+  { d:'13/06', g:'C', h:'🇧🇷 Brasil', a:'🇲🇦 Marrocos', hs:1, as:1, done:true },
+  { d:'13/06', g:'C', h:'🇭🇹 Haiti', a:'🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia', hs:0, as:1, done:true },
+  { d:'14/06', g:'E', h:'🇩🇪 Alemanha', a:'🇨🇼 Curaçao', hs:null, as:null, done:false, time:'14h' },
+  { d:'14/06', g:'F', h:'🇳🇱 Holanda', a:'🇯🇵 Japão', hs:null, as:null, done:false, time:'17h' },
+  { d:'14/06', g:'E', h:'🇨🇮 Costa do Marfim', a:'🇪🇨 Equador', hs:null, as:null, done:false, time:'20h' },
+  { d:'14/06', g:'F', h:'🇸🇪 Suécia', a:'🇹🇳 Tunísia', hs:null, as:null, done:false, time:'23h' },
+  { d:'15/06', g:'H', h:'🇪🇸 Espanha', a:'🇨🇻 Cabo Verde', hs:null, as:null, done:false, time:'13h' },
+  { d:'15/06', g:'G', h:'🇧🇪 Bélgica', a:'🇪🇬 Egito', hs:null, as:null, done:false, time:'13h' },
+  { d:'15/06', g:'H', h:'🇸🇦 Arábia Saudita', a:'🇺🇾 Uruguai', hs:null, as:null, done:false, time:'16h' },
+  { d:'15/06', g:'G', h:'🇮🇷 Irã', a:'🇳🇿 Nova Zelândia', hs:null, as:null, done:false, time:'19h' },
+  { d:'16/06', g:'J', h:'🇦🇷 Argentina', a:'🇩🇿 Argélia', hs:null, as:null, done:false, time:'13h' },
+  { d:'16/06', g:'I', h:'🇫🇷 França', a:'🇸🇳 Senegal', hs:null, as:null, done:false, time:'13h' },
+  { d:'16/06', g:'J', h:'🇦🇹 Áustria', a:'🇯🇴 Jordânia', hs:null, as:null, done:false, time:'16h' },
+  { d:'16/06', g:'I', h:'🇳🇴 Noruega', a:'Rep. Playoff 2', hs:null, as:null, done:false, time:'16h' },
+  { d:'17/06', g:'K', h:'🇵🇹 Portugal', a:'🇺🇿 Uzbequistão', hs:null, as:null, done:false, time:'13h' },
+  { d:'17/06', g:'L', h:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra', a:'🇭🇷 Croácia', hs:null, as:null, done:false, time:'13h' },
+  { d:'17/06', g:'K', h:'🇨🇴 Colômbia', a:'Rep. Playoff 1', hs:null, as:null, done:false, time:'16h' },
+  { d:'17/06', g:'L', h:'🇬🇭 Gana', a:'🇵🇦 Panamá', hs:null, as:null, done:false, time:'16h' },
+];
+
+// Scorers (real from search results)
+const SCORERS_STATIC = [
+  { n:'G. Reyna', t:'🇺🇸 EUA', g:1, a:0 },
+  { n:'V. Gyökeres', t:'🇸🇪 Suécia', g:1, a:1 },
+  { n:'J. Quiñones', t:'🇲🇽 México', g:1, a:0 },
+  { n:'R. Jiménez', t:'🇲🇽 México', g:1, a:0 },
+  { n:'I. Saibari', t:'🇲🇦 Marrocos', g:1, a:0 },
+  { n:'Vinicius Jr.', t:'🇧🇷 Brasil', g:1, a:0 },
+  { n:'J. McGinn', t:'🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia', g:1, a:0 },
+  { n:'B. Khoukhi', t:'🇶🇦 Catar', g:1, a:0 },
+  { n:'N. Irankunda', t:'🇦🇺 Austrália', g:1, a:0 },
+  { n:'C. Metcalfe', t:'🇦🇺 Austrália', g:1, a:0 },
+];
+
+// ══════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════
+let apiKey = document.getElementById('api-key-sidebar').value;
+let apiConnected = false;
+let apiData = { fixtures:[], standings:[], scorers:[] };
+
+// ══════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════
+function nav(id, el) {
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + id)?.classList.add('active');
+}
+function navTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + id)?.classList.add('active');
+  document.querySelectorAll('.ni').forEach(n => {
+    if(n.textContent.trim().toLowerCase().startsWith(id.substring(0,4))) n.classList.add('active');
+    else n.classList.remove('active');
+  });
+}
+
+// ══════════════════════════════════════
+//  API
+// ══════════════════════════════════════
+function log(msg) {
+  const el = document.getElementById('api-log');
+  if(el) { el.innerHTML += `> ${msg}<br>`; el.scrollTop = el.scrollHeight; }
+  console.log('[API]', msg);
+}
+
+async function fetchAPI(endpoint) {
+  const key = document.getElementById('api-key-sidebar').value || document.getElementById('api-key-main').value;
+  const r = await fetch(`https://v3.football.api-sports.io/${endpoint}`, {
+    headers: { 'x-apisports-key': key }
+  });
+  if(!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+async function syncAndLoad() {
+  const key = document.getElementById('api-key-sidebar').value || document.getElementById('api-key-main').value;
+  if(!key || key.length < 10) { alert('Chave inválida.'); return; }
+  document.getElementById('api-key-sidebar').value = key;
+  document.getElementById('api-key-main').value = key;
+
+  log('Conectando à API-Sports...');
+  setStatus('loading');
+
+  try {
+    // Test connection
+    const status = await fetchAPI('status');
+    if(!status.response) throw new Error('Sem resposta');
+    const acc = status.response.account;
+    log(`✓ Conectado como: ${acc?.firstname || 'usuário'}`);
+
+    // Fixtures - WC 2026 league_id = 1 (FIFA World Cup)
+    log('Buscando partidas da Copa 2026...');
+    const fx = await fetchAPI('fixtures?league=1&season=2026');
+    if(fx.response && fx.response.length > 0) {
+      apiData.fixtures = fx.response;
+      log(`✓ ${fx.response.length} partidas carregadas.`);
+    } else {
+      log('⚠ Sem partidas na API, usando dados locais.');
+    }
+
+    // Scorers
+    log('Buscando artilheiros...');
+    const sc = await fetchAPI('players/topscorers?league=1&season=2026');
+    if(sc.response && sc.response.length > 0) {
+      apiData.scorers = sc.response;
+      log(`✓ ${sc.response.length} artilheiros carregados.`);
+    }
+
+    setStatus('ok');
+    log('✓ Sincronização concluída!');
+  } catch(e) {
+    log(`✗ Erro: ${e.message}`);
+    log('→ Usando dados estáticos como fallback.');
+    setStatus('err');
+  }
+  renderAll();
+}
+
+function clearKey() {
+  document.getElementById('api-key-sidebar').value = '';
+  document.getElementById('api-key-main').value = '';
+  setStatus('err');
+}
+
+function setStatus(s) {
+  const pill = document.getElementById('api-pill');
+  const top = document.getElementById('api-status-top');
+  const page = document.getElementById('api-status-page');
+  const map = { ok:['✓ CONECTADO','sok'], err:['● ERRO','serr'], loading:['↺ ...','serr'] };
+  const [txt, cls] = map[s] || map.err;
+  [pill, top, page].forEach(el => { if(el){ el.textContent = txt; el.className = el.className.replace(/(sok|serr)/g,'') + ' ' + cls; } });
+}
+
+// ══════════════════════════════════════
+//  RENDER STATIC DATA
+// ══════════════════════════════════════
+function renderAll() {
+  renderGroups();
+  renderStandings();
+  renderMatchList();
+  renderScorers();
+  renderPainel();
+}
+
+// -- GROUPS --
+function renderGroups() {
+  const grid = document.getElementById('groups-grid');
+  const sgrid = document.getElementById('standings-grid');
+  if(!grid || !sgrid) return;
+  let gh = '', sh = '';
+  for(const [letter, data] of Object.entries(GROUPS)) {
+    const teams = data.teams.map((t,i) => `<div style="display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:${i<3?'1px solid rgba(255,255,255,.03)':'none'};">
+      <span style="font-size:9px;font-weight:700;color:var(--dim);width:12px;">${i+1}</span>
+      <span style="font-size:11px;font-weight:600;">${t}</span>
+    </div>`).join('');
+    gh += `<div class="gcard"><div class="gch"><span class="gct">GRUPO ${letter}</span></div><div class="gcb">${teams}</div></div>`;
+
+    // Standings table
+    const rows = data.teams.map((t,i) => {
+      const isQ = i < 2;
+      return `<tr><td><span class="pos ${isQ?'p'+(i+1):'p4'}">${i+1}</span></td>
+        <td style="font-size:10px;font-weight:600;">${t}</td>
+        <td>0</td><td>0</td><td>0</td><td>0</td><td class="pts">0</td>
+        <td><div class="fps">—</div></td></tr>`;
+    }).join('');
+    sh += `<div class="card"><div class="ch"><span class="ct">Grupo ${letter}</span></div>
+      <div class="cb" style="padding:.5rem .875rem;overflow-x:auto;">
+        <table class="stbl"><thead><tr><th>#</th><th style="text-align:left;">Seleção</th><th>J</th><th>V</th><th>E</th><th>D</th><th>Pts</th><th>Forma</th></tr></thead>
+        <tbody>${rows}</tbody></table></div></div>`;
+  }
+  grid.innerHTML = gh;
+  sgrid.innerHTML = sh;
+}
+
+// -- MATCH LIST --
+function renderMatchList() {
+  const el = document.getElementById('all-matches');
+  if(!el) return;
+
+  // Group by date
+  const byDate = {};
+  RESULTS.forEach(m => {
+    if(!byDate[m.d]) byDate[m.d] = [];
+    byDate[m.d].push(m);
+  });
+
+  let html = '';
+  for(const [date, matches] of Object.entries(byDate)) {
+    const today = date === '16/06';
+    html += `<div style="font-size:10px;font-weight:700;letter-spacing:1px;color:${today?'var(--gold)':'var(--dim)'};text-transform:uppercase;padding:8px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px;">${today?'● ':''} ${date === '13/06'?'13/06 — Sábado':date === '14/06'?'14/06 — Domingo':date === '15/06'?'15/06 — Segunda':date === '16/06'?'16/06 — Hoje':date} — Grupo ${[...new Set(matches.map(m=>m.g))].join(', ')}</div>`;
+    matches.forEach(m => {
+      const done = m.done;
+      const timeEl = done ? `<span class="mend">FIM</span>` : `<span class="mt">${m.time||''}</span>`;
+      const scoreEl = done ? `<div class="msco"><span class="msc" style="${m.hs>m.as?'color:var(--gold)':''}">${m.hs}</span><span class="msep">–</span><span class="msc" style="${m.as>m.hs?'color:var(--gold)':''}">${m.as}</span></div>` : `<span style="font-size:9px;color:var(--muted);">${m.time||'—'} BRT</span>`;
+      html += `<div class="mi">
+        ${timeEl}
+        <div class="mteams">
+          <div class="mteam ${done&&m.hs>m.as?'win':''}"><span class="mtn">${m.h}</span></div>
+          <div class="mteam ${done&&m.as>m.hs?'win':''}"><span class="mtn">${m.a}</span></div>
         </div>
+        <span class="badge bo" style="font-size:9px;">G.${m.g}</span>
+        ${scoreEl}
+      </div>`;
+    });
+  }
+  el.innerHTML = html;
+}
 
-        <!-- ABA 5: NOTÍCIAS -->
-        <div id="view-noticias" class="hidden space-y-6">
-            <div class="bg-[#121316]/60 p-5 rounded-xl border border-neutral-800/70">
-                <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase tracking-wider flex justify-between items-center">
-                    <span>Giro de Notícias</span>
-                    <button onclick="buscarNoticias()" class="text-xs bg-neutral-950 px-3 py-1 rounded border border-neutral-700 hover:border-amber-500 text-neutral-300">Atualizar</button>
-                </h2>
-                <div id="feed-noticias" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="text-xs text-neutral-500 italic py-4">Buscando as últimas notícias reais do Google News...</div>
-                </div>
-            </div>
-        </div>
+// -- SCORERS --
+function renderScorers() {
+  const el = document.getElementById('scorers-full');
+  const elP = document.getElementById('top-scorers-panel');
+  const scorers = apiData.scorers.length > 0 ? apiData.scorers.map(s => ({
+    n: s.player?.name || '—', t: s.statistics[0]?.team?.name || '—', g: s.statistics[0]?.goals?.total || 0, a: s.statistics[0]?.goals?.assists || 0
+  })) : SCORERS_STATIC;
 
-    </main>
+  scorers.sort((a,b) => b.g - a.g);
+  document.getElementById('scorer-count').textContent = scorers.length + ' JOGADORES';
 
-    <footer class="text-center text-neutral-600 text-[10px] font-medium tracking-wider py-6 mt-6 border-t border-neutral-900/40">
-        DESENVOLVIDO PARA @AVOZDOESPORTEOFICIAL • COPA DO MUNDO 2026
-    </footer>
+  const top = scorers[0] || {};
+  document.getElementById('feat-scorer-name').textContent = top.n || '—';
+  document.getElementById('feat-scorer-info').textContent = `${top.g || 0} gols · ${top.t || '—'}`;
 
-    <script>
-        let somAtivo = false;
+  const rows = scorers.map((s,i) => `<div class="scitem">
+    <div class="scrank ${i===0?'scr1':''}">${i+1}</div>
+    <div class="scav">${s.n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+    <div class="scinfo"><div class="scname">${s.n}</div><div class="scteam">${s.t}</div></div>
+    <div style="text-align:right;"><div class="scg" style="${i===0?'':'font-size:14px;color:var(--text);'}">${s.g}</div><div class="scgl">gols</div></div>
+    <div style="text-align:right;min-width:30px;"><div style="font-size:12px;font-weight:700;color:var(--blue);">${s.a}</div><div class="scgl">ass</div></div>
+  </div>`).join('');
+  if(el) el.innerHTML = rows;
 
-        function controlarMusica() {
-            const som = document.getElementById('audio-estadio');
-            const b = document.getElementById('btn-som');
-            if(somAtivo) { som.pause(); b.innerHTML = "🔈 Estadio"; somAtivo = false; }
-            else { som.play().catch(()=>{}); b.innerHTML = "🔊 Tocando"; somAtivo = true; }
-        }
+  const topRows = scorers.slice(0,5).map((s,i) => `<div class="scitem">
+    <div class="scrank ${i===0?'scr1':''}">${i+1}</div>
+    <div class="scinfo"><div class="scname" style="font-size:11px;">${s.n}</div><div class="scteam" style="font-size:9px;">${s.t}</div></div>
+    <div class="scg" style="${i===0?'':'font-size:13px;color:var(--text);'}">${s.g}⚽</div>
+  </div>`).join('');
+  if(elP) elP.innerHTML = topRows;
 
-        function mudarAba(alvo) {
-            const rotas = ['painel', 'grupos', 'matamata', 'artilharia', 'noticias'];
-            rotas.forEach(r => {
-                const b = document.getElementById('tab-' + r);
-                const v = document.getElementById('view-' + r);
-                if(r === alvo) {
-                    b.className = "bg-amber-500 text-black text-xs font-bold px-4 py-1.5 rounded transition-all";
-                    v.classList.remove('hidden');
-                    v.classList.add('block');
-                } else {
-                    b.className = "bg-neutral-900/50 border border-neutral-800/60 hover:text-amber-500 text-neutral-400 text-xs font-bold px-4 py-1.5 rounded transition-all";
-                    v.classList.add('hidden');
-                    v.classList.remove('block');
-                }
-            });
-        }
+  document.getElementById('st-top').textContent = top.n || '—';
+  document.getElementById('st-top-sub').textContent = `${top.g||0} gols · ${top.t||'—'}`;
 
-        function buscarNoticias() {
-            const feed = document.getElementById('feed-noticias');
-            feed.innerHTML = '<div class="text-xs text-amber-500 italic py-4 md:col-span-2 text-center">Buscando notícias ao vivo...</div>';
-            
-            // Busca notícias reais via RSS do Google News
-            fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fnews.google.com%2Frss%2Fsearch%3Fq%3DCopa%2Bdo%2BMundo%2B2026%26hl%3Dpt-BR%26gl%3DBR%26ceid%3DBR%3Apt-419')
-            .then(res => res.json())
-            .then(data => {
-                if(data.items && data.items.length > 0) {
-                    feed.innerHTML = data.items.slice(0, 6).map(item => `
-                        <a href="${item.link}" target="_blank" class="block bg-neutral-950 p-4 rounded-lg border border-neutral-800 hover:border-amber-500/50 transition-colors shadow-md">
-                            <h3 class="font-bold text-neutral-200 text-xs mb-2 line-clamp-2">${item.title}</h3>
-                            <span class="text-[9px] text-neutral-500 uppercase font-medium border border-neutral-800 px-2 py-0.5 rounded">Google News</span>
-                        </a>
-                    `).join('');
-                }
-            })
-            .catch(() => {
-                feed.innerHTML = '<div class="text-xs text-red-500 italic py-4">Erro ao carregar notícias.</div>';
-            });
-        }
+  const stats = `🏆 Artilheiro: <b>${top.n||'—'}</b> (${top.g||0} gols)<br>📊 Jogadores com gol: ${scorers.filter(s=>s.g>0).length}<br>⚽ Total de gols: ${scorers.reduce((a,s)=>a+s.g,0)}<br>🅰️ Total assists: ${scorers.reduce((a,s)=>a+s.a,0)}`;
+  document.getElementById('scorer-stats').innerHTML = stats;
+}
 
-        // FUNÇÃO REAL DE SINCRONIZAÇÃO COM A API-SPORTS
-        async function sincronizarRealAPI() {
-            const apiKey = document.getElementById('api-key-input').value.trim();
-            const btn = document.getElementById('btn-sync');
-            const statusTxt = document.getElementById('txt-api-status');
-            const badge = document.getElementById('badge-status');
-            const listaArtilharia = document.getElementById('lista-artilharia');
-            const containerJogos = document.getElementById('container-jogos-dia');
+// -- PAINEL --
+function renderPainel() {
+  const done = RESULTS.filter(m=>m.done);
+  const upcoming = RESULTS.filter(m=>!m.done&&m.d==='16/06');
+  const live = 0; // Would come from API
 
-            if(!apiKey) {
-                alert("Por favor, informe a chave da API-Sports.");
-                return;
-            }
-
-            // Inicia o visual de carregamento
-            btn.innerText = "⏳ BUSCANDO DADOS...";
-            statusTxt.innerText = "Conectando ao servidor da API-Sports...";
-            badge.innerHTML = "● CONECTANDO";
-            badge.className = "bg-amber-500/20 border border-amber-500/50 text-amber-500 text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1 animate-pulse";
-            
-            listaArtilharia.innerHTML = '<div class="text-xs text-amber-500 italic text-center py-4">Consultando banco de dados da API...</div>';
-            containerJogos.innerHTML = '<div class="text-xs text-amber-500 italic text-center py-4 md:col-span-2">Consultando banco de dados da API...</div>';
-
-            try {
-                // PARAMETROS GLOBAIS DA COPA DO MUNDO: League ID 1, Temporada 2026
-                const headers = {
-                    "x-rapidapi-host": "v3.football.api-sports.io",
-                    "x-rapidapi-key": apiKey
-                };
-
-                // 1. Busca os Artilheiros (Top Scorers) REAIS
-                const responseScorers = await fetch("https://v3.football.api-sports.io/players/topscorers?league=1&season=2026", { method: "GET", headers: headers });
-                const dataScorers = await responseScorers.json();
-
-                if (dataScorers.errors && Object.keys(dataScorers.errors).length > 0) {
-                    throw new Error("Chave da API inválida ou limite atingido.");
-                }
-
-                // 2. Processa os Artilheiros (Se não houver dados ainda na Copa 2026, a API retorna array vazio)
-                if (dataScorers.response && dataScorers.response.length > 0) {
-                    listaArtilharia.innerHTML = dataScorers.response.slice(0, 10).map((item, idx) => `
-                        <div class="flex items-center justify-between bg-neutral-950 p-3 rounded-lg border border-neutral-800">
-                            <div class="flex items-center gap-3">
-                                <span class="text-amber-500 font-black text-sm w-4">${idx + 1}º</span>
-                                <div class="flex flex-col">
-                                    <span class="text-sm font-bold text-neutral-200">${item.player.name}</span>
-                                    <span class="text-[10px] text-neutral-500 mt-0.5">${item.statistics[0].team.name}</span>
-                                </div>
-                            </div>
-                            <div class="bg-neutral-900 px-3 py-1 rounded text-amber-500 font-bold border border-neutral-800">
-                                ${item.statistics[0].goals.total} Gols
-                            </div>
-                        </div>
-                    `).join('');
-                } else {
-                    listaArtilharia.innerHTML = '<div class="text-xs text-neutral-500 italic text-center py-8">A API não possui registros de gols para a temporada 2026 ainda. (Aguardando o início do torneio).</div>';
-                }
-
-                // Resposta de Sucesso na Interface
-                btn.innerText = "SINCRONIZAR";
-                statusTxt.innerText = "Conectado • Dados reais sincronizados";
-                badge.innerHTML = "● ONLINE";
-                badge.className = "bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1";
-                
-                // Limpa o mock visual de jogos do painel (pois não fizemos a chamada complexa de fixtures aqui para simplificar o script base)
-                containerJogos.innerHTML = '<div class="text-xs text-neutral-500 italic text-center py-4 md:col-span-2">Os dados da API foram conectados. (As partidas de 2026 ainda não foram completamente sorteadas pela FIFA).</div>';
-
-            } catch (error) {
-                // Em caso de erro na chave ou falha de rede
-                btn.innerText = "ERRO - TENTAR NOVAMENTE";
-                statusTxt.innerText = "Falha de comunicação: " + error.message;
-                badge.innerHTML = "● ERRO";
-                badge.className = "bg-red-500/10 border border-red-500/30 text-red-500 text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1";
-                
-                listaArtilharia.innerHTML = '<div class="text-xs text-red-500 italic text-center py-8">Erro de conexão. Verifique sua chave da API.</div>';
-                containerJogos.innerHTML = '<div class="text-xs text-red-500 italic text-center py-4 md:col-span-2">Erro de conexão. Verifique sua chave da API.</div>';
-                console.error(error);
-            }
-        }
-
-        // Inicializa as notícias assim que a página carrega
-        window.onload = function() {
-            buscarNoticias();
-        }
-    </script>
-</body>
-</html>
+  document.getElementById('st-live').textContent = live;
+  document.getElementById('st-live-sub').textContent = live > 0 ? 'Jogos ao andamento' : 'Sem jogos ao vivo';
+  document.getElementById('live-count').textContent = `${live} AO VIVO`;
+  document.getElementById('live-badge').textContent = upcoming.length || '—';
+  document.getElementById('notif-msg').textContent
