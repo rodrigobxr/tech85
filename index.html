@@ -61,8 +61,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 
 /* CONTENT */
 .content { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
-
-/* PANELS */
 .panel { display: none; flex-direction: column; gap: 1.25rem; }
 .panel.active { display: flex; }
 
@@ -113,7 +111,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .mi { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.03); gap: 10px; }
 .mi:last-child { border-bottom: none; }
 .mt { font-size: 10px; color: var(--dim); width: 30px; text-align: center; flex-shrink: 0; }
-.mlv { font-size: 9px; font-weight: 700; color: var(--green); background: rgba(46,204,113,.1); border-radius: 3px; padding: 2px 4px; width: 30px; text-align: center; }
+.mlv { font-size: 9px; font-weight: 800; color: var(--gold); background: rgba(245,200,66,.1); border-radius: 3px; padding: 2px 4px; width: 30px; text-align: center; animation: pulse 1.5s infinite; }
 .mend { font-size: 9px; font-weight: 600; color: var(--muted); width: 30px; text-align: center; background: rgba(255,255,255,.05); border-radius: 3px; padding: 2px 4px; }
 .mteams { flex: 1; }
 .mteam { display: flex; align-items: center; gap: 7px; margin-bottom: 3px; }
@@ -134,14 +132,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .p1 { background: rgba(245,200,66,.2); color: var(--gold); }
 .p2,.p3 { background: rgba(52,152,219,.12); color: var(--blue); }
 .p4 { background: rgba(136,136,136,.1); color: var(--muted); }
-.tdot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
-.trow { display: flex; align-items: center; gap: 7px; }
-.pts { font-weight: 800; }
-.fps { display: flex; gap: 2px; justify-content: center; }
-.fp { width: 13px; height: 13px; border-radius: 3px; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
-.fw { background: rgba(46,204,113,.2); color: var(--green); }
-.fd { background: rgba(136,136,136,.12); color: #888; }
-.fl { background: rgba(231,76,60,.15); color: var(--red); }
 
 /* SCORERS */
 .scitem { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.03); }
@@ -171,14 +161,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .gch { padding: .6rem .875rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
 .gct { font-size: 11px; font-weight: 800; color: var(--gold); letter-spacing: .5px; }
 .gcb { padding: .5rem .875rem; }
-
-/* SECTION HEADER */
 .sh { display: flex; align-items: center; justify-content: space-between; margin-bottom: .875rem; }
 .sl2 { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: var(--dim); text-transform: uppercase; }
-
-/* SPINNER */
-.spin { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,.1); border-top-color: var(--gold); border-radius: 50%; animation: spin .7s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
 
 @media(max-width:900px) {
   .sidebar { display: none; }
@@ -190,6 +174,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 </head>
 <body>
 
+<!-- TOPBAR -->
 <div class="topbar">
   <div style="display:flex;align-items:center;gap:.75rem;">
     <div class="logo">RODRIGAO</div>
@@ -204,6 +189,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 </div>
 
 <div class="main">
+<!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="profile">
     <div class="avatar">R</div>
@@ -256,8 +242,10 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </nav>
 
+<!-- CONTENT -->
 <div class="content">
 
+<!-- ═══ PAINEL ═══ -->
 <div class="panel active" id="panel-painel">
   <div class="tabs">
     <button class="tab active" onclick="nav('painel')">PAINEL</button>
@@ -279,7 +267,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
       <div class="sh"><span class="sl2">● Jogo em Destaque</span></div>
       <div class="lm" id="featured-match">
         <div>
-          <div class="lb"><div class="live-dot"></div>AO VIVO</div>
+          <div class="lb" id="feat-status-badge"><div class="live-dot"></div>AO VIVO</div>
           <div class="lmin" id="feat-min" style="margin-top:8px;">—'</div>
         </div>
         <div class="lt">
@@ -314,6 +302,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
+<!-- ═══ JOGOS ═══ -->
 <div class="panel" id="panel-jogos">
   <div class="tabs">
     <button class="tab" onclick="nav('painel')">PAINEL</button>
@@ -324,11 +313,12 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
     <button class="tab" onclick="nav('api')">API</button>
   </div>
   <div class="card">
-    <div class="ch"><span class="ct">Jogos da Copa do Mundo 2026</span><span class="badge bg">FASE DE GRUPOS</span></div>
+    <div class="ch"><span class="ct">Jogos da Copa do Mundo 2026</span><span class="badge bg">TODOS OS JOGOS</span></div>
     <div class="cb" id="all-matches"><div style="color:var(--dim);font-size:11px;text-align:center;padding:1.5rem 0;">Carregando jogos...</div></div>
   </div>
 </div>
 
+<!-- ═══ GRUPOS ═══ -->
 <div class="panel" id="panel-grupos">
   <div class="tabs">
     <button class="tab" onclick="nav('painel')">PAINEL</button>
@@ -341,6 +331,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   <div id="groups-grid" class="gg"></div>
 </div>
 
+<!-- ═══ CLASSIFICAÇÃO ═══ -->
 <div class="panel" id="panel-classificacao">
   <div class="tabs">
     <button class="tab" onclick="nav('painel')">PAINEL</button>
@@ -353,6 +344,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   <div id="standings-grid" class="gg"></div>
 </div>
 
+<!-- ═══ ARTILHARIA ═══ -->
 <div class="panel" id="panel-artilharia">
   <div class="tabs">
     <button class="tab" onclick="nav('painel')">PAINEL</button>
@@ -383,6 +375,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
+<!-- ═══ API ═══ -->
 <div class="panel" id="panel-api">
   <div class="tabs">
     <button class="tab" onclick="nav('painel')">PAINEL</button>
@@ -409,35 +402,56 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
-</div></div><script>
+</div><!-- /content -->
+</div><!-- /main -->
+
+<script>
 // ══════════════════════════════════════
-//  BLINDAGEM CONTRA BUG DO GITHUB
+//  FUNÇÕES AUXILIARES DE TELA
 // ══════════════════════════════════════
 function setHtml(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
 function setText(id, text) { const el = document.getElementById(id); if (el) el.textContent = text; }
 
 function getFlag(name) {
+  if(!name) return `<span style="display:inline-block;width:16px;height:12px;background:#333;border-radius:2px;"></span>`;
   const map = {
     "Mexico": "mx", "Africa do Sul": "za", "Coreia do Sul": "kr", "Rep. Tcheca": "cz",
-    "Canada": "ca", "Bosnia-Herz.": "ba", "Catar": "qa", "Suica": "ch",
-    "Brasil": "br", "Marrocos": "ma", "Haiti": "ht", "Escocia": "gb-sct",
-    "Estados Unidos": "us", "Paraguai": "py", "Australia": "au", "Turquia": "tr",
-    "Alemanha": "de", "Curacao": "cw", "Costa do Marfim": "ci", "Equador": "ec",
-    "Holanda": "nl", "Japao": "jp", "Suecia": "se", "Tunisia": "tn",
-    "Belgica": "be", "Egito": "eg", "Ira": "ir", "Nova Zelandia": "nz",
-    "Espanha": "es", "Cabo Verde": "cv", "Arabia Saudita": "sa", "Uruguai": "uy",
-    "Franca": "fr", "Senegal": "sn", "Noruega": "no",
-    "Argentina": "ar", "Argelia": "dz", "Austria": "at", "Jordania": "jo",
-    "Portugal": "pt", "Uzbequistao": "uz", "Colombia": "co",
-    "Inglaterra": "gb-eng", "Croacia": "hr", "Gana": "gh", "Panama": "pa"
+    "Canada": "ca", "Bosnia-Herz.": "ba", "Bosnia": "ba", "Bosnia and Herzegovina": "ba", "Catar": "qa", "Qatar": "qa", "Suica": "ch", "Switzerland": "ch",
+    "Brasil": "br", "Brazil": "br", "Marrocos": "ma", "Morocco": "ma", "Haiti": "ht", "Escocia": "gb-sct", "Scotland": "gb-sct",
+    "Estados Unidos": "us", "USA": "us", "Paraguai": "py", "Paraguay": "py", "Australia": "au", "Turquia": "tr", "Turkey": "tr",
+    "Alemanha": "de", "Germany": "de", "Curacao": "cw", "Costa do Marfim": "ci", "Ivory Coast": "ci", "Equador": "ec", "Ecuador": "ec",
+    "Holanda": "nl", "Netherlands": "nl", "Japao": "jp", "Japan": "jp", "Suecia": "se", "Sweden": "se", "Tunisia": "tn",
+    "Belgica": "be", "Belgium": "be", "Egito": "eg", "Egypt": "eg", "Ira": "ir", "Iran": "ir", "Nova Zelandia": "nz", "New Zealand": "nz",
+    "Espanha": "es", "Spain": "es", "Cabo Verde": "cv", "Cape Verde": "cv", "Arabia Saudita": "sa", "Saudi Arabia": "sa", "Uruguai": "uy", "Uruguay": "uy",
+    "Franca": "fr", "France": "fr", "Senegal": "sn", "Noruega": "no", "Norway": "no",
+    "Argentina": "ar", "Argelia": "dz", "Algeria": "dz", "Austria": "at", "Jordania": "jo", "Jordan": "jo",
+    "Portugal": "pt", "Uzbequistao": "uz", "Uzbekistan": "uz", "Colombia": "co",
+    "Inglaterra": "gb-eng", "England": "gb-eng", "Croacia": "hr", "Croatia": "hr", "Gana": "gh", "Ghana": "gh", "Panama": "pa"
   };
   const code = map[name];
   if(!code) return `<span style="display:inline-block;width:16px;height:12px;background:#333;border-radius:2px;"></span>`;
   return `<img src="https://flagcdn.com/w20/${code}.png" style="width:16px;height:12px;object-fit:cover;border-radius:2px;vertical-align:middle;">`;
 }
 
+function traduzirNome(name) {
+  if(!name) return "A definir";
+  const map = {
+    "South Africa": "Africa do Sul", "South Korea": "Coreia do Sul", "Czech Republic": "Rep. Tcheca",
+    "Bosnia and Herzegovina": "Bosnia-Herz.", "Bosnia": "Bosnia-Herz.", "Qatar": "Catar", "Switzerland": "Suica",
+    "Brazil": "Brasil", "Morocco": "Marrocos", "Scotland": "Escocia",
+    "USA": "Estados Unidos", "Paraguay": "Paraguai", "Turkey": "Turquia",
+    "Germany": "Alemanha", "Ivory Coast": "Costa do Marfim", "Ecuador": "Equador",
+    "Netherlands": "Holanda", "Japan": "Japao", "Sweden": "Suecia",
+    "Belgium": "Belgica", "Egypt": "Egito", "Iran": "Ira", "New Zealand": "Nova Zelandia",
+    "Spain": "Espanha", "Cape Verde": "Cabo Verde", "Saudi Arabia": "Arabia Saudita", "Uruguay": "Uruguai",
+    "France": "Franca", "Norway": "Noruega", "Algeria": "Argelia", "Jordan": "Jordania",
+    "Uzbekistan": "Uzbequistao", "England": "Inglaterra", "Croatia": "Croacia", "Ghana": "Gana"
+  };
+  return map[name] || name;
+}
+
 // ══════════════════════════════════════
-//  DADOS SIMULADOS DE SEGURANÇA
+//  DADOS GLOBAIS E MOCK
 // ══════════════════════════════════════
 const GROUPS = {
   A: { teams: ['Mexico','Africa do Sul','Coreia do Sul','Rep. Tcheca'] },
@@ -454,57 +468,45 @@ const GROUPS = {
   L: { teams: ['Inglaterra','Croacia','Gana','Panama'] }
 };
 
-const RESULTS = [
-  { d:'11/06', g:'A', h:'Mexico', a:'Africa do Sul', hs:2, as:0, done:true },
-  { d:'12/06', g:'A', h:'Coreia do Sul', a:'Rep. Tcheca', hs:null, as:null, done:false, time:'23h' },
-  { d:'12/06', g:'B', h:'Canada', a:'Bosnia-Herz.', hs:null, as:null, done:false, time:'16h' },
-  { d:'12/06', g:'D', h:'Estados Unidos', a:'Paraguai', hs:null, as:null, done:false, time:'22h' },
-  { d:'13/06', g:'D', h:'Australia', a:'Turquia', hs:2, as:0, done:true },
-  { d:'13/06', g:'B', h:'Catar', a:'Suica', hs:1, as:1, done:true },
-  { d:'13/06', g:'C', h:'Brasil', a:'Marrocos', hs:1, as:1, done:true },
-  { d:'13/06', g:'C', h:'Haiti', a:'Escocia', hs:0, as:1, done:true },
-  { d:'14/06', g:'E', h:'Alemanha', a:'Curacao', hs:null, as:null, done:false, time:'14h' },
-  { d:'14/06', g:'F', h:'Holanda', a:'Japao', hs:null, as:null, done:false, time:'17h' }
+let RESULTS = [
+  { d:'11/06', g:'A', h:'Mexico', a:'Africa do Sul', hs:2, as:0, done:true, live:false },
+  { d:'12/06', g:'A', h:'Coreia do Sul', a:'Rep. Tcheca', hs:null, as:null, done:false, live:false, time:'23h' },
+  { d:'12/06', g:'B', h:'Canada', a:'Bosnia-Herz.', hs:null, as:null, done:false, live:false, time:'16h' },
+  { d:'12/06', g:'D', h:'Estados Unidos', a:'Paraguai', hs:null, as:null, done:false, live:false, time:'22h' },
+  { d:'13/06', g:'D', h:'Australia', a:'Turquia', hs:2, as:0, done:true, live:false },
+  { d:'13/06', g:'B', h:'Catar', a:'Suica', hs:1, as:1, done:true, live:false },
+  { d:'13/06', g:'C', h:'Brasil', a:'Marrocos', hs:1, as:1, done:true, live:false },
+  { d:'13/06', g:'C', h:'Haiti', a:'Escocia', hs:0, as:1, done:true, live:false },
+  { d:'14/06', g:'E', h:'Alemanha', a:'Curacao', hs:null, as:null, done:false, live:false, time:'14h' },
+  { d:'14/06', g:'F', h:'Holanda', a:'Japao', hs:null, as:null, done:false, live:false, time:'17h' }
 ];
 
-const SCORERS_STATIC = [
-  { n:'G. Reyna', t:'Estados Unidos', g:1, a:0 },
-  { n:'V. Gyokeres', t:'Suecia', g:1, a:1 },
-  { n:'J. Quinones', t:'Mexico', g:1, a:0 },
-  { n:'R. Jimenez', t:'Mexico', g:1, a:0 },
-  { n:'I. Saibari', t:'Marrocos', g:1, a:0 },
-  { n:'Vinicius Jr.', t:'Brasil', g:1, a:0 },
-  { n:'J. McGinn', t:'Escocia', g:1, a:0 },
-  { n:'B. Khoukhi', t:'Catar', g:1, a:0 },
-  { n:'N. Irankunda', t:'Australia', g:1, a:0 }
-];
+let apiData = { scorers: [] };
 
 // ══════════════════════════════════════
-//  CONTROLES DE NAVEGAÇÃO E ESTADO
+//  NAVEGAÇÃO (BLINDADA CONTRA ERROS)
 // ══════════════════════════════════════
-let apiData = { fixtures:[], standings:[], scorers:[] };
-
 function nav(id) {
-  // Troca os painéis principais
+  // Ocultar todos os paineis e exibir o escolhido
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   const targetPanel = document.getElementById('panel-' + id);
-  if(targetPanel) targetPanel.classList.add('active');
+  if (targetPanel) targetPanel.classList.add('active');
 
-  // Atualiza botões da barra lateral
+  // Atualizar visual dos botões no menu lateral
   document.querySelectorAll('.ni').forEach(n => {
-    if(n.getAttribute('onclick').includes(`'${id}'`)) n.classList.add('active');
+    if (n.getAttribute('onclick') === `nav('${id}')`) n.classList.add('active');
     else n.classList.remove('active');
   });
 
-  // Atualiza botões no topo de cada painel
+  // Atualizar visual dos botões de abas no topo do painel atual
   document.querySelectorAll('.tab').forEach(t => {
-    if(t.getAttribute('onclick').includes(`'${id}'`)) t.classList.add('active');
+    if (t.getAttribute('onclick') === `nav('${id}')`) t.classList.add('active');
     else t.classList.remove('active');
   });
 }
 
 // ══════════════════════════════════════
-//  LÓGICA DA API
+//  LÓGICA DA API (FETCH E ATUALIZAÇÃO)
 // ══════════════════════════════════════
 function log(msg) {
   const el = document.getElementById('api-log');
@@ -529,47 +531,66 @@ async function syncAndLoad() {
     const k2 = document.getElementById('api-key-main');
     const key = (k1 ? k1.value : '') || (k2 ? k2.value : '');
     
-    if(!key || key.length < 10) { 
-      alert('Chave invalida ou ausente.'); 
-      return; 
-    }
+    if(!key || key.length < 10) { alert('Chave invalida ou ausente.'); return; }
     
     if(k1) k1.value = key;
     if(k2) k2.value = key;
 
-    log('Iniciando sincronizacao...');
+    log('Iniciando sincronizacao com banco de dados...');
     setStatus('loading');
 
+    // Validação da Conta
     const status = await fetchAPI('status');
-    if(status.errors && Object.keys(status.errors).length > 0) {
-      throw new Error(Object.values(status.errors)[0]);
-    }
-    if(!status.response || !status.response.account) {
-      throw new Error('Sem resposta valida da API');
-    }
+    if(status.errors && Object.keys(status.errors).length > 0) throw new Error(Object.values(status.errors)[0]);
+    if(!status.response || !status.response.account) throw new Error('Sem resposta valida da API');
     
-    log(`Conectado. Conta: ${status.response.account.firstname}`);
+    log(`Conectado. Conta autorizada.`);
 
+    // Busca de Jogos (Fixtures)
     const fx = await fetchAPI('fixtures?league=1&season=2026');
-    if(fx.response && fx.response.length > 0) apiData.fixtures = fx.response;
+    if(fx.response && fx.response.length > 0) {
+      RESULTS = []; // Limpa o mock e injeta os reais
+      fx.response.forEach(item => {
+        const dObj = new Date(item.fixture.date);
+        const s = item.fixture.status.short;
+        const isLive = ['1H','2H','HT','ET','P'].includes(s);
+        const isDone = ['FT','AET','PEN'].includes(s);
+        
+        let grp = item.league.round.replace('Group ', '');
+        if (grp.length > 2) grp = '-'; // Trata jogos de mata-mata
+        
+        RESULTS.push({
+          d: dObj.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'}),
+          g: grp,
+          h: traduzirNome(item.teams.home.name),
+          a: traduzirNome(item.teams.away.name),
+          hs: item.goals.home,
+          as: item.goals.away,
+          done: isDone,
+          live: isLive,
+          time: isLive ? item.fixture.status.elapsed + "'" : dObj.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}).replace(':', 'h')
+        });
+      });
+      log(`Jogos importados com sucesso.`);
+    }
     
+    // Busca de Artilheiros
     const sc = await fetchAPI('players/topscorers?league=1&season=2026');
-    if(sc.response && sc.response.length > 0) apiData.scorers = sc.response;
+    if(sc.response && sc.response.length > 0) {
+      apiData.scorers = sc.response;
+      log(`Estatisticas de jogadores recebidas.`);
+    }
 
     setStatus('ok');
-    log('Dados atualizados com sucesso!');
+    log('Processo finalizado e dados atualizados na tela!');
   } catch(e) {
     log(`ERRO API: ${e.message}`);
-    log('Carregando dados de seguranca da nossa base...');
+    log('A API nao retornou dados atualizados para 2026. Mantendo o painel com simulacoes.');
     setStatus('err');
   }
   
-  // SEMPRE renderiza a tela (plano B) para o sistema não travar
-  try {
-    renderAll();
-  } catch(err) {
-    console.error("Falha ao montar o visual", err);
-  }
+  // RENDERIZA A TELA (COM API OU COM MOCK)
+  renderAll();
 }
 
 function clearKey() {
@@ -586,18 +607,14 @@ function setStatus(s) {
   
   ['api-pill', 'api-status-top', 'api-status-page'].forEach(id => {
     const el = document.getElementById(id);
-    if(el) {
-        el.textContent = txt; 
-        el.className = el.className.replace(/(sok|serr)/g,'') + ' ' + cls;
-    }
+    if(el) { el.textContent = txt; el.className = el.className.replace(/(sok|serr)/g,'') + ' ' + cls; }
   });
 }
 
 // ══════════════════════════════════════
-//  RENDERIZAÇÃO VISUAL BLINDADA
+//  RENDERIZAÇÃO DOS ELEMENTOS DA TELA
 // ══════════════════════════════════════
 function renderAll() {
-  // Bandeirinhas base no HTML principal
   setHtml('fl-br', getFlag('Brasil'));
   setHtml('fl-br2', getFlag('Brasil'));
   setHtml('fl-br3', getFlag('Brasil'));
@@ -644,14 +661,16 @@ function renderMatchList() {
   for(const [date, matches] of Object.entries(byDate)) {
     html += `<div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--dim);text-transform:uppercase;padding:8px 0 4px;border-bottom:1px solid var(--border);margin-bottom:4px;">DATA: ${date}</div>`;
     matches.forEach(m => {
-      const done = m.done;
-      const timeEl = done ? `<span class="mend">FIM</span>` : `<span class="mt">${m.time||''}</span>`;
-      const scoreEl = done ? `<div class="msco"><span class="msc" style="${m.hs>m.as?'color:var(--gold)':''}">${m.hs}</span><span class="msep">–</span><span class="msc" style="${m.as>m.hs?'color:var(--gold)':''}">${m.as}</span></div>` : `<span style="font-size:9px;color:var(--muted);">${m.time||'—'} BRT</span>`;
+      const isLive = m.live;
+      const isDone = m.done;
+      const timeEl = isLive ? `<span class="mlv">${m.time}</span>` : (isDone ? `<span class="mend">FIM</span>` : `<span class="mt">${m.time||''}</span>`);
+      const scoreEl = (isDone || isLive) ? `<div class="msco"><span class="msc" style="${m.hs>m.as?'color:var(--gold)':''}">${m.hs!=null?m.hs:''}</span><span class="msep">–</span><span class="msc" style="${m.as>m.hs?'color:var(--gold)':''}">${m.as!=null?m.as:''}</span></div>` : `<span style="font-size:9px;color:var(--muted);">VS</span>`;
+      
       html += `<div class="mi">
         ${timeEl}
         <div class="mteams">
-          <div class="mteam ${done&&m.hs>m.as?'win':''}">${getFlag(m.h)} <span class="mtn">${m.h}</span></div>
-          <div class="mteam ${done&&m.as>m.hs?'win':''}">${getFlag(m.a)} <span class="mtn">${m.a}</span></div>
+          <div class="mteam ${(isDone||isLive)&&m.hs>m.as?'win':''}">${getFlag(m.h)} <span class="mtn">${m.h}</span></div>
+          <div class="mteam ${(isDone||isLive)&&m.as>m.hs?'win':''}">${getFlag(m.a)} <span class="mtn">${m.a}</span></div>
         </div>
         <span class="badge bo" style="font-size:9px;">G.${m.g}</span>
         ${scoreEl}
@@ -662,8 +681,18 @@ function renderMatchList() {
 }
 
 function renderScorers() {
+  // Fallback visual
+  const SCORERS_STATIC = [
+    { n:'G. Reyna', t:'Estados Unidos', g:1, a:0 },
+    { n:'V. Gyokeres', t:'Suecia', g:1, a:1 },
+    { n:'J. Quinones', t:'Mexico', g:1, a:0 },
+    { n:'R. Jimenez', t:'Mexico', g:1, a:0 },
+    { n:'I. Saibari', t:'Marrocos', g:1, a:0 },
+    { n:'Vinicius Jr.', t:'Brasil', g:1, a:0 }
+  ];
+
   const scorers = apiData.scorers.length > 0 ? apiData.scorers.map(s => ({
-    n: s.player?.name || '—', t: s.statistics[0]?.team?.name || '—', g: s.statistics[0]?.goals?.total || 0, a: s.statistics[0]?.goals?.assists || 0
+    n: s.player?.name || '—', t: traduzirNome(s.statistics[0]?.team?.name), g: s.statistics[0]?.goals?.total || 0, a: s.statistics[0]?.goals?.assists || 0
   })) : SCORERS_STATIC;
 
   scorers.sort((a,b) => b.g - a.g);
@@ -695,65 +724,72 @@ function renderScorers() {
 }
 
 function renderPainel() {
-  setText('notif-msg', `Copa do Mundo 2026 em andamento — Partidas simuladas prontas.`);
+  const liveMatches = RESULTS.filter(m => m.live);
+  const liveCount = liveMatches.length;
+
+  setText('st-live', liveCount > 0 ? liveCount : '—');
+  setText('st-live-sub', liveCount > 0 ? 'Jogos em andamento' : 'Sem jogos ao vivo');
+  setText('live-count', `${liveCount} AO VIVO`);
+  setText('live-badge', liveCount > 0 ? liveCount : '—');
+  setText('st-total', RESULTS.length > 0 ? RESULTS.length : '104');
   
-  const brFeat = RESULTS.find(m => m.h.includes('Brasil') && m.done);
-  if(brFeat) {
-    setText('feat-h', 'Brasil');
-    setText('feat-a', 'Marrocos');
-    setText('feat-hs', brFeat.hs);
-    setText('feat-as', brFeat.as);
-    setHtml('feat-h-flag', getFlag('Brasil'));
-    setHtml('feat-a-flag', getFlag('Marrocos'));
-    setText('feat-group', 'GRUPO C · MetLife Stadium');
-    setText('feat-min', 'FIM');
+  setText('notif-msg', `Copa do Mundo 2026 em andamento — Painel conectado com sucesso.`);
+  
+  // Destaque (Pega o 1º Ao vivo, se nao tiver pega o ultimo encerrado)
+  const featMatch = liveMatches[0] || RESULTS.filter(m => m.done).pop() || RESULTS[0];
+  if(featMatch) {
+    setText('feat-h', featMatch.h);
+    setText('feat-a', featMatch.a);
+    setText('feat-hs', featMatch.hs != null ? featMatch.hs : '-');
+    setText('feat-as', featMatch.as != null ? featMatch.as : '-');
+    setHtml('feat-h-flag', getFlag(featMatch.h));
+    setHtml('feat-a-flag', getFlag(featMatch.a));
+    setText('feat-group', `GRUPO ${featMatch.g} · ${featMatch.d}`);
+    
+    const minText = featMatch.live ? featMatch.time : (featMatch.done ? 'FIM' : featMatch.time);
+    setText('feat-min', minText);
     
     const lm = document.querySelector('.lm');
-    if (lm) lm.style.borderColor = 'rgba(245,200,66,.2)';
+    const lb = document.getElementById('feat-status-badge');
     
-    const lb = document.querySelector('.lb');
-    if (lb) {
-      lb.innerHTML = 'ENCERRADO';
-      lb.style.color = 'var(--gold)';
-      lb.style.background = 'rgba(245,200,66,.1)';
-      lb.style.borderColor = 'rgba(245,200,66,.2)';
+    if(featMatch.live) {
+      if(lm) lm.style.borderColor = 'rgba(46,204,113,.2)';
+      if(lb) { lb.innerHTML = '<div class="live-dot"></div>AO VIVO'; lb.style.color = 'var(--green)'; lb.style.background = 'rgba(46,204,113,.1)'; lb.style.borderColor = 'rgba(46,204,113,.2)'; }
+    } else {
+      if(lm) lm.style.borderColor = 'rgba(245,200,66,.2)';
+      if(lb) { lb.innerHTML = featMatch.done ? 'ENCERRADO' : 'AGUARDANDO'; lb.style.color = 'var(--gold)'; lb.style.background = 'rgba(245,200,66,.1)'; lb.style.borderColor = 'rgba(245,200,66,.2)'; }
     }
   }
 
+  // Lista Recentes no painel
   const recent = RESULTS.slice(-6).reverse();
   const recentHtml = recent.map(m => `
     <div class="mi">
-      <div class="${m.done?'mend':'mt'}">${m.done?'FIM':m.time||'—'}</div>
+      <div class="${m.live?'mlv':(m.done?'mend':'mt')}">${m.live?m.time:(m.done?'FIM':m.time||'—')}</div>
       <div class="mteams">
-        <div class="mteam ${m.done&&m.hs>m.as?'win':''}">${getFlag(m.h)} <span class="mtn">${m.h}</span></div>
-        <div class="mteam ${m.done&&m.as>m.hs?'win':''}">${getFlag(m.a)} <span class="mtn">${m.a}</span></div>
+        <div class="mteam ${(m.done||m.live)&&m.hs>m.as?'win':''}">${getFlag(m.h)} <span class="mtn">${m.h}</span></div>
+        <div class="mteam ${(m.done||m.live)&&m.as>m.hs?'win':''}">${getFlag(m.a)} <span class="mtn">${m.a}</span></div>
       </div>
       <div style="display:flex;align-items:center;gap:5px;min-width:40px;justify-content:flex-end;">
-        ${m.done?`<span class="msc">${m.hs}</span><span class="msep">–</span><span class="msc">${m.as}</span>`:`<span style="font-size:9px;color:var(--muted);">G.${m.g}</span>`}
+        ${(m.done||m.live)?`<span class="msc">${m.hs!=null?m.hs:''}</span><span class="msep">–</span><span class="msc">${m.as!=null?m.as:''}</span>`:`<span style="font-size:9px;color:var(--muted);">G.${m.g}</span>`}
       </div>
     </div>`).join('');
-    
   setHtml('recent-matches', recentHtml);
-  setText('jogos-dia', '16/06');
 }
 
-function loadAll() {
-  try {
-      renderAll();
-  } catch (err) {
-      console.error("Erro na renderizacao inicial", err);
-  }
+// ══════════════════════════════════════
+//  INICIALIZAÇÃO DO APLICATIVO
+// ══════════════════════════════════════
+window.onload = () => {
+  renderAll(); // Roda a interface mockada de segurança primeiro
   
+  // Dispara a sincronização automática em 1 segundo
   setTimeout(() => {
     const k1 = document.getElementById('api-key-sidebar');
     if(k1 && k1.value && k1.value.length > 10) {
         syncAndLoad();
     }
-  }, 500);
-}
-
-window.onload = () => {
-  loadAll();
+  }, 1000);
 };
 </script>
 </body>
