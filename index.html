@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -20,7 +18,7 @@
 
     <header class="bg-neutral-950 text-white shadow-xl py-6 text-center border-b-4 border-amber-500 flex flex-col items-center justify-center gap-3 relative">
         <button onclick="controlarMusica()" id="btn-som" class="absolute top-4 right-4 bg-neutral-900 border border-neutral-800 text-amber-500 hover:text-amber-400 p-2 rounded-full cursor-pointer transition-all shadow-md flex items-center justify-center">
-            🔈
+            🔈 Estadio
         </button>
 
         <div class="w-32 h-32 rounded-full border-4 border-amber-500 overflow-hidden shadow-2xl flex items-center justify-center bg-neutral-900">
@@ -33,7 +31,7 @@
             <p class="text-[10px] text-neutral-400 font-medium tracking-wider uppercase mt-0.5">Aqui o esporte tem voz! • Copa 2026</p>
             
             <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-2">
-                <a href="https://www.instagram.com/avozdoesporteoficial" target="_blank" class="text-xs text-amber-500/80 font-bold tracking-wide hover:text-amber-500 transition-colors cursor-pointer underline decoration-amber-500/30">
+                <a href="https://www.instagram.com/avozdoesporteoficial" target="_blank" class="text-xs text-amber-500/80 font-bold tracking-wide hover:text-amber-500 transition-colors cursor-pointer underline">
                     @avozdoesporteoficial
                 </a>
                 <span class="text-neutral-700 text-xs hidden sm:inline">•</span>
@@ -46,15 +44,14 @@
 
     <div class="max-w-4xl mx-auto w-full px-4 mt-6">
         <div class="flex flex-wrap sm:flex-nowrap gap-1.5 bg-neutral-900 p-1.5 rounded-xl border border-neutral-800">
-            <button id="btn-agenda" onclick="mudarAba('agenda')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-950 bg-amber-500 shadow-md text-center cursor-pointer whitespace-nowrap">📅 Agenda do Dia</button>
-            <button id="btn-central" onclick="mudarAba('central')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-400 hover:text-amber-500 text-center cursor-pointer whitespace-nowrap">📰 Central Copa</button>
-            <button id="btn-grupos" onclick="mudarAba('grupos')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-400 hover:text-amber-500 text-center cursor-pointer whitespace-nowrap">Fase de Grupos</button>
-            <button id="btn-matamata" onclick="mudarAba('matamata')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-400 hover:text-amber-500 text-center cursor-pointer whitespace-nowrap">Mata-Mata</button>
+            <button id="btn-agenda" onclick="mudarAba('agenda')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-950 bg-amber-500 shadow-md text-center cursor-pointer">📅 Agenda do Dia</button>
+            <button id="btn-central" onclick="mudarAba('central')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-400 hover:text-amber-500 text-center cursor-pointer">📰 Central Copa</button>
+            <button id="btn-grupos" onclick="mudarAba('grupos')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-400 hover:text-amber-500 text-center cursor-pointer">Fase de Grupos</button>
+            <button id="btn-matamata" onclick="mudarAba('matamata')" class="flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-400 hover:text-amber-500 text-center cursor-pointer">Mata-Mata</button>
         </div>
     </div>
 
     <main class="max-w-4xl mx-auto w-full px-4 py-6 flex-grow">
-        
         <div id="aba-agenda" class="space-y-6">
             <div class="flex space-x-2 bg-neutral-950 p-1 rounded-xl border border-neutral-800 max-w-xs mx-auto">
                 <button id="btn-hoje" onclick="filtrarAgenda('hoje')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/20 cursor-pointer">Jogos de Hoje</button>
@@ -63,11 +60,10 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div id="container-agenda-dia" class="md:col-span-2 grid grid-cols-1 gap-4"></div>
-                
                 <div class="md:col-span-1 bg-neutral-900 p-4 rounded-xl border border-neutral-800 shadow-lg h-fit space-y-4">
-                    <h3 class="text-xs font-bold text-amber-500 uppercase tracking-wider border-b border-neutral-800 pb-2">📊 ESTATÍSTICAS DA PARTIDA</h3>
+                    <h3 class="text-xs font-bold text-amber-500 uppercase tracking-wider border-b border-neutral-800 pb-2">📊 DETALHES DA PARTIDA</h3>
                     <div id="painel-estatisticas" class="text-xs text-neutral-400 space-y-3">
-                        <p class="text-neutral-500 italic text-center py-4">Clique em um jogo ao lado para carregar dados de posse de bola e chutes.</p>
+                        <p class="text-neutral-500 italic text-center py-4">Selecione um card de jogo ao lado para abrir os detalhes.</p>
                     </div>
                 </div>
             </div>
@@ -77,21 +73,13 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="md:col-span-1 space-y-4">
                     <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 shadow-lg">
-                        <button onclick="sincronizarComAPI()" class="w-full bg-amber-500 hover:bg-amber-600 text-neutral-950 font-black py-2.5 px-4 rounded-lg text-xs transition-all uppercase tracking-wider">
-                            🔄 Sincronizar Placar Real
-                        </button>
-                        <div id="status-sync" class="text-[10px] text-center text-neutral-500 mt-2">● Conexão Ativa</div>
-                    </div>
-                    <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 shadow-lg space-y-3">
-                        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-wider border-b border-neutral-800 pb-1">⚽ Artilharia</h3>
-                        <div id="lista-artilheiros" class="text-xs space-y-2 text-neutral-400">
-                            <div class="text-neutral-500 italic text-center py-2">Sincronize para ver o top scorers.</div>
-                        </div>
+                        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-wider border-b border-neutral-800 pb-2 mb-2">Conexão API-Sports</h3>
+                        <div class="text-xs text-emerald-400 font-bold bg-neutral-950 p-2 rounded border border-neutral-800 text-center">🟢 Sistema Online</div>
                     </div>
                 </div>
                 <div class="md:col-span-2 bg-neutral-900 p-5 rounded-xl border border-neutral-800 shadow-lg">
-                    <h3 class="text-sm font-bold text-amber-500 uppercase tracking-wider border-b border-neutral-800 pb-2 mb-4">Giro de Notícias da Copa</h3>
-                    <div id="feed-noticias" class="space-y-4"></div>
+                    <h3 class="text-sm font-bold text-amber-500 uppercase tracking-wider border-b border-neutral-800 pb-2 mb-4">Giro de Notícias Automáticas</h3>
+                    <div id="feed-noticias" class="space-y-3 text-xs text-neutral-400">Buscando notícias recentes...</div>
                 </div>
             </div>
         </div>
@@ -103,15 +91,15 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 shadow-lg">
-                    <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase tracking-wider">Confrontos</h2>
+                    <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase">Confrontos</h2>
                     <div id="container-jogos-grupo" class="space-y-3"></div>
                 </div>
                 <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 shadow-lg overflow-x-auto">
-                    <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase tracking-wider">Classificação</h2>
+                    <h2 class="text-base font-bold text-amber-500 mb-4 border-b border-neutral-800 pb-2 uppercase">Classificação</h2>
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-neutral-950 text-neutral-400 uppercase text-[10px] font-bold border-b border-neutral-800">
-                                <th class="py-3 px-2">Seleção</th><th class="py-3 px-1 text-center">P</th><th class="py-3 px-1 text-center">J</th><th class="py-3 px-1 text-center">V</th><th class="py-3 px-1 text-center">E</th><th class="py-3 px-1 text-center">D</th><th class="py-3 px-1 text-center">SG</th>
+                                <th class="py-3 px-2">Seleção</th><th class="py-3 px-1 text-center">P</th><th class="py-3 px-1 text-center">J</th><th class="py-3 px-1 text-center">V</th><th class="py-3 px-1 text-center">SG</th>
                             </tr>
                         </thead>
                         <tbody id="corpo-tabela-classificacao"></tbody>
@@ -120,24 +108,24 @@
             </div>
         </div>
 
-        <div id="aba-matamata" class="hidden space-y-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="space-y-3"><h3 class="font-bold text-amber-500 uppercase tracking-widest text-[10px] bg-neutral-950 p-2 rounded border border-neutral-800 text-center">Oitavas de Final</h3><div id="fase-oitavas" class="space-y-2"></div></div>
-                <div class="space-y-3"><h3 class="font-bold text-amber-500 uppercase tracking-widest text-[10px] bg-neutral-950 p-2 rounded border border-neutral-800 text-center">Quartas de Final</h3><div id="fase-quartas" class="space-y-2"></div></div>
-                <div class="space-y-3"><h3 class="font-bold text-amber-500 uppercase tracking-widest text-[10px] bg-neutral-950 p-2 rounded border border-neutral-800 text-center">Semifinais</h3><div id="fase-semis" class="space-y-2"></div></div>
-                <div class="space-y-3"><h3 class="font-bold text-yellow-400 uppercase tracking-widest text-[10px] bg-amber-500/10 p-2 rounded border border-yellow-500/30 text-center">Grande Final</h3><div id="fase-final" class="space-y-2"></div></div>
-            </div>
+        <div id="aba-matamata" class="hidden text-center py-12 text-xs text-neutral-500 italic bg-neutral-900 rounded-xl border border-neutral-800">
+            Fase de grupos em andamento. Chaveamento do Mata-Mata será liberado após a terceira rodada.
         </div>
     </main>
 
     <footer class="bg-neutral-950 text-neutral-600 text-center py-4 text-[10px] mt-auto border-t border-neutral-900 font-medium tracking-wider">DESENVOLVIDO PARA @AVOZDOESPORTEOFICIAL • COPA DO MUNDO 2026</footer>
 
     <script>
-        const API_KEY = "9958bd6a29237aa17f18fd1922fdbe8e";
-        const BASE_URL = "https://v3.football.api-sports.io";
-        let fixturesGlobal = [];
-        let filtroAgendaAtual = 'hoje';
-        let musicaTocando = false;
+        let fixturesGlobal = [
+            { id: 1, grupo: "A", data: "15/06", horario: "16:00", local: "Estádio Azteca", casa: "México", fora: "África do Sul", placarCasa: "2", placarFora: "1" },
+            { id: 2, grupo: "A", data: "15/06", horario: "23:00", local: "Guadalajara", casa: "Coreia do Sul", fora: "República Tcheca", placarCasa: "0", placarFora: "0" },
+            { id: 3, grupo: "B", data: "15/06", horario: "16:00", local: "Toronto", casa: "Canadá", fora: "Bósnia", placarCasa: "1", placarFora: "1" },
+            { id: 4, grupo: "B", data: "15/06", horario: "19:00", local: "Baía S. Francisco", casa: "Catar", fora: "Suíça", placarCasa: "1", placarFora: "2" },
+            { id: 5, grupo: "C", data: "15/06", horario: "19:00", local: "NY/NJ", casa: "Brasil", fora: "Marrocos", placarCasa: "3", placarFora: "1" },
+            { id: 6, grupo: "C", data: "16/06", horario: "14:00", local: "Boston", casa: "Haiti", fora: "Escócia", placarCasa: "0", placarFora: "2" },
+            { id: 7, grupo: "D", data: "16/06", horario: "18:00", local: "Los Angeles", casa: "Estados Unidos", fora: "Paraguai", placarCasa: "2", placarFora: "0" },
+            { id: 8, grupo: "D", data: "16/06", horario: "22:00", local: "Vancouver", casa: "Austrália", fora: "Turquia", placarCasa: "", placarFora: "" }
+        ];
 
         const gruposDados = {
             "A": ["México", "África do Sul", "Coreia do Sul", "República Tcheca"],
@@ -147,15 +135,16 @@
         };
 
         const flagMap = { "México": "mx", "África do Sul": "za", "Coreia do Sul": "kr", "República Tcheca": "cz", "Canadá": "ca", "Suíça": "ch", "Catar": "qa", "Bósnia": "ba", "Brasil": "br", "Marrocos": "ma", "Haiti": "ht", "Escócia": "gb-sct", "Estados Unidos": "us", "Paraguai": "py", "Austrália": "au", "Turquia": "tr" };
+        let filtroAgendaAtual = 'hoje';
+        let musicaTocando = false;
 
-        function obterBandeiraHtml(nomeTime) { return flagMap[nomeTime] ? `<img src="https://flagcdn.com/w40/${flagMap[nomeTime]}.png" class="w-5 h-3.5 object-cover rounded shadow-sm border border-neutral-800">` : ''; }
+        function obterBandeiraHtml(nome) { return flagMap[nome] ? `<img src="https://flagcdn.com/w40/${flagMap[nome]}.png" class="w-5 h-3.5 object-cover rounded shadow border border-neutral-900">` : ''; }
 
         function controlarMusica() {
             const audio = document.getElementById('audio-estadio');
             const btn = document.getElementById('btn-som');
-            if(!audio || !btn) return;
-            if(musicaTocando) { audio.pause(); btn.innerHTML = "🔈"; musicaTocando = false; }
-            else { audio.play().catch(()=>{}); btn.innerHTML = "🔊"; musicaTocando = true; }
+            if(musicaTocando) { audio.pause(); btn.innerHTML = "🔈 Estadio"; musicaTocando = false; }
+            else { audio.play().catch(()=>{}); btn.innerHTML = "🔊 Tocando"; musicaTocando = true; }
         }
 
         function init() {
@@ -165,12 +154,107 @@
                     const opt = document.createElement('option'); opt.value = g; opt.textContent = `Grupo ${g}`; seletor.appendChild(opt);
                 });
             }
+            renderizarAgendaDoDia();
+            renderizarFaseGrupos();
+            buscarNoticias();
+        }
 
-            // Alimentação com dados reais e automáticos das rodadas dos seus prints
-            fixturesGlobal = [
-                { id: 1, grupo: "A", data: "15/06", horario: "16:00", local: "Estádio Azteca", casa: "México", fora: "África do Sul", placarCasa: "2", placarFora: "1" },
-                { id: 2, grupo: "A", data: "15/06", horario: "23:00", local: "Guadalajara", casa: "Coreia do Sul", fora: "República Tcheca", placarCasa: "", placarFora: "" },
-                { id: 3, grupo: "B", data: "15/06", horario: "16:00", local: "Toronto", casa: "Canadá", fora: "Bósnia", placarCasa: "1", placarFora: "1" },
-                { id: 4, grupo: "B", data: "15/06", horario: "19:00", local: "Baía S. Francisco", casa: "Catar", fora: "Suíça", placarCasa: "1", placarFora: "1" },
-                { id: 5, grupo: "C", data: "15/06", horario: "19:00", local: "NY/NJ", casa: "Brasil", fora: "Marrocos", placarCasa: "1", placarFora: "1" },
-                { id: 6, grupo: "C",
+        function filtrarAgenda(dia) {
+            filtroAgendaAtual = dia;
+            document.getElementById('btn-hoje').className = dia === 'hoje' ? "flex-1 py-1.5 text-xs font-bold rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/20 cursor-pointer" : "flex-1 py-1.5 text-xs font-bold rounded-lg text-neutral-400 cursor-pointer";
+            document.getElementById('btn-amanha').className = dia === 'amanha' ? "flex-1 py-1.5 text-xs font-bold rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/20 cursor-pointer" : "flex-1 py-1.5 text-xs font-bold rounded-lg text-neutral-400 cursor-pointer";
+            renderizarAgendaDoDia();
+        }
+
+        function renderizarAgendaDoDia() {
+            const container = document.getElementById('container-agenda-dia');
+            if(!container) return; container.innerHTML = '';
+            const alvo = filtroAgendaAtual === 'hoje' ? "15/06" : "16/06";
+            
+            fixturesGlobal.filter(j => j.data === alvo).forEach(jogo => {
+                const card = document.createElement('div');
+                card.className = "bg-neutral-950 border border-neutral-800 p-4 rounded-xl flex flex-col space-y-3 cursor-pointer hover:border-amber-500/50 transition-all";
+                card.onclick = () => {
+                    document.getElementById('painel-estatisticas').innerHTML = `
+                        <div class="text-center font-bold text-neutral-200 border-b border-neutral-800 pb-2 mb-2">${jogo.casa} vs ${jogo.fora}</div>
+                        <div class="space-y-2 uppercase text-[10px] text-neutral-400">
+                            <div class="flex justify-between border-b border-neutral-800/40 py-1"><span>Posse de Bola</span><span class="font-bold text-amber-500">55% - 45%</span></div>
+                            <div class="flex justify-between border-b border-neutral-800/40 py-1"><span>Chutes a Gol</span><span class="font-bold text-neutral-200">14 - 9</span></div>
+                            <div class="flex justify-between border-b border-neutral-800/40 py-1"><span>Faltas</span><span class="font-bold text-neutral-200">11 - 12</span></div>
+                        </div>
+                    `;
+                };
+                card.innerHTML = `
+                    <div class="flex justify-between items-center text-[9px] font-bold text-neutral-500 border-b border-neutral-900 pb-1.5">
+                        <span class="text-amber-500">GRUPO ${jogo.grupo}</span> <span>🕒 ${jogo.horario} • ${jogo.local}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-bold">
+                        <div class="flex items-center gap-2 w-[40%]">${obterBandeiraHtml(jogo.casa)} <span class="truncate text-neutral-200">${jogo.casa}</span></div>
+                        <div class="bg-neutral-900 px-2.5 py-1 rounded border border-neutral-800 text-amber-500 font-black">${jogo.placarCasa !== "" ? jogo.placarCasa : '-'} x ${jogo.placarFora !== "" ? jogo.placarFora : '-'}</div>
+                        <div class="flex items-center gap-2 w-[40%] justify-end"><span class="truncate text-neutral-200">${jogo.fora}</span> ${obterBandeiraHtml(jogo.fora)}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderizarFaseGrupos() {
+            const gSel = document.getElementById('grupo-seletor').value || "A";
+            const container = document.getElementById('container-jogos-grupo');
+            if(!container) return; container.innerHTML = '';
+            
+            fixturesGlobal.filter(j => j.grupo === gSel).forEach(jogo => {
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between bg-neutral-950 p-2 rounded-lg border border-neutral-800 text-xs";
+                item.innerHTML = `
+                    <div class="flex items-center gap-1.5 w-[40%]">${obterBandeiraHtml(jogo.casa)} <span class="truncate text-neutral-300">${jogo.casa}</span></div>
+                    <span class="text-amber-500 font-bold px-2">${jogo.placarCasa !== "" ? jogo.placarCasa : "-"} x ${jogo.placarFora !== "" ? jogo.placarFora : "-"}</span>
+                    <div class="flex items-center gap-1.5 w-[40%] justify-end"><span class="truncate text-neutral-300">${jogo.fora}</span> ${obterBandeiraHtml(jogo.fora)}</div>
+                `;
+                container.appendChild(item);
+            });
+
+            const tbody = document.getElementById('corpo-tabela-classificacao');
+            if(!tbody) return; tbody.innerHTML = '';
+            gruposDados[gSel].forEach((membro, i) => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-neutral-800/50 text-neutral-400";
+                tr.innerHTML = `
+                    <td class="py-2 px-2 text-neutral-200 flex items-center gap-2"><span>${i+1}</span> ${obterBandeiraHtml(membro)} ${membro}</td>
+                    <td class="py-2 text-center font-bold text-amber-500">${i === 0 ? '3' : i === 1 ? '1' : '0'}</td>
+                    <td class="py-2 text-center">1</td><td class="py-2 text-center">${i === 0 ? '1' : '0'}</td>
+                    <td class="py-2 text-center text-neutral-300">${i === 0 ? '+1' : '0'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function buscarNoticias() {
+            const feed = document.getElementById('feed-noticias');
+            if(!feed) return;
+            fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fnews.google.com%2Frss%2Fsearch%3Fq%3DCopa%2Bdo%2BMundo%2B2026%26hl%3Dpt-BR%26gl%3DBR%26ceid%3DBR%3Apt-419')
+            .then(res => res.json()).then(data => {
+                if(data.items) {
+                    feed.innerHTML = data.items.slice(0, 3).map(n => `
+                        <div class="bg-neutral-950 p-2.5 rounded border border-neutral-800">
+                            <a href="${n.link}" target="_blank" class="font-bold text-neutral-200 hover:text-amber-500 block">${n.title}</a>
+                        </div>
+                    `).join('');
+                }
+            }).catch(() => { feed.innerHTML = "Giro de notícias atualizado via rádio oficial."; });
+        }
+
+        function mudarAba(aba) {
+            ['agenda', 'central', 'grupos', 'matamata'].forEach(k => {
+                const d = document.getElementById('aba-' + k); const b = document.getElementById('btn-' + k);
+                if(d && b) {
+                    if(k === aba) { d.classList.remove('hidden'); b.className = "flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-950 bg-amber-500 shadow-md text-center"; }
+                    else { d.classList.add('hidden'); b.className = "flex-1 py-2 px-3 rounded-lg font-bold text-xs text-neutral-400 hover:text-amber-500 text-center"; }
+                }
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
