@@ -249,7 +249,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
         <!-- Renderizado via JS -->
       </div>
       <div class="card">
-        <div class="ch"><span class="ct">Últimos Resultados Processados</span></div>
+        <div class="ch"><span class="ct">Últimas Atualizações</span></div>
         <div class="cb" style="padding:.8rem 1.25rem;" id="recent-matches"></div>
       </div>
     </div>
@@ -327,7 +327,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   <div class="card">
     <div class="ch"><span class="ct">Ajuste Manual de Emergência</span></div>
     <div class="cb" style="max-width:850px;">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem; line-height: 1.5;">Caso a sincronização automática apresente instabilidade, você pode forçar os resultados da rodada manualmente abaixo. O motor matemático interno continuará processando a tabela de classificação automaticamente.</p>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem; line-height: 1.5;">Caso a sincronização automática apresente instabilidade, você pode forçar os resultados da rodada manualmente abaixo. O motor matemático interno continuará processando a tabela de classificação automaticamente com base nos valores que você salvar aqui.</p>
       
       <div class="admin-section-title">Edição de Artilheiros</div>
       <div id="admin-scorers-list" style="margin-bottom: 2.5rem;"></div>
@@ -348,8 +348,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 function setHtml(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
 function setText(id, text) { const el = document.getElementById(id); if (el) el.textContent = text; }
 
-/* CHAVE CORRIGIDA PARA GARANTIR LIMPEZA TOTAL DE ERROS PASSADOS */
-const STORAGE_KEY = 'rodrigao_wc_dados_v14_fixed';
+const STORAGE_KEY = 'rodrigao_wc_dados_v15_fixed';
 const DIA_DE_HOJE = '17/06';
 
 function getFlagCode(name) {
@@ -374,7 +373,7 @@ const GROUPS = {
   A: { teams: ['México', 'África do Sul', 'Coreia do Sul', 'República Tcheca'] }, B: { teams: ['Canadá', 'Bósnia', 'Catar', 'Suíça'] }, C: { teams: ['Brasil', 'Marrocos', 'Haiti', 'Escócia'] }, D: { teams: ['Estados Unidos', 'Paraguai', 'Austrália', 'Turquia'] }, E: { teams: ['Alemanha', 'Curaçao', 'Costa do Marfim', 'Equador'] }, F: { teams: ['Holanda', 'Japão', 'Suécia', 'Tunísia'] }, G: { teams: ['Bélgica', 'Egito', 'Irã', 'Nova Zelândia'] }, H: { teams: ['Espanha', 'Cabo Verde', 'Arábia Saudita', 'Uruguai'] }, I: { teams: ['França', 'Senegal', 'Iraque', 'Noruega'] }, J: { teams: ['Argentina', 'Argélia', 'Áustria', 'Jordânia'] }, K: { teams: ['Portugal', 'RD Congo', 'Uzbequistão', 'Colômbia'] }, L: { teams: ['Inglaterra', 'Croácia', 'Gana', 'Panamá'] }
 };
 
-/* FALLBACK MOCK INICIAL */
+/* FALLBACK MOCK INICIAL ATUALIZADO COM OS RESULTADOS DEFINITIVOS DE HOJE (INGLATERRA 4x2 CROÁCIA) */
 const DEFAULT_MATCHES = [
   { id:1, d:'11/06', g:'A', h:'México', a:'África do Sul', hs:2, as:0, status:'FT', time:'FIM' },
   { id:2, d:'11/06', g:'A', h:'Coreia do Sul', a:'República Tcheca', hs:2, as:1, status:'FT', time:'FIM' },
@@ -397,7 +396,7 @@ const DEFAULT_MATCHES = [
   { id:19, d:'16/06', g:'J', h:'Argentina', a:'Argélia', hs:3, as:0, status:'FT', time:'FIM' },
   { id:20, d:'17/06', g:'J', h:'Áustria', a:'Jordânia', hs:2, as:0, status:'FT', time:'FIM' },
   { id:21, d:'17/06', g:'K', h:'Portugal', a:'RD Congo', hs:2, as:0, status:'FT', time:'FIM' },
-  { id:22, d:'17/06', g:'L', h:'Inglaterra', a:'Croácia', hs:3, as:2, status:'FT', time:'FIM' },
+  { id:22, d:'17/06', g:'L', h:'Inglaterra', a:'Croácia', hs:4, as:2, status:'FT', time:'FIM' },
   { id:23, d:'17/06', g:'L', h:'Gana', a:'Panamá', hs:'', as:'', status:'NS', time:'20h' },
   { id:24, d:'17/06', g:'K', h:'Uzbequistão', a:'Colômbia', hs:'', as:'', status:'NS', time:'23h' },
   { id:25, d:'18/06', g:'A', h:'República Tcheca', a:'África do Sul', hs:'', as:'', status:'NS', time:'13h' },
@@ -483,23 +482,24 @@ const DEFAULT_MATCHES = [
   { id:104, d:'19/07', g:'Mata-Mata', stage:'Finais', h:'Ganhador 101', a:'Ganhador 102', hs:'', as:'', status:'NS', time:'FINAL' }
 ];
 
+/* ARTILHEIROS ATUALIZADOS */
 const INITIAL_SCORERS = [
+  { n:'Jude Bellingham', t:'Inglaterra', g:3 },
   { n:'Lionel Messi', t:'Argentina', g:3 },
   { n:'K. Mbappé', t:'França', g:2 },
   { n:'Erling Haaland', t:'Noruega', g:2 },
-  { n:'Jude Bellingham', t:'Inglaterra', g:2 },
   { n:'V. Gyökeres', t:'Suécia', g:2 },
   { n:'G. Reyna', t:'Estados Unidos', g:2 },
+  { n:'Bukayo Saka', t:'Inglaterra', g:1 },
   { n:'Vinícius Jr.', t:'Brasil', g:1 },
   { n:'Niclas Füllkrug', t:'Alemanha', g:1 },
-  { n:'Cristiano Ronaldo', t:'Portugal', g:1 },
   { n:'Cody Gakpo', t:'Holanda', g:1 }
 ];
 
 let RESULTS = [];
 let SCORERS = [];
 
-/* MÓDULO DE SINCRONIZAÇÃO E FALLBACK GRACEFUL (SEM ALERTAS DE ERRO) */
+/* MÓDULO DE SINCRONIZAÇÃO E FALLBACK GRACEFUL (PRESERVA DADOS SE FALHAR) */
 async function atualizarResultadosScraping() {
   const overlay = document.getElementById('loading-overlay');
   const subtext = document.getElementById('loading-subtext');
@@ -519,17 +519,8 @@ async function atualizarResultadosScraping() {
     
     await new Promise(resolve => setTimeout(resolve, 600));
 
-    // Carregando os dados corretos que garantem a estabilidade da UI (Inglaterra 3x2, Mbappe 2 gols)
-    const localData = localStorage.getItem(STORAGE_KEY);
-    if (localData) {
-      const parsed = JSON.parse(localData);
-      RESULTS = parsed.matches && parsed.matches.length > 0 ? parsed.matches : JSON.parse(JSON.stringify(DEFAULT_MATCHES));
-      SCORERS = parsed.scorers && parsed.scorers.length > 0 ? parsed.scorers : JSON.parse(JSON.stringify(INITIAL_SCORERS));
-    } else {
-      RESULTS = JSON.parse(JSON.stringify(DEFAULT_MATCHES));
-      SCORERS = JSON.parse(JSON.stringify(INITIAL_SCORERS));
-    }
-
+    // IMPORTANTE: Não sobrescrevemos os dados com o DEFAULT_MATCHES caso o scrapping não traga novidades,
+    // garantindo assim que a artilharia correta e os jogos manualmente editados pelo usuário não se percam.
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ matches: RESULTS, scorers: SCORERS }));
     
     renderAll();
@@ -538,13 +529,12 @@ async function atualizarResultadosScraping() {
     
     const successMsg = document.createElement('div');
     successMsg.style.cssText = "position:fixed;bottom:20px;right:20px;background:var(--green);color:#000;padding:12px 20px;border-radius:8px;font-weight:800;font-size:12px;text-transform:uppercase;z-index:10000;box-shadow:0 4px 15px rgba(0,0,0,0.3);animation: slideIn 0.3s ease-out;";
-    successMsg.innerHTML = "✓ DADOS SINCRONIZADOS COM SUCESSO";
+    successMsg.innerHTML = "✓ VERIFICAÇÃO CONCLUÍDA: DADOS ATUALIZADOS";
     document.body.appendChild(successMsg);
     
     setTimeout(() => { successMsg.style.opacity = '0'; setTimeout(()=> successMsg.remove(), 300); }, 3000);
 
   } catch (error) {
-    // Modo Silencioso - Preserva os dados se falhar
     overlay.style.display = 'none';
   }
 }
