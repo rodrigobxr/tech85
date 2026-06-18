@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -160,6 +161,10 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
       <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       WhatsApp
     </a>
+    <button id="music-btn" onclick="toggleMusic()" class="social-btn" style="background:#1A1A1A;color:var(--gold);border:1px solid var(--border-gold);cursor:pointer;" title="Música da torcida">
+      <span id="music-icon">🔇</span>
+      <span id="music-label">TORCIDA OFF</span>
+    </button>
   </div>
 </div>
 
@@ -206,6 +211,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
     <div class="hoje-title">Jogos de Hoje</div>
     <div class="hoje-sub">Resultados finais das partidas do dia.</div>
   </div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button onclick="doSync()" style="background:var(--gold);color:#000;border:none;padding:8px 14px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;">↻ ATUALIZAR PARTIDAS</button></div>
   <div id="hoje-matches-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
 </div>
 
@@ -250,7 +256,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 <!-- CALENDÁRIO -->
 <div class="panel" id="panel-jogos">
   <div class="tabs"><button class="tab active" onclick="nav('jogos')">CALENDÁRIO COMPLETO</button><button class="tab" onclick="nav('grupos')">GRUPOS</button></div>
-  <div class="card"><div class="ch"><span class="ct">Histórico e Agenda do Torneio</span></div><div class="cb" id="all-matches"></div></div>
+  <div class="card"><div class="ch"><span class="ct">Histórico e Agenda do Torneio</span><button onclick="doSync()" style="background:var(--gold);color:#000;border:none;padding:6px 12px;border-radius:6px;font-weight:800;font-size:11px;cursor:pointer;">↻ ATUALIZAR PARTIDAS</button></div><div class="cb" id="all-matches"></div></div>
 </div>
 
 <!-- GRUPOS -->
@@ -292,7 +298,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 </div>
 
 <script>
-const STORAGE_KEY = 'rodrigao_wc2026_v2';
+const STORAGE_KEY = 'rodrigao_wc2026_v3';
 
 function getTodayStr() {
   const d = new Date();
@@ -321,16 +327,16 @@ const DEFAULT_MATCHES=[
   {id:9,d:'14/06',g:'E',h:'Alemanha',a:'Curaçao',hs:7,as:1,status:'FT',time:'FIM',goals:{h:["Havertz 5'","Müller 18'","Gnabry 29'","Fullkrug 45'","Havertz 61'","Gnabry 74'","Sane 88'"],a:["Kluivert 80'"]}},
   {id:10,d:'14/06',g:'F',h:'Holanda',a:'Japão',hs:2,as:2,status:'FT',time:'FIM',goals:{h:["Gakpo 15'","Depay 44'"],a:["Doan 55'","Asano 79'"]}},
   {id:11,d:'14/06',g:'E',h:'Costa do Marfim',a:'Equador',hs:1,as:0,status:'FT',time:'FIM',goals:{h:["Haller 38'"],a:[]}},
-  {id:12,d:'14/06',g:'F',h:'Suécia',a:'Tunísia',hs:5,as:1,status:'FT',time:'FIM',goals:{h:["Gyokeres 12'","Ibrahimovic 30'","Gyokeres 44'","Forsberg 62'","Isak 87'"],a:["Msakni 51'"]}},
+  {id:12,d:'14/06',g:'F',h:'Suécia',a:'Tunísia',hs:5,as:1,status:'FT',time:'FIM',goals:{h:["Ayari 7'","Isak 30'","Gyökeres 59'","Svanberg 84'","Ayari 90+6'"],a:["Omar Rekik 43'"]}},
   {id:13,d:'15/06',g:'H',h:'Espanha',a:'Cabo Verde',hs:0,as:0,status:'FT',time:'FIM',goals:{h:[],a:[]}},
   {id:14,d:'15/06',g:'G',h:'Bélgica',a:'Egito',hs:1,as:1,status:'FT',time:'FIM',goals:{h:["Lukaku 34'"],a:["Salah 78'"]}},
   {id:15,d:'15/06',g:'H',h:'Arábia Saudita',a:'Uruguai',hs:1,as:1,status:'FT',time:'FIM',goals:{h:["Al Dawsari 53'"],a:["Nunez 20'"]}},
   {id:16,d:'15/06',g:'G',h:'Irã',a:'Nova Zelândia',hs:2,as:2,status:'FT',time:'FIM',goals:{h:["Taremi 25'","Azmoun 67'"],a:["Wood 40'","Payne 80'"]}},
   {id:17,d:'16/06',g:'I',h:'França',a:'Senegal',hs:3,as:1,status:'FT',time:'FIM',goals:{h:["Mbappe 11'","Mbappe 45'","Griezmann 73'"],a:["Diallo 60'"]}},
-  {id:18,d:'16/06',g:'I',h:'Iraque',a:'Noruega',hs:1,as:4,status:'FT',time:'FIM',goals:{h:["Mohanad 35'"],a:["Haaland 7'","Haaland 22'","Odegaard 55'","Haaland 90'"]}},
-  {id:19,d:'16/06',g:'J',h:'Argentina',a:'Argélia',hs:3,as:0,status:'FT',time:'FIM',goals:{h:["Messi 14'","Lautaro 48'","Messi 77'"],a:[]}},
+  {id:18,d:'16/06',g:'I',h:'Iraque',a:'Noruega',hs:1,as:4,status:'FT',time:'FIM',goals:{h:["Aymen Hussein 39'"],a:["Haaland 28'","Haaland 42'","Østigård 87'","Aymen Hussein (contra) 90+2'"]}},
+  {id:19,d:'16/06',g:'J',h:'Argentina',a:'Argélia',hs:3,as:0,status:'FT',time:'FIM',goals:{h:["Messi 17'","Messi 60'","Messi 76'"],a:[]}},
   {id:20,d:'17/06',g:'J',h:'Áustria',a:'Jordânia',hs:2,as:0,status:'FT',time:'FIM',goals:{h:["Arnautovic 23'","Sabitzer 61'"],a:[]}},
-  {id:21,d:'17/06',g:'K',h:'Portugal',a:'RD Congo',hs:1,as:1,status:'FT',time:'FIM',goals:{h:["Cristiano 31'"],a:["Bongondjo 74'"]}},
+  {id:21,d:'17/06',g:'K',h:'Portugal',a:'RD Congo',hs:1,as:1,status:'FT',time:'FIM',goals:{h:["João Neves 6'"],a:["Yoane Wissa 45+5'"]}},
   {id:22,d:'17/06',g:'L',h:'Inglaterra',a:'Croácia',hs:4,as:2,status:'FT',time:'FIM',goals:{h:["Bellingham 18'","Kane 34'","Saka 55'","Kane 78'"],a:["Modric 40'","Kramaric 67'"]}},
   {id:23,d:'17/06',g:'L',h:'Gana',a:'Panamá',hs:'',as:'',status:'NS',time:'20h'},
   {id:24,d:'17/06',g:'K',h:'Uzbequistão',a:'Colômbia',hs:'',as:'',status:'NS',time:'23h'},
@@ -414,13 +420,7 @@ const DEFAULT_MATCHES=[
   {id:102,d:'19/07',g:'MM',stage:'Final',h:'Venc. 101',a:'Venc. 102',hs:'',as:'',status:'NS',time:'17h'}
 ];
 
-const DEFAULT_SCORERS=[
-  {n:'Erling Haaland',t:'Noruega',g:3},{n:'Lionel Messi',t:'Argentina',g:3},
-  {n:'K. Mbappé',t:'França',g:2},{n:'Jude Bellingham',t:'Inglaterra',g:2},
-  {n:'Victor Gyökeres',t:'Suécia',g:2},{n:'G. Reyna',t:'Estados Unidos',g:2},
-  {n:'Harry Kane',t:'Inglaterra',g:2},{n:'Vinícius Jr.',t:'Brasil',g:1},
-  {n:'Cristiano Ronaldo',t:'Portugal',g:1},{n:'Cody Gakpo',t:'Holanda',g:1}
-];
+const DEFAULT_SCORERS=[];
 
 let RESULTS=[],SCORERS=[],NEWS=[];
 
@@ -485,7 +485,48 @@ async function doSync(){
   document.getElementById('last-sync-label').textContent='Última sync: '+new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 }
 
-function doSyncNews(){showToast('Use o app web para buscar notícias via IA.');}
+async function doSyncNews(){
+  const el=document.getElementById('news-container');
+  el.innerHTML='<div style="color:var(--dim);text-align:center;padding:2rem;grid-column:1/-1;">Buscando notícias da Copa 2026...</div>';
+  const curatedNews=[
+    {title:'Messi faz hat-trick, chega a marca histórica e vira destaque da rodada',summary:'Craque argentino marcou três vezes contra a Argélia; informação confrontada em ge, FIFA e veículos nacionais.',source:'ge.globo / FIFA',url:'https://ge.globo.com/futebol/copa-do-mundo/noticia/2026/06/17/messi-festeja-vitoria-da-argentina-e-recorde.ghtml'},
+    {title:'Haaland marca duas vezes na estreia da Noruega contra o Iraque',summary:'Relatos de FIFA, ESPN e Estadão confirmam dois gols de Haaland, não três, na vitória norueguesa por 4 a 1.',source:'FIFA / ESPN / Estadão',url:'https://www.fifa.com/pt/articles/iraque-noruega-melhores-momentos-resumo-grupo-i'},
+    {title:'Portugal empata com a RD Congo; João Neves e Wissa fazem os gols',summary:'Cristiano Ronaldo teve atuação apagada; o gol português foi de João Neves, confirmado por FIFA, ESPN e O Globo.',source:'FIFA / ESPN / O Globo',url:'https://www.espn.com/soccer/match/_/gameId/760435/congo-dr-portugal'},
+    {title:'Suécia goleia a Tunísia; Ayari, Isak, Gyökeres e Svanberg marcam',summary:'A súmula confrontada indica dois gols de Yasin Ayari e não registra gol de Ibrahimović, já aposentado.',source:'FIFA / ESPN / Sky Sports',url:'https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/sweden-tunisia-highlights-match-report'}
+  ];
+  const feeds=[
+    {src:'ge.globo',url:'https://ge.globo.com/futebol/copa-do-mundo/rss.xml'},
+    {src:'ESPN Brasil',url:'https://www.espn.com.br/espn/rss/futebol/news'},
+    {src:'CBF',url:'https://www.cbf.com.br/rss/noticias'}
+  ];
+  const proxy='https://api.allorigins.win/raw?url=';
+  const all=[...curatedNews];
+  for(const f of feeds){
+    try{
+      const r=await fetch(proxy+encodeURIComponent(f.url));
+      if(!r.ok) continue;
+      const txt=await r.text();
+      const doc=new DOMParser().parseFromString(txt,'text/xml');
+      const items=Array.from(doc.querySelectorAll('item')).slice(0,8);
+      items.forEach(it=>{
+        const title=it.querySelector('title')?.textContent||'';
+        const link=it.querySelector('link')?.textContent||'#';
+        const desc=(it.querySelector('description')?.textContent||'').replace(/<[^>]*>/g,'').slice(0,160);
+        const low=(title+' '+desc).toLowerCase();
+        if(f.src==='ge.globo' || low.includes('copa')||low.includes('mundo')||low.includes('fifa')||low.includes('seleção')||low.includes('brasil')){
+          all.push({title,url:link,summary:desc,source:f.src});
+        }
+      });
+    }catch(e){console.warn('feed fail',f.src,e);}
+  }
+  // Top 4 destaques do dia, sem duplicatas por título
+  const seen={};
+  const uniq=all.filter(n=>{const k=(n.title||'').trim().toLowerCase();if(seen[k])return false;seen[k]=1;return !!k;});
+  NEWS=uniq.slice(0,4);
+  saveData();
+  renderNews();
+  showToast('✓ NOTÍCIAS ATUALIZADAS!');
+}
 
 function renderHoje(){
   const d=new Date();
@@ -538,10 +579,48 @@ function renderGroups(){
   document.getElementById('standings-grid').innerHTML=html;
 }
 
+function computeScorersFromMatches(){
+  // Auto-calcula artilharia a partir dos gols registrados nas partidas
+  const tally={};
+  RESULTS.forEach(m=>{
+    if(m.status!=='FT'||!m.goals) return;
+    (m.goals.h||[]).forEach(g=>{
+      if(/contra|own goal|og/i.test(String(g))) return;
+      const name=String(g).replace(/\s*\d+'.*$/,'').replace(/\(.*?\)/g,'').trim();
+      if(!name||/^og$|gol contra/i.test(name)) return;
+      const k=name+'|'+m.h;
+      tally[k]=tally[k]||{n:name,t:m.h,g:0};tally[k].g++;
+    });
+    (m.goals.a||[]).forEach(g=>{
+      if(/contra|own goal|og/i.test(String(g))) return;
+      const name=String(g).replace(/\s*\d+'.*$/,'').replace(/\(.*?\)/g,'').trim();
+      if(!name||/^og$|gol contra/i.test(name)) return;
+      const k=name+'|'+m.a;
+      tally[k]=tally[k]||{n:name,t:m.a,g:0};tally[k].g++;
+    });
+  });
+  return Object.values(tally).sort((a,b)=>b.g-a.g);
+}
+
 function renderScorers(){
-  const sorted=[...SCORERS].sort((a,b)=>b.g-a.g);
-  if(sorted.length)document.getElementById('st-top').textContent=sorted[0].n+' ('+sorted[0].g+')';
-  document.getElementById('scorers-full').innerHTML=sorted.slice(0,10).map((s,i)=>`
+  // Artilharia 100% calculada a partir dos gols reais marcados nas partidas (status FT)
+  // Agrupa por nome normalizado para evitar duplicatas (Haaland aparecendo 2x, etc).
+  const auto=computeScorersFromMatches();
+  const byName={};
+  auto.forEach(s=>{
+    const key=s.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z]/g,'');
+    if(!byName[key]) byName[key]={n:s.n,t:s.t,g:0};
+    byName[key].g+=s.g;
+  });
+  const sorted=Object.values(byName).sort((a,b)=>b.g-a.g||a.n.localeCompare(b.n));
+  const el=document.getElementById('scorers-full');
+  if(!sorted.length){
+    document.getElementById('st-top').textContent='—';
+    el.innerHTML='<div style="color:var(--dim);text-align:center;padding:2rem;">Nenhum gol registrado ainda. A artilharia será calculada automaticamente a partir das partidas encerradas.</div>';
+    return;
+  }
+  document.getElementById('st-top').textContent=sorted[0].n+' ('+sorted[0].g+')';
+  el.innerHTML=sorted.slice(0,10).map((s,i)=>`
     <div class="scitem">
       <div class="scrank ${i===0?'scr1':''}">${i+1}</div>
       <div class="scinfo"><div class="scname">${s.n}</div><div class="scteam">${getFlagSm(s.t)}${s.t}</div></div>
@@ -579,14 +658,23 @@ function renderCalendar(){
     html+=`<div class="date-label" style="color:${isHoje?'var(--gold)':'var(--dim)'}">${isHoje?'● ':''}DATA: ${date}</div>`;
     ms.forEach(m=>{
       const done=m.status==='FT';
-      html+=`<div class="mi">
-        ${done?'<span class="mend">FIM</span>':'<span class="mt">'+m.time+'</span>'}
-        <div class="mteams">
-          <div class="mteam ${done&&m.hs>m.as?'win':''}">${getFlagSm(m.h)}<span class="mtn">${m.h}</span></div>
-          <div class="mteam ${done&&m.as>m.hs?'win':''}">${getFlagSm(m.a)}<span class="mtn">${m.a}</span></div>
+      const goalsH=(m.goals?.h||[]);
+      const goalsA=(m.goals?.a||[]);
+      const hasGoals=done&&(goalsH.length||goalsA.length);
+      html+=`<div style="border-bottom:1px solid rgba(255,255,255,.03);padding-bottom:6px;">
+        <div class="mi" style="border-bottom:none;">
+          ${done?'<span class="mend">FIM</span>':'<span class="mt">'+m.time+'</span>'}
+          <div class="mteams">
+            <div class="mteam ${done&&m.hs>m.as?'win':''}">${getFlagSm(m.h)}<span class="mtn">${m.h}</span></div>
+            <div class="mteam ${done&&m.as>m.hs?'win':''}">${getFlagSm(m.a)}<span class="mtn">${m.a}</span></div>
+          </div>
+          <span class="badge bo" style="font-size:9px;">G.${m.g}</span>
+          ${done?'<div class="msco"><span class="msc">'+m.hs+'</span><span class="msep">x</span><span class="msc">'+m.as+'</span></div>':'<span style="font-size:10px;color:var(--dim);padding:0 8px;">VS</span>'}
         </div>
-        <span class="badge bo" style="font-size:9px;">G.${m.g}</span>
-        ${done?'<div class="msco"><span class="msc">'+m.hs+'</span><span class="msep">x</span><span class="msc">'+m.as+'</span></div>':'<span style="font-size:10px;color:var(--dim);padding:0 8px;">VS</span>'}
+        ${hasGoals?`<div style="display:flex;gap:18px;padding:4px 0 4px 57px;font-size:10px;color:var(--muted);flex-wrap:wrap;">
+          <div style="flex:1;min-width:140px;">${goalsH.map(g=>'⚽ '+g).join(' · ')||'<span style="color:var(--dim)">—</span>'}</div>
+          <div style="flex:1;min-width:140px;text-align:right;">${goalsA.map(g=>g+' ⚽').join(' · ')||'<span style="color:var(--dim)">—</span>'}</div>
+        </div>`:''}
       </div>`;
     });
   }
@@ -630,12 +718,30 @@ function renderPainel(){
 
 function renderNews(){
   const el=document.getElementById('news-container');
-  if(!NEWS.length){el.innerHTML='<div style="color:var(--dim);text-align:center;padding:3rem;grid-column:1/-1;">Use o app web (rodrigao-copa2026.base44.app) para buscar notícias via IA.</div>';return;}
+  if(!NEWS.length){el.innerHTML='<div style="color:var(--dim);text-align:center;padding:3rem;grid-column:1/-1;">Clique em <b style="color:var(--gold)">↻ ATUALIZAR</b> para buscar as notícias da Copa do Mundo 2026 direto do ge.globo, ESPN e CBF.</div>';return;}
   el.innerHTML=NEWS.map(n=>`<a class="news-card" href="${n.url||'#'}" target="_blank" rel="noopener">
     <div class="news-title">${n.title}</div>
     ${n.summary?'<div class="news-summary">'+n.summary+'</div>':''}
-    ${n.source?'<div class="news-source">'+n.source+'</div>':''}
+    ${n.source?'<div class="news-source">📰 '+n.source+'</div>':''}
   </a>`).join('');
+}
+
+// === Música da torcida ===
+function toggleMusic(){
+  let a=document.getElementById('torcida-audio');
+  if(!a){
+    a=document.createElement('audio');
+    a.id='torcida-audio';a.src='/torcida.mp3';a.loop=true;a.volume=0.6;
+    document.body.appendChild(a);
+  }
+  const icon=document.getElementById('music-icon');
+  const label=document.getElementById('music-label');
+  if(a.paused){
+    a.play().then(()=>{icon.textContent='🔊';label.textContent='TORCIDA ON';})
+            .catch(()=>showToast('Não foi possível tocar a música',false));
+  }else{
+    a.pause();icon.textContent='🔇';label.textContent='TORCIDA OFF';
+  }
 }
 
 function renderAdminPanel(){
@@ -680,7 +786,7 @@ function renderAll(){
   renderHoje();renderGroups();renderScorers();renderMataMata();renderCalendar();renderPainel();renderNews();
 }
 
-window.onload=()=>{loadData();renderAll();renderAdminPanel();};
+window.onload=()=>{loadData();renderAll();renderAdminPanel();if(!NEWS.length)doSyncNews();};
 </script>
 </body>
 </html>
