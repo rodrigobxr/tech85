@@ -546,7 +546,6 @@ async function doSync(){
   saveData();
   renderAll();
   
-  // ESSAS LINHAS ABAIXO FALTARAM NO SEU CÓDIGO
   overlay.style.display = 'none';
   showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
   document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
