@@ -156,6 +156,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .admin-section-title { color: #FFF; font-size: 16px; font-weight: 900; margin: 25px 0 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px; text-transform: uppercase; }
 @keyframes slideIn { from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1} }
 
+/* REMOÇÃO DO MENU DUPLICADO NO CELULAR */
 @media(max-width:980px){
   .sidebar{display:none}
   .sg{grid-template-columns:repeat(2,1fr)}
@@ -327,11 +328,15 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   <div class="tabs"><button class="tab" onclick="nav('painel')">VOLTAR</button><button class="tab active" onclick="nav('api')">AJUSTE MANUAL</button></div>
   <div class="card"><div class="ch"><span class="ct">Ajuste Manual de Resultados</span></div>
   <div class="cb" style="max-width:850px;">
-    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;">Aqui você é o dono do seu aplicativo. Digite os placares dos jogos que estão acontecendo hoje e clique em salvar. Todo o site será atualizado na mesma hora (Classificação, Mata-Mata e Calendário).</p>
-    <div class="admin-section-title">Artilheiros Customizados</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;">Aqui você é o dono do seu aplicativo. Digite os placares e os nomes dos jogadores que fizeram os gols separados por vírgula (Ex: "Messi 15', Di Maria 88'"). Todo o site será atualizado na mesma hora (Classificação, Artilharia, Mata-Mata).</p>
+    
+    <div class="admin-section-title">Placares e Gols das Partidas</div>
+    <div id="admin-match-list" style="max-height:650px;overflow-y:auto;padding-right:10px;margin-bottom:2rem;"></div>
+
+    <div class="admin-section-title" style="margin-top: 2rem;">Top 10 Artilheiros Customizados (Opcional)</div>
+    <div style="font-size:11px;color:var(--dim);margin-bottom:1rem;">Se preencher os gols lá em cima, não precisa mexer aqui. A artilharia é automática. Use apenas se quiser forçar nomes.</div>
     <div id="admin-scorers-list" style="margin-bottom:2rem;"></div>
-    <div class="admin-section-title">Placares das Partidas</div>
-    <div id="admin-match-list" style="max-height:600px;overflow-y:auto;padding-right:10px;"></div>
+
     <button class="btn-save" onclick="saveAdminData()">Salvar Informações no Site</button>
   </div></div>
 </div>
@@ -340,8 +345,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 </div>
 
 <script>
-// A CHAVE V11 BLINDA SEU SITE PARA SEMPRE
-const STORAGE_KEY = 'rodrigao_wc2026_v11'; 
+// A CHAVE V12 FORÇA UMA LIMPEZA DE CACHE TOTAL E ATIVA OS CAMPOS DE GOLS
+const STORAGE_KEY = 'rodrigao_wc2026_v12'; 
 
 function getTodayStr() {
   const d = new Date();
@@ -386,7 +391,7 @@ const DEFAULT_MATCHES=[
   {id:25,d:'18/06',g:'A',h:'República Tcheca',a:'África do Sul',hs:1,as:1,status:'FT',time:'FIM',goals:{h:["Souček 34'"],a:["Tau 67'"]}},
   {id:26,d:'18/06',g:'B',h:'Suíça',a:'Bósnia',hs:4,as:1,status:'FT',time:'FIM',goals:{h:["Embolo 12'","Shaqiri 45'","Akanji 60'","Xhaka 88'"],a:["Džeko 30'"]}},
   {id:27,d:'18/06',g:'B',h:'Canadá',a:'Catar',hs:6,as:0,status:'FT',time:'FIM',goals:{h:["David 10'","David 25'","David 40'","Davies 55'","Buchanan 70'","Larin 85'"],a:[]}},
-  {id:28,d:'18/06',g:'A',h:'México',a:'Coreia do Sul',hs:2,as:1,status:'LIVE',time:'2º Tempo',goals:{h:["Santi Giménez 15'", "Lozano 58'"],a:["Son 44'"]}}, // MÉXICO ATUALIZADO AQUI
+  {id:28,d:'18/06',g:'A',h:'México',a:'Coreia do Sul',hs:'',as:'',status:'NS',time:'22h'}, 
   {id:29,d:'19/06',g:'D',h:'Estados Unidos',a:'Austrália',hs:'',as:'',status:'NS',time:'16h'},
   {id:30,d:'19/06',g:'C',h:'Escócia',a:'Marrocos',hs:'',as:'',status:'NS',time:'19h'},
   {id:31,d:'19/06',g:'C',h:'Brasil',a:'Haiti',hs:'',as:'',status:'NS',time:'21h30'},
@@ -492,7 +497,7 @@ function saveData(){
 }
 
 function limparCache(){
-  if(confirm('Limpar dados locais e voltar aos dados oficiais?')){
+  if(confirm('Atenção: Isso vai apagar todos os placares que você digitou e voltar para os resultados originais. Deseja continuar?')){
     localStorage.removeItem(STORAGE_KEY);
     location.reload();
   }
@@ -533,13 +538,9 @@ function showToast(msg,ok=true){
   setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),300);},3000);
 }
 
-// 🔵 A FUNÇÃO DO BOTAO "ATUALIZAR PARTIDAS" RECRIA A TELA INTEIRA COM BASE NO QUE ESTÁ SALVO
 function doSync(){
   const overlay = document.getElementById('loading-overlay');
-  const sub = document.getElementById('loading-subtext');
-  
   overlay.style.display = 'flex';
-  sub.textContent = 'Organizando banco de dados...';
   
   setTimeout(() => {
       SCORERS = computeScorersFromMatches();
@@ -548,17 +549,16 @@ function doSync(){
       overlay.style.display = 'none';
       showToast('✓ ATUALIZADO COM SUCESSO');
       document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-  }, 600);
+  }, 500);
 }
 
-// A ABA NOTÍCIAS NÃO VAI MAIS TRAVAR. ELA SÓ CARREGA AS INFORMAÇÕES EXATAS DO SEU PEDIDO.
 function doSyncNews(){
   NEWS = [
     {title:'Foco total: Seleção Brasileira faz último treino antes do duelo contra o Haiti',summary:'Após o empate na estreia, o técnico ajusta os últimos detalhes táticos para o jogo de amanhã (19/06). Vitória é fundamental para liderar o Grupo C.',source:'GE.GLOBO',url:'#'},
     {title:'Show canadense: Canadá atropela o Catar com goleada histórica por 6 a 0',summary:'Jonathan David brilha intensamente no Grupo B e anota um hat-trick espetacular, isolando-se na corrida pelos goleadores do torneio.',source:'ESPN',url:'#'},
     {title:'Suíça domina completamente a Bósnia e aplica 4 a 1 em Boston',summary:'Com gols de Embolo, Shaqiri, Akanji e Xhaka, a seleção suíça assume uma posição confortável na tabela do Grupo B.',source:'CAZÉTV',url:'#'},
     {title:'Empate eletrizante: República Tcheca e África do Sul ficam no 1 a 1',summary:'Souček abriu o placar para os europeus, mas Tau buscou a igualdade para os sul-africanos em um confronto físico pelo Grupo A.',source:'FIFA',url:'#'},
-    {title:'MÉXICO ENTRA EM CAMPO: Jogo pegado contra a Coreia do Sul rolando agora',summary:'Anfitriões já abriram o placar com Santi Giménez em busca da classificação precoce diante de sua torcida.',source:'SPORTV',url:'#'}
+    {title:'Expectativa máxima em Guadalajara: México enfrenta a Coreia do Sul logo mais',summary:'Anfitriões entram em campo às 22h buscando consolidar o favoritismo absoluto e garantir a classificação precoce diante de sua torcida.',source:'SPORTV',url:'#'}
   ];
   saveData();
   renderNews();
@@ -728,9 +728,31 @@ function toggleMusic(){
   else {a.pause();ic.textContent='🔇';lb.textContent='TORCIDA OFF'}
 }
 
+// 🔵 NOVO PAINEL DE ADMIN: AGORA VOCÊ DIGITA OS GOLS
 function renderAdminPanel(){
   document.getElementById('admin-scorers-list').innerHTML=SCORERS.slice(0,10).map((s,i)=>`<div class="adm-row"><span style="width:25px;font-size:11px;color:var(--dim);font-weight:900">#${i+1}</span><input class="adm-input-text" style="width:200px" id="sc-n-${i}" value="${s.n}"><input class="adm-input-text" style="width:160px" id="sc-t-${i}" value="${s.t}"><input class="adm-input" id="sc-g-${i}" value="${s.g}" min="0"></div>`).join('');
-  document.getElementById('admin-match-list').innerHTML=RESULTS.filter(m=>m.g!=='MM').map(m=>`<div class="adm-row"><span style="width:40px;font-size:10px;color:var(--dim)">${m.d}</span><span style="flex:1;text-align:right;font-weight:700">${getFlagSm(m.h)}${m.h}</span><input class="adm-input" id="hs-${m.id}" value="${m.hs}"><span style="color:var(--dim)">x</span><input class="adm-input" id="as-${m.id}" value="${m.as}"><span style="flex:1;font-weight:700">${getFlagSm(m.a)}${m.a}</span><select class="adm-select" id="st-${m.id}"><option value="NS" ${m.status==='NS'?'selected':''}>AGUARDANDO</option><option value="LIVE" ${m.status==='LIVE'?'selected':''}>AO VIVO</option><option value="FT" ${m.status==='FT'?'selected':''}>FIM</option></select></div>`).join('');
+  
+  document.getElementById('admin-match-list').innerHTML=RESULTS.filter(m=>m.g!=='MM').map(m=>`
+    <div class="adm-row" style="flex-direction:column; gap:8px;">
+      <div style="display:flex; width:100%; align-items:center; gap:10px;">
+        <span style="width:40px;font-size:10px;color:var(--dim)">${m.d}</span>
+        <span style="flex:1;text-align:right;font-weight:700">${getFlagSm(m.h)}${m.h}</span>
+        <input class="adm-input" id="hs-${m.id}" value="${m.hs}">
+        <span style="color:var(--dim)">x</span>
+        <input class="adm-input" id="as-${m.id}" value="${m.as}">
+        <span style="flex:1;font-weight:700">${getFlagSm(m.a)}${m.a}</span>
+        <select class="adm-select" id="st-${m.id}">
+          <option value="NS" ${m.status==='NS'?'selected':''}>AGUARDANDO</option>
+          <option value="LIVE" ${m.status==='LIVE'?'selected':''}>AO VIVO</option>
+          <option value="FT" ${m.status==='FT'?'selected':''}>FIM</option>
+        </select>
+      </div>
+      <div style="display:flex; width:100%; gap:10px;">
+        <input class="adm-input-text" style="flex:1; font-size:10px;" id="gh-${m.id}" value="${m.goals&&m.goals.h?m.goals.h.join(', '):''}" placeholder="Gols do ${m.h} (Ex: Messi 15', Maria 80')">
+        <input class="adm-input-text" style="flex:1; font-size:10px;" id="ga-${m.id}" value="${m.goals&&m.goals.a?m.goals.a.join(', '):''}" placeholder="Gols do ${m.a}">
+      </div>
+    </div>
+  `).join('');
 }
 
 function saveAdminData(){
@@ -739,11 +761,22 @@ function saveAdminData(){
     s.n=n.value; s.t=document.getElementById('sc-t-'+i).value; s.g=+document.getElementById('sc-g-'+i).value||0;
   });
   SCORERS.sort((a,b)=>b.g-a.g);
+  
   RESULTS.forEach(m=>{
     const h=document.getElementById('hs-'+m.id);if(!h)return;
     m.hs=h.value!==''?+h.value:'';
     m.as=document.getElementById('as-'+m.id).value!==''?+document.getElementById('as-'+m.id).value:'';
     m.status=document.getElementById('st-'+m.id).value;
+    
+    // NOVO: SALVANDO OS GOLS PRA ARTILHARIA AUTOMATICA
+    const ghInput = document.getElementById('gh-'+m.id);
+    const gaInput = document.getElementById('ga-'+m.id);
+    if(ghInput && gaInput) {
+       m.goals = {
+          h: ghInput.value ? ghInput.value.split(',').map(s=>s.trim()).filter(s=>s) : [],
+          a: gaInput.value ? gaInput.value.split(',').map(s=>s.trim()).filter(s=>s) : []
+       };
+    }
   });
   SCORERS = computeScorersFromMatches(); 
   saveData(); renderAll(); showToast('✓ SALVO E RECALCULADO'); nav('hoje');
@@ -755,8 +788,8 @@ function renderAll(){
 
 window.onload=()=>{
   loadData();
-  doSyncNews();
   renderAll();
+  if(!NEWS.length) doSyncNews();
 };
 </script>
 </body>
