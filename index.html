@@ -318,9 +318,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 </div>
 
 <script>
-// ============================================================
-// CÓDIGO ATUALIZADO — DINÂMICA DE MATA-MATA, PLACARES CORRIGIDOS E NOTÍCIAS
-// ============================================================
 const STORAGE_KEY = 'rodrigao_wc2026_v5'; 
 const AUTO_SYNC_MS = 2 * 60 * 1000; 
 
@@ -339,7 +336,6 @@ function getFlagSm(name){const c=getFlagCode(name);return c?'<img src="https://f
 
 const GROUPS_2026={A:{teams:['México','África do Sul','Coreia do Sul','República Tcheca']},B:{teams:['Canadá','Bósnia','Catar','Suíça']},C:{teams:['Brasil','Marrocos','Haiti','Escócia']},D:{teams:['Estados Unidos','Paraguai','Austrália','Turquia']},E:{teams:['Alemanha','Curaçao','Costa do Marfim','Equador']},F:{teams:['Holanda','Japão','Suécia','Tunísia']},G:{teams:['Bélgica','Egito','Irã','Nova Zelândia']},H:{teams:['Espanha','Cabo Verde','Arábia Saudita','Uruguai']},I:{teams:['França','Senegal','Iraque','Noruega']},J:{teams:['Argentina','Argélia','Áustria','Jordânia']},K:{teams:['Portugal','RD Congo','Uzbequistão','Colômbia']},L:{teams:['Inglaterra','Croácia','Gana','Panamá']}};
 
-// DADOS CORRIGIDOS: Áustria 3x1 Jordânia e Gana 1x0 Panamá
 const DEFAULT_MATCHES=[
   {id:1,d:'11/06',g:'A',h:'México',a:'África do Sul',hs:2,as:0,status:'FT',time:'FIM',goals:{h:["Lozano 12'","Martín 67'"],a:[]}},
   {id:2,d:'11/06',g:'A',h:'Coreia do Sul',a:'República Tcheca',hs:2,as:1,status:'FT',time:'FIM',goals:{h:["Son 34'","Hwang 78'"],a:["Schick 55'"]}},
@@ -515,6 +511,7 @@ function showToast(msg,ok=true){
   setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),300);},3000);
 }
 
+// A FUNÇÃO CORRIGIDA ESTÁ AQUI
 async function doSync(){
   const overlay = document.getElementById('loading-overlay');
   const sub = document.getElementById('loading-subtext');
@@ -550,14 +547,7 @@ async function doSync(){
   showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
   document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 }
-  
-  overlay.style.display = 'none';
-  showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
-  document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-}
-}
 
-// CORREÇÃO DAS NOTÍCIAS REAIS
 async function doSyncNews(){
   const el=document.getElementById('news-container');
   el.innerHTML='<div style="color:var(--dim);text-align:center;padding:2rem;grid-column:1/-1;">Buscando notícias da Copa 2026...</div>';
@@ -651,7 +641,6 @@ function renderGroups(){
   document.getElementById('standings-grid').innerHTML=html;
 }
 
-// CORREÇÃO: Mata-mata dinâmico buscando os times reais
 function getRealTeamName(placeholder) {
   const match = placeholder.match(/(\d)º\s([A-L])/);
   if(match) {
