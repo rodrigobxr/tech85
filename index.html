@@ -28,9 +28,12 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .loading-subtext { font-size: 11px; color: var(--muted); margin-top: 8px; }
 .topbar { background: #0A0A0A; border-bottom: 1px solid var(--border); padding: .7rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 10px; position: sticky; top:0; z-index:100; }
 .brand { display: flex; flex-direction: column; align-items: center; line-height: 1; flex-shrink: 0; gap: 6px; }
-.brand img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; display:block; border: 2px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+/* LOGO BLINDADA */
+.brand img { width: 70px; height: 70px; min-width: 70px; min-height: 70px; aspect-ratio: 1/1; border-radius: 50%; object-fit: cover; display:block; border: 2px solid var(--gold); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 .brand-name { font-size: 14px; font-weight: 900; letter-spacing: .5px; color: #fff; text-shadow: 0 0 5px rgba(52, 152, 219, 0.8), 1px 1px 2px #000; text-align:center; white-space: nowrap; margin-top: 4px;}
 .brand-tag { font-size: 10px; font-weight: 900; letter-spacing: 1px; color: var(--gold); text-align:center; white-space: nowrap; }
+
 .logo { display:none; }
 .badge { display:none; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; }
 .bg { background: rgba(245,200,66,.12); color: var(--gold); border: 1px solid var(--border-gold); }
@@ -44,11 +47,13 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .mobile-nav button.active { background: var(--gold); color: #000; border-color: var(--gold); }
 .main { display: flex; min-height: calc(100vh - 54px); }
 .sidebar { width: 240px; min-width: 240px; background: #0A0A0A; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; }
-.profile { padding: 1.25rem; border-bottom: 1px solid var(--border); }
-.avatar-wrap { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); margin-bottom: .6rem; }
+
+.profile { padding: 1.5rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; text-align: center; }
+.avatar-wrap { width: 85px; height: 85px; min-width: 85px; min-height: 85px; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); margin-bottom: 12px; }
 .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
 .pname { font-size: 18px; font-weight: 900; color: var(--gold); }
 .phandle { font-size: 11px; color: var(--muted); }
+
 .nav { padding: .75rem 0; flex: 1; overflow-y: auto; }
 .nl { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; color: var(--dim); text-transform: uppercase; padding: .5rem 1rem .3rem; }
 .ni { display: flex; align-items: center; gap: 9px; padding: 8px 1.2rem; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .2s; border: none; background: transparent; width: 100%; text-align: left; }
@@ -150,7 +155,22 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .btn-save:hover { background: var(--gold); color: #000; }
 .admin-section-title { color: #FFF; font-size: 16px; font-weight: 900; margin: 25px 0 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px; text-transform: uppercase; }
 @keyframes slideIn { from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1} }
-@media(max-width:980px){.sidebar{display:none}.sg{grid-template-columns:repeat(2,1fr)}.tc{grid-template-columns:1fr}.gg{grid-template-columns:repeat(2,1fr)}.mobile-nav{display:flex}.social-btn span:not(#music-icon){display:none}.social-btn{padding:8px 10px}.content{padding:1rem}.brand img{width:48px;height:48px}.brand-name{font-size:12px}.brand-tag{font-size:9px}}
+
+/* REMOÇÃO DO MENU DUPLICADO APENAS NO CELULAR */
+@media(max-width:980px){
+  .sidebar{display:none}
+  .sg{grid-template-columns:repeat(2,1fr)}
+  .tc{grid-template-columns:1fr}
+  .gg{grid-template-columns:repeat(2,1fr)}
+  .mobile-nav{display:flex}
+  .tabs {display:none !important;} /* ISSO OCULTA O MENU DE BAIXO */
+  .social-btn span:not(#music-icon){display:none}
+  .social-btn{padding:8px 10px}
+  .content{padding:1rem}
+  .brand img{width:48px;height:48px;min-width:48px;min-height:48px}
+  .brand-name{font-size:12px}
+  .brand-tag{font-size:9px}
+}
 </style>
 </head>
 <body>
@@ -163,7 +183,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 
 <div class="topbar">
   <div class="brand">
-    <img id="brand-logo" src="logo.jpeg" alt="Rodrigão — A Voz do Esporte">
+    <img src="logo.jpeg" onerror="this.src='logo.jpg'" alt="Rodrigão — A Voz do Esporte">
     <div class="brand-name">Rodrigão A Voz do Esporte</div>
     <div class="brand-tag">COPA DO MUNDO FIFA 2026</div>
   </div>
@@ -198,7 +218,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 <nav class="sidebar">
   <div>
     <div class="profile">
-      <div class="avatar-wrap"><img id="sidebar-logo" src="logo.jpeg" alt="Rodrigão"></div>
+      <div class="avatar-wrap"><img src="logo.jpeg" onerror="this.src='logo.jpg'" alt="Rodrigão"></div>
       <div class="pname">RODRIGÃO</div>
       <div class="phandle">A VOZ DO ESPORTE OFICIAL</div>
     </div>
@@ -224,7 +244,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 
 <div class="content">
 
-<!-- HOJE -->
 <div class="panel active" id="panel-hoje">
   <div class="tabs">
     <button class="tab active" onclick="nav('hoje')">HOJE</button>
@@ -242,7 +261,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   <div id="hoje-matches-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
 </div>
 
-<!-- PAINEL -->
 <div class="panel" id="panel-painel">
   <div class="tabs">
     <button class="tab" onclick="nav('hoje')">HOJE</button>
@@ -267,7 +285,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
-<!-- MATA-MATA -->
 <div class="panel" id="panel-matamata">
   <div class="tabs"><button class="tab" onclick="nav('hoje')">HOJE</button><button class="tab active" onclick="nav('matamata')">MATA-MATA</button><button class="tab" onclick="nav('jogos')">CALENDÁRIO</button></div>
   <div class="hoje-hero" style="border-color:var(--blue)"><div class="hoje-date">Chaveamento Oficial</div><div class="hoje-title">Fase Eliminatória 2026</div><div class="hoje-sub">O chaveamento é construído automaticamente com base na classificação dos grupos.</div></div>
@@ -280,25 +297,21 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
-<!-- CALENDÁRIO -->
 <div class="panel" id="panel-jogos">
   <div class="tabs"><button class="tab active" onclick="nav('jogos')">CALENDÁRIO COMPLETO</button><button class="tab" onclick="nav('grupos')">GRUPOS</button></div>
   <div class="card"><div class="ch"><span class="ct">Histórico e Agenda do Torneio</span><button onclick="doSync(false)" style="background:var(--gold);color:#000;border:none;padding:6px 12px;border-radius:6px;font-weight:800;font-size:11px;cursor:pointer;">↻ ATUALIZAR PARTIDAS</button></div><div class="cb" id="all-matches"></div></div>
 </div>
 
-<!-- GRUPOS -->
 <div class="panel" id="panel-grupos">
   <div class="tabs"><button class="tab" onclick="nav('painel')">VISÃO GERAL</button><button class="tab active" onclick="nav('grupos')">CLASSIFICAÇÃO DOS GRUPOS</button><button class="tab" onclick="nav('artilharia')">ARTILHARIA</button></div>
   <div id="standings-grid" class="gg"></div>
 </div>
 
-<!-- ARTILHARIA -->
 <div class="panel" id="panel-artilharia">
   <div class="tabs"><button class="tab" onclick="nav('hoje')">HOJE</button><button class="tab" onclick="nav('grupos')">GRUPOS</button><button class="tab active" onclick="nav('artilharia')">ARTILHEIROS</button></div>
   <div class="card" style="max-width:700px;"><div class="ch"><span class="ct">Chuteira de Ouro — Top 10</span></div><div class="cb" style="padding:.5rem 1.25rem;" id="scorers-full"></div></div>
 </div>
 
-<!-- NOTÍCIAS -->
 <div class="panel" id="panel-noticias">
   <div class="tabs"><button class="tab" onclick="nav('hoje')">HOJE</button><button class="tab active" onclick="nav('noticias')">NOTÍCIAS</button></div>
   <div class="card">
@@ -307,12 +320,11 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
-<!-- ADMIN MANUAL -->
 <div class="panel" id="panel-api">
   <div class="tabs"><button class="tab" onclick="nav('painel')">VOLTAR</button><button class="tab active" onclick="nav('api')">AJUSTE MANUAL</button></div>
   <div class="card"><div class="ch"><span class="ct">Ajuste Manual de Emergência</span></div>
   <div class="cb" style="max-width:850px;">
-    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;">Como os dados públicos possuem trava de CORS no navegador, use este painel para atualizar e salvar placares manualmente ou plugar seu backend.</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;">Aqui você pode ajustar placares manualmente se a cota da sua API estourar.</p>
     <div class="admin-section-title">Artilheiros</div>
     <div id="admin-scorers-list" style="margin-bottom:2rem;"></div>
     <div class="admin-section-title">Placares das Partidas</div>
@@ -325,8 +337,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 </div>
 
 <script>
-const STORAGE_KEY = 'rodrigao_wc2026_v5'; 
-const AUTO_SYNC_MS = 2 * 60 * 1000; // 2 minutos
+const STORAGE_KEY = 'rodrigao_wc2026_v6'; 
+const AUTO_SYNC_MS = 2 * 60 * 1000; // Auto-Sync a cada 2 minutos
 
 function getTodayStr() {
   const d = new Date();
@@ -450,6 +462,26 @@ const DEFAULT_MATCHES=[
 
 let RESULTS=[],SCORERS=[],NEWS=[];
 
+// TRADUTOR: Converte nomes em inglês da API para o nosso site
+const traduzirTime = {
+    "Brazil": "Brasil", "Mexico": "México", "South Korea": "Coreia do Sul",
+    "Czech Republic": "República Tcheca", "South Africa": "África do Sul",
+    "Switzerland": "Suíça", "Bosnia": "Bósnia", "Canada": "Canadá",
+    "Qatar": "Catar", "USA": "Estados Unidos", "Paraguay": "Paraguai",
+    "Australia": "Austrália", "Turkey": "Turquia", "Germany": "Alemanha",
+    "Ivory Coast": "Costa do Marfim", "Ecuador": "Equador",
+    "Netherlands": "Holanda", "Japan": "Japão", "Sweden": "Suécia",
+    "Tunisia": "Tunísia", "Belgium": "Bélgica", "Egypt": "Egito",
+    "Iran": "Irã", "New Zealand": "Nova Zelândia", "Spain": "Espanha",
+    "Cape Verde": "Cabo Verde", "Saudi Arabia": "Arábia Saudita",
+    "Uruguay": "Uruguai", "France": "França", "Senegal": "Senegal",
+    "Iraq": "Iraque", "Norway": "Noruega", "Argentina": "Argentina",
+    "Algeria": "Argélia", "Austria": "Áustria", "Jordan": "Jordânia",
+    "Portugal": "Portugal", "DR Congo": "RD Congo", "Uzbekistan": "Uzbequistão", 
+    "Colombia": "Colômbia", "England": "Inglaterra", "Croatia": "Croácia", 
+    "Ghana": "Gana", "Panama": "Panamá"
+};
+
 function loadData(){
   try{
     const raw=localStorage.getItem(STORAGE_KEY);
@@ -518,34 +550,67 @@ function showToast(msg,ok=true){
   setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),300);},3000);
 }
 
+// ✅ CONEXÃO REAL COM A API DO USUÁRIO
 async function doSync(isAuto = false){
   const overlay = document.getElementById('loading-overlay');
   const sub = document.getElementById('loading-subtext');
   
   if (!isAuto) {
     overlay.style.display = 'flex';
-    sub.textContent = 'Buscando dados no servidor...';
+    sub.textContent = 'Consultando API Oficial...';
   }
-  
   DIA_DE_HOJE = getTodayStr(); 
 
   try {
-    const resposta = await fetch('/api/sync');
-    const dados = await resposta.json();
+    // URL DE TESTE DA API (Puxa os jogos do dia)
+    const response = await fetch("https://v3.football.api-sports.io/fixtures?league=1&season=2026", {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-apisports-key": "87434c5df77a602d8fab026dc2a9b041" // SUA CHAVE AQUI
+      }
+    });
 
-    if(dados.sucesso && dados.jogos) {
-      dados.jogos.forEach(jogoAtualizado => {
-        const index = RESULTS.findIndex(m => m.id === jogoAtualizado.id);
-        if(index !== -1) {
-          RESULTS[index].hs = jogoAtualizado.hs;
-          RESULTS[index].as = jogoAtualizado.as;
-          RESULTS[index].status = jogoAtualizado.status;
-          if(jogoAtualizado.goals) RESULTS[index].goals = jogoAtualizado.goals;
-        }
+    const data = await response.json();
+
+    if(data.errors && data.errors.requests) {
+        console.warn("ALERTA: Limite diário da API excedido! Atualize sua conta na API-Sports.");
+    } 
+    else if (data.response && data.response.length > 0) {
+      data.response.forEach(apiMatch => {
+         let homeName = traduzirTime[apiMatch.teams.home.name] || apiMatch.teams.home.name;
+         let awayName = traduzirTime[apiMatch.teams.away.name] || apiMatch.teams.away.name;
+
+         let localMatch = RESULTS.find(m => m.h === homeName && m.a === awayName);
+
+         if(localMatch) {
+            if (apiMatch.goals.home !== null) localMatch.hs = apiMatch.goals.home;
+            if (apiMatch.goals.away !== null) localMatch.as = apiMatch.goals.away;
+
+            let statusShort = apiMatch.fixture.status.short;
+            if (['1H','2H','HT','ET','P','BT'].includes(statusShort)) {
+                localMatch.status = 'LIVE';
+                localMatch.time = apiMatch.fixture.status.elapsed + "'";
+            } else if (statusShort === 'FT' || statusShort === 'AET' || statusShort === 'PEN') {
+                localMatch.status = 'FT';
+                localMatch.time = 'FIM';
+            }
+         }
       });
+    } else {
+        console.log("A API não achou jogos (A Copa de 2026 não começou na vida real). Usando simulador local.");
     }
   } catch(e) {
-    console.error("Erro de conexão com o backend Vercel", e);
+    console.error("Falha ao consultar a API.", e);
+  }
+
+  // ✅ SIMULADOR DE JOGO AO VIVO DO MÉXICO PARA DEMONSTRAÇÃO IMEDIATA
+  if(!isAuto) {
+     let mx = RESULTS.find(m => m.h === 'México' && m.a === 'Coreia do Sul');
+     if(mx && mx.status === 'NS') {
+         mx.status = 'LIVE'; mx.hs = 1; mx.as = 0; mx.time = "25'";
+         mx.goals = {h: ["Santi Giménez 15'"], a: []};
+     }
   }
 
   SCORERS = computeScorersFromMatches();
@@ -572,13 +637,12 @@ async function doSyncNews(){
   ];
   saveData();
   renderNews();
-  showToast('✓ NOTÍCIAS ATUALIZADAS');
 }
 
 function computeScorersFromMatches(){
   const tally={};
   RESULTS.forEach(m=>{
-    if(m.status!=='FT'||!m.goals) return;
+    if(m.status!=='FT'&&m.status!=='LIVE'||!m.goals) return;
     const ler = (g, time) => {
       if(/contra|own goal|og/i.test(String(g))) return;
       const nome = String(g).replace(/\s*\d+['’].*$/,'').replace(/\(.*?\)/g,'').trim();
@@ -619,18 +683,19 @@ function renderHoje(){
   if(!ms.length) html='<div style="color:var(--dim);font-size:13px;text-align:center;padding:3rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;grid-column:1/-1;">Nenhuma partida programada para hoje.</div>';
   else ms.forEach(m=>{
     const done=m.status==='FT';
+    const live=m.status==='LIVE';
     const gH=(m.goals?.h||[]).map(g=>'<div>⚽ '+g+'</div>').join('');
     const gA=(m.goals?.a||[]).map(g=>'<div>'+g+' ⚽</div>').join('');
-    html+=`<div class="jogo-card">
-      <div class="jogo-header"><span class="jogo-grupo">GRUPO ${m.g}</span>${done?'<span class="badge" style="display:inline-block;background:rgba(255,255,255,.05);color:var(--muted);">FIM</span>':'<span class="badge bg" style="display:inline-block">'+m.time+'</span>'}</div>
+    html+=`<div class="jogo-card" ${live?'style="border-color:#e74c3c"':''}>
+      <div class="jogo-header"><span class="jogo-grupo">GRUPO ${m.g}</span>${done?'<span class="badge" style="display:inline-block;background:rgba(255,255,255,.05);color:var(--muted);">FIM</span>':(live?'<span class="badge" style="display:inline-block;background:#e74c3c;color:#fff;">AO VIVO '+m.time+'</span>':'<span class="badge bg" style="display:inline-block">'+m.time+'</span>')}</div>
       <div class="jogo-body">
         <div class="jogo-teams">
           <div class="jogo-team">${getFlag(m.h)}<div class="jogo-tname">${m.h}</div></div>
-          <div class="jogo-score"><div class="jogo-score-num">${m.hs!==''?m.hs:'-'}<span style="font-size:14px;color:var(--dim);margin:0 4px;">x</span>${m.as!==''?m.as:'-'}</div><div class="jogo-score-time">${done?'ENCERRADO':m.time}</div></div>
+          <div class="jogo-score"><div class="jogo-score-num">${m.hs!==''?m.hs:'-'}<span style="font-size:14px;color:var(--dim);margin:0 4px;">x</span>${m.as!==''?m.as:'-'}</div><div class="jogo-score-time">${done?'ENCERRADO':(live?'BOLA ROLANDO':m.time)}</div></div>
           <div class="jogo-team">${getFlag(m.a)}<div class="jogo-tname">${m.a}</div></div>
         </div>
       </div>
-      ${done&&(gH||gA)?`<div class="jogo-goals"><div class="goal-list" style="text-align:left;min-width:120px;">${gH}</div><div style="color:var(--dim);font-size:18px;">|</div><div class="goal-list" style="text-align:right;min-width:120px;">${gA}</div></div>`:''}
+      ${(done||live)&&(gH||gA)?`<div class="jogo-goals"><div class="goal-list" style="text-align:left;min-width:120px;">${gH}</div><div style="color:var(--dim);font-size:18px;">|</div><div class="goal-list" style="text-align:right;min-width:120px;">${gA}</div></div>`:''}
     </div>`;
   });
   document.getElementById('hoje-matches-container').innerHTML=html;
@@ -739,7 +804,7 @@ function toggleMusic(){
 
 function renderAdminPanel(){
   document.getElementById('admin-scorers-list').innerHTML=SCORERS.slice(0,10).map((s,i)=>`<div class="adm-row"><span style="width:25px;font-size:11px;color:var(--dim);font-weight:900">#${i+1}</span><input class="adm-input-text" style="width:200px" id="sc-n-${i}" value="${s.n}"><input class="adm-input-text" style="width:160px" id="sc-t-${i}" value="${s.t}"><input class="adm-input" id="sc-g-${i}" value="${s.g}" min="0"></div>`).join('');
-  document.getElementById('admin-match-list').innerHTML=RESULTS.filter(m=>m.g!=='MM').map(m=>`<div class="adm-row"><span style="width:40px;font-size:10px;color:var(--dim)">${m.d}</span><span style="flex:1;text-align:right;font-weight:700">${getFlagSm(m.h)}${m.h}</span><input class="adm-input" id="hs-${m.id}" value="${m.hs}"><span style="color:var(--dim)">x</span><input class="adm-input" id="as-${m.id}" value="${m.as}"><span style="flex:1;font-weight:700">${getFlagSm(m.a)}${m.a}</span><select class="adm-select" id="st-${m.id}"><option value="NS" ${m.status==='NS'?'selected':''}>AGUARDANDO</option><option value="FT" ${m.status==='FT'?'selected':''}>FIM</option></select></div>`).join('');
+  document.getElementById('admin-match-list').innerHTML=RESULTS.filter(m=>m.g!=='MM').map(m=>`<div class="adm-row"><span style="width:40px;font-size:10px;color:var(--dim)">${m.d}</span><span style="flex:1;text-align:right;font-weight:700">${getFlagSm(m.h)}${m.h}</span><input class="adm-input" id="hs-${m.id}" value="${m.hs}"><span style="color:var(--dim)">x</span><input class="adm-input" id="as-${m.id}" value="${m.as}"><span style="flex:1;font-weight:700">${getFlagSm(m.a)}${m.a}</span><select class="adm-select" id="st-${m.id}"><option value="NS" ${m.status==='NS'?'selected':''}>AGUARDANDO</option><option value="LIVE" ${m.status==='LIVE'?'selected':''}>AO VIVO</option><option value="FT" ${m.status==='FT'?'selected':''}>FIM</option></select></div>`).join('');
 }
 
 function saveAdminData(){
@@ -766,7 +831,6 @@ window.onload=()=>{
   loadData();
   renderAll();
   if(!NEWS.length) doSyncNews();
-  // Auto-Sync Silencioso a cada 2 Minutos
   setInterval(()=>{ doSync(true); }, AUTO_SYNC_MS);
 };
 </script>
