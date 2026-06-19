@@ -15,7 +15,7 @@
   --text: #F0EDE4; --muted: #888880; --dim: #555550;
   --green: #2ECC71; --red: #E74C3C; --blue: #3498DB;
 }
-body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(--text); min-height: 100vh; }
+body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
 /* LOADING SCREEN */
 #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,10,0.95); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; color: var(--gold); backdrop-filter: blur(5px); }
@@ -156,7 +156,6 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 .admin-section-title { color: #FFF; font-size: 16px; font-weight: 900; margin: 25px 0 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px; text-transform: uppercase; }
 @keyframes slideIn { from{transform:translateY(100px);opacity:0}to{transform:translateY(0);opacity:1} }
 
-/* REMOÇÃO DO MENU DUPLICADO NO CELULAR */
 @media(max-width:980px){
   .sidebar{display:none}
   .sg{grid-template-columns:repeat(2,1fr)}
@@ -177,13 +176,13 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 
 <div id="loading-overlay">
   <div class="spinner"></div>
-  <div class="loading-text">Sincronizando Dados da Copa</div>
-  <div class="loading-subtext" id="loading-subtext">Conectando...</div>
+  <div class="loading-text">Atualizando Sistema</div>
+  <div class="loading-subtext" id="loading-subtext">Salvando informações locais...</div>
 </div>
 
 <div class="topbar">
   <div class="brand">
-    <img src="logo.jpeg" alt="Rodrigão">
+    <img src="logo.jpeg" onerror="this.src='logo.jpg'" alt="Rodrigão">
     <div class="brand-name">Rodrigão A Voz do Esporte</div>
     <div class="brand-tag">COPA DO MUNDO FIFA 2026</div>
   </div>
@@ -207,14 +206,14 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   <button data-mn="grupos" onclick="nav('grupos')">◈ GRUPOS</button>
   <button data-mn="artilharia" onclick="nav('artilharia')">⚽ ARTILHARIA</button>
   <button data-mn="noticias" onclick="nav('noticias')">📰 NOTÍCIAS</button>
-  <button data-mn="api" onclick="nav('api')">⚙️ AJUSTE</button>
+  <button data-mn="api" onclick="nav('api')">⚙️ AJUSTE MANUAL</button>
 </nav>
 
 <div class="main">
 <nav class="sidebar">
   <div>
     <div class="profile">
-      <div class="avatar-wrap"><img src="logo.jpeg" alt="Rodrigão"></div>
+      <div class="avatar-wrap"><img src="logo.jpeg" onerror="this.src='logo.jpg'" alt="Rodrigão"></div>
       <div class="pname">RODRIGÃO</div>
       <div class="phandle">A VOZ DO ESPORTE OFICIAL</div>
     </div>
@@ -227,14 +226,14 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
       <button class="ni" onclick="nav('grupos')">◈ Classificação Grupos</button>
       <button class="ni" onclick="nav('artilharia')">⚽ Top Artilheiros</button>
       <button class="ni" onclick="nav('noticias')">📰 Notícias</button>
-      <div class="nl" style="margin-top:1rem;">Ferramentas</div>
-      <button class="ni" onclick="nav('api')" style="color:var(--dim)">⚙️ Ajuste Manual</button>
+      <div class="nl" style="margin-top:1rem;">Ferramentas do Admin</div>
+      <button class="ni" onclick="nav('api')" style="color:var(--dim)">⚙️ Ajuste Manual de Placar</button>
     </div>
   </div>
   <div class="sfooter">
-    <button class="btn-sync-main" onclick="doSync()">↻ ATUALIZAR RESULTADOS</button>
-    <div style="margin-top:8px;font-size:9px;color:var(--dim);text-align:center;line-height:1.4;" id="last-sync-label">Clique para buscar dados.</div>
-    <div style="margin-top:4px;font-size:8px;color:var(--dim);text-align:center;cursor:pointer;text-decoration:underline" onclick="limparCache()">🔄 Limpar cache</div>
+    <button class="btn-sync-main" onclick="nav('api')">⚙️ ATUALIZAR UM JOGO</button>
+    <div style="margin-top:8px;font-size:9px;color:var(--dim);text-align:center;line-height:1.4;" id="last-sync-label">Gestão Local</div>
+    <div style="margin-top:4px;font-size:8px;color:var(--dim);text-align:center;cursor:pointer;text-decoration:underline" onclick="limparCache()">🔄 Restaurar Padrões</div>
   </div>
 </nav>
 
@@ -254,7 +253,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
     <div class="hoje-title">Jogos de Hoje</div>
     <div class="hoje-sub">Resultados das partidas programadas para o dia.</div>
   </div>
-  <div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button onclick="doSync()" style="background:var(--gold);color:#000;border:none;padding:8px 14px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;">↻ ATUALIZAR PARTIDAS</button></div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:12px;"><button onclick="nav('api')" style="background:var(--gold);color:#000;border:none;padding:8px 14px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;">⚙️ ATUALIZAR PARTIDAS</button></div>
   <div id="hoje-matches-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
 </div>
 
@@ -299,7 +298,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 <!-- CALENDÁRIO -->
 <div class="panel" id="panel-jogos">
   <div class="tabs"><button class="tab active" onclick="nav('jogos')">CALENDÁRIO COMPLETO</button><button class="tab" onclick="nav('grupos')">GRUPOS</button></div>
-  <div class="card"><div class="ch"><span class="ct">Histórico e Agenda do Torneio</span><button onclick="doSync()" style="background:var(--gold);color:#000;border:none;padding:6px 12px;border-radius:6px;font-weight:800;font-size:11px;cursor:pointer;">↻ ATUALIZAR PARTIDAS</button></div><div class="cb" id="all-matches"></div></div>
+  <div class="card"><div class="ch"><span class="ct">Histórico e Agenda do Torneio</span><button onclick="nav('api')" style="background:var(--gold);color:#000;border:none;padding:6px 12px;border-radius:6px;font-weight:800;font-size:11px;cursor:pointer;">⚙️ ATUALIZAR PARTIDAS</button></div><div class="cb" id="all-matches"></div></div>
 </div>
 
 <!-- GRUPOS -->
@@ -326,14 +325,14 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 <!-- ADMIN MANUAL -->
 <div class="panel" id="panel-api">
   <div class="tabs"><button class="tab" onclick="nav('painel')">VOLTAR</button><button class="tab active" onclick="nav('api')">AJUSTE MANUAL</button></div>
-  <div class="card"><div class="ch"><span class="ct">Ajuste Manual de Emergência</span></div>
+  <div class="card"><div class="ch"><span class="ct">Ajuste Manual de Resultados</span></div>
   <div class="cb" style="max-width:850px;">
-    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;">Aqui você pode ajustar placares manualmente caso a API falhe ou a cota gratuita estoure.</p>
-    <div class="admin-section-title">Artilheiros</div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.5;">Aqui você é o dono do seu aplicativo. Digite os placares dos jogos que estão acontecendo hoje e clique em salvar. Todo o site será atualizado na mesma hora (Classificação, Mata-Mata e Calendário).</p>
+    <div class="admin-section-title">Artilheiros Customizados</div>
     <div id="admin-scorers-list" style="margin-bottom:2rem;"></div>
     <div class="admin-section-title">Placares das Partidas</div>
     <div id="admin-match-list" style="max-height:600px;overflow-y:auto;padding-right:10px;"></div>
-    <button class="btn-save" onclick="saveAdminData()">Salvar Configuração Manual</button>
+    <button class="btn-save" onclick="saveAdminData()">Salvar Informações no Site</button>
   </div></div>
 </div>
 
@@ -341,8 +340,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 </div>
 
 <script>
-// A CHAVE V10 GARANTE QUE NENHUM CACHE ANTIGO VAI APAGAR SEUS JOGOS
-const STORAGE_KEY = 'rodrigao_wc2026_v10'; 
+// A CHAVE V11 BLINDA SEU SITE PARA SEMPRE
+const STORAGE_KEY = 'rodrigao_wc2026_v11'; 
 
 function getTodayStr() {
   const d = new Date();
@@ -387,7 +386,7 @@ const DEFAULT_MATCHES=[
   {id:25,d:'18/06',g:'A',h:'República Tcheca',a:'África do Sul',hs:1,as:1,status:'FT',time:'FIM',goals:{h:["Souček 34'"],a:["Tau 67'"]}},
   {id:26,d:'18/06',g:'B',h:'Suíça',a:'Bósnia',hs:4,as:1,status:'FT',time:'FIM',goals:{h:["Embolo 12'","Shaqiri 45'","Akanji 60'","Xhaka 88'"],a:["Džeko 30'"]}},
   {id:27,d:'18/06',g:'B',h:'Canadá',a:'Catar',hs:6,as:0,status:'FT',time:'FIM',goals:{h:["David 10'","David 25'","David 40'","Davies 55'","Buchanan 70'","Larin 85'"],a:[]}},
-  {id:28,d:'18/06',g:'A',h:'México',a:'Coreia do Sul',hs:'',as:'',status:'NS',time:'22h'},
+  {id:28,d:'18/06',g:'A',h:'México',a:'Coreia do Sul',hs:2,as:1,status:'LIVE',time:'2º Tempo',goals:{h:["Santi Giménez 15'", "Lozano 58'"],a:["Son 44'"]}}, // MÉXICO ATUALIZADO AQUI
   {id:29,d:'19/06',g:'D',h:'Estados Unidos',a:'Austrália',hs:'',as:'',status:'NS',time:'16h'},
   {id:30,d:'19/06',g:'C',h:'Escócia',a:'Marrocos',hs:'',as:'',status:'NS',time:'19h'},
   {id:31,d:'19/06',g:'C',h:'Brasil',a:'Haiti',hs:'',as:'',status:'NS',time:'21h30'},
@@ -466,26 +465,6 @@ const DEFAULT_MATCHES=[
 
 let RESULTS=[],SCORERS=[],NEWS=[];
 
-// 🔵 TRADUTOR UNIVERSAL DA API-SPORTS
-const traduzirTime = {
-    "Brazil": "Brasil", "Mexico": "México", "South Korea": "Coreia do Sul",
-    "Czech Republic": "República Tcheca", "Czechia": "República Tcheca", "South Africa": "África do Sul",
-    "Switzerland": "Suíça", "Bosnia": "Bósnia", "Bosnia and Herzegovina": "Bósnia", "Canada": "Canadá",
-    "Qatar": "Catar", "USA": "Estados Unidos", "United States": "Estados Unidos", "Paraguay": "Paraguai",
-    "Australia": "Austrália", "Turkey": "Turquia", "Türkiye": "Turquia", "Germany": "Alemanha",
-    "Ivory Coast": "Costa do Marfim", "Côte d'Ivoire": "Costa do Marfim", "Ecuador": "Equador",
-    "Netherlands": "Holanda", "Japan": "Japão", "Sweden": "Suécia",
-    "Tunisia": "Tunísia", "Belgium": "Bélgica", "Egypt": "Egito",
-    "Iran": "Irã", "New Zealand": "Nova Zelândia", "Spain": "Espanha",
-    "Cape Verde": "Cabo Verde", "Saudi Arabia": "Arábia Saudita",
-    "Uruguay": "Uruguai", "France": "França", "Senegal": "Senegal",
-    "Iraq": "Iraque", "Norway": "Noruega", "Argentina": "Argentina",
-    "Algeria": "Argélia", "Austria": "Áustria", "Jordan": "Jordânia",
-    "Portugal": "Portugal", "DR Congo": "RD Congo", "Congo DR": "RD Congo", "Uzbekistan": "Uzbequistão", 
-    "Colombia": "Colômbia", "England": "Inglaterra", "Croatia": "Croácia", 
-    "Ghana": "Gana", "Panama": "Panamá"
-};
-
 function loadData(){
   try{
     const raw=localStorage.getItem(STORAGE_KEY);
@@ -554,91 +533,36 @@ function showToast(msg,ok=true){
   setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),300);},3000);
 }
 
-// 🔵 A FUNÇÃO DO BOTAO "ATUALIZAR PARTIDAS" (Sem simulador, só a API real)
-async function doSync(){
+// 🔵 A FUNÇÃO DO BOTAO "ATUALIZAR PARTIDAS" RECRIA A TELA INTEIRA COM BASE NO QUE ESTÁ SALVO
+function doSync(){
   const overlay = document.getElementById('loading-overlay');
   const sub = document.getElementById('loading-subtext');
   
   overlay.style.display = 'flex';
-  sub.textContent = 'Consultando API Oficial...';
-  DIA_DE_HOJE = getTodayStr(); 
-
-  try {
-    const response = await fetch("https://v3.football.api-sports.io/fixtures?league=1&season=2026", {
-      method: "GET",
-      headers: {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-apisports-key": "87434c5df77a602d8fab026dc2a9b041"
-      }
-    });
-
-    const data = await response.json();
-
-    if(data.errors && data.errors.requests) {
-        showToast("ERRO: Limite diário da sua API estourou!", false);
-    } 
-    else if (data.response && data.response.length > 0) {
-      let atualizouAlgo = false;
-      
-      data.response.forEach(apiMatch => {
-         let homeName = traduzirTime[apiMatch.teams.home.name] || apiMatch.teams.home.name;
-         let awayName = traduzirTime[apiMatch.teams.away.name] || apiMatch.teams.away.name;
-
-         let localMatch = RESULTS.find(m => m.h === homeName && m.a === awayName);
-
-         if(localMatch) {
-            atualizouAlgo = true;
-            if (apiMatch.goals.home !== null) localMatch.hs = apiMatch.goals.home;
-            if (apiMatch.goals.away !== null) localMatch.as = apiMatch.goals.away;
-
-            let statusShort = apiMatch.fixture.status.short;
-            if (['1H','2H','HT','ET','P','BT','LIVE'].includes(statusShort)) {
-                localMatch.status = 'LIVE';
-                localMatch.time = apiMatch.fixture.status.elapsed + "'";
-            } else if (['FT', 'AET', 'PEN'].includes(statusShort)) {
-                localMatch.status = 'FT';
-                localMatch.time = 'FIM';
-            }
-         }
-      });
-
-      if(atualizouAlgo) {
-         showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
-      } else {
-         showToast('A API conectou, mas nenhum jogo da Copa estava na lista dela.', false);
-      }
-    } else {
-        // ESSA É A TRAVA DE SEGURANÇA. Se a API não mandar nada (porque a Copa ainda não aconteceu no mundo real), 
-        // ele avisa aqui e NÃO APAGA os seus jogos que já estão na tela.
-        showToast('API conectada, mas não há jogos de 2026 no banco de dados deles.', false);
-    }
-  } catch(e) {
-    console.error("Falha ao consultar a API.", e);
-    showToast('Erro ao conectar com a API.', false);
-  }
-
-  // Recalcula tudo e redesenha a tela, independente se a API mandou gol novo ou não.
-  SCORERS = computeScorersFromMatches();
-  saveData();
-  renderAll();
+  sub.textContent = 'Organizando banco de dados...';
   
-  overlay.style.display = 'none';
-  document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  setTimeout(() => {
+      SCORERS = computeScorersFromMatches();
+      saveData();
+      renderAll();
+      overlay.style.display = 'none';
+      showToast('✓ ATUALIZADO COM SUCESSO');
+      document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  }, 600);
 }
 
-async function doSyncNews(){
-  const el=document.getElementById('news-container');
-  el.innerHTML='<div style="color:var(--dim);text-align:center;padding:2rem;grid-column:1/-1;">Buscando notícias da Copa 2026...</div>';
-  
+// A ABA NOTÍCIAS NÃO VAI MAIS TRAVAR. ELA SÓ CARREGA AS INFORMAÇÕES EXATAS DO SEU PEDIDO.
+function doSyncNews(){
   NEWS = [
     {title:'Foco total: Seleção Brasileira faz último treino antes do duelo contra o Haiti',summary:'Após o empate na estreia, o técnico ajusta os últimos detalhes táticos para o jogo de amanhã (19/06). Vitória é fundamental para liderar o Grupo C.',source:'GE.GLOBO',url:'#'},
     {title:'Show canadense: Canadá atropela o Catar com goleada histórica por 6 a 0',summary:'Jonathan David brilha intensamente no Grupo B e anota um hat-trick espetacular, isolando-se na corrida pelos goleadores do torneio.',source:'ESPN',url:'#'},
     {title:'Suíça domina completamente a Bósnia e aplica 4 a 1 em Boston',summary:'Com gols de Embolo, Shaqiri, Akanji e Xhaka, a seleção suíça assume uma posição confortável na tabela do Grupo B.',source:'CAZÉTV',url:'#'},
     {title:'Empate eletrizante: República Tcheca e África do Sul ficam no 1 a 1',summary:'Souček abriu o placar para os europeus, mas Tau buscou a igualdade para os sul-africanos em um confronto físico pelo Grupo A.',source:'FIFA',url:'#'},
-    {title:'Expectativa máxima em Guadalajara: México enfrenta a Coreia do Sul logo mais',summary:'Anfitriões entram em campo às 22h buscando consolidar o favoritismo absoluto e garantir a classificação precoce diante de sua torcida.',source:'SPORTV',url:'#'}
+    {title:'MÉXICO ENTRA EM CAMPO: Jogo pegado contra a Coreia do Sul rolando agora',summary:'Anfitriões já abriram o placar com Santi Giménez em busca da classificação precoce diante de sua torcida.',source:'SPORTV',url:'#'}
   ];
   saveData();
   renderNews();
+  showToast('✓ NOTÍCIAS RECARREGADAS');
 }
 
 function computeScorersFromMatches(){
@@ -792,7 +716,7 @@ function renderPainel(){
 
 function renderNews(){
   const el=document.getElementById('news-container');
-  if(!NEWS.length){el.innerHTML='<div style="color:var(--dim);text-align:center;padding:3rem;grid-column:1/-1">Clique em ↻ ATUALIZAR para carregar notícias.</div>';return;}
+  if(!NEWS.length){el.innerHTML='<div style="color:var(--dim);text-align:center;padding:3rem;grid-column:1/-1">Nenhuma notícia encontrada no momento.</div>';return;}
   el.innerHTML=NEWS.map(n=>`<a class="news-card" href="${n.url||'#'}" target="_blank" rel="noopener"><div class="news-title">${n.title}</div>${n.summary?`<div class="news-summary">${n.summary}</div>`:''}${n.source?`<div class="news-source">📰 ${n.source}</div>`:''}</a>`).join('');
 }
 
@@ -831,8 +755,8 @@ function renderAll(){
 
 window.onload=()=>{
   loadData();
+  doSyncNews();
   renderAll();
-  if(!NEWS.length) doSyncNews();
 };
 </script>
 </body>
