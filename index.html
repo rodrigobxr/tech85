@@ -516,21 +516,33 @@ function showToast(msg,ok=true){
 }
 
 async function doSync(){
-  const overlay=document.getElementById('loading-overlay');
-  const sub=document.getElementById('loading-subtext');
-  overlay.style.display='flex';
-  sub.textContent='Atualizando dados (Simulação de API)...';
+  const overlay = document.getElementById('loading-overlay');
+  const sub = document.getElementById('loading-subtext');
+  
+  overlay.style.display = 'flex';
+  sub.textContent = 'Buscando dados no servidor...';
   DIA_DE_HOJE = getTodayStr(); 
 
-  // Simulação de chamada de API. Para atualizar de verdade, insira uma chamada fetch() real aqui futuramente.
-  await new Promise(r => setTimeout(r, 800)); 
+  try {
+    const resposta = await fetch('/api/sync');
+    const dados = await resposta.json();
+
+    if(dados.sucesso) {
+      console.log("Servidor respondeu:", dados.mensagem);
+    } else {
+      console.warn("Erro no servidor:", dados.erro);
+    }
+  } catch(e) {
+    console.error("Erro de conexão com o backend Vercel", e);
+  }
 
   SCORERS = computeScorersFromMatches();
   saveData();
   renderAll();
-  overlay.style.display='none';
+  
+  overlay.style.display = 'none';
   showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
-  document.getElementById('last-sync-label').textContent='Última sync: '+new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
 }
 
 // CORREÇÃO DAS NOTÍCIAS REAIS
