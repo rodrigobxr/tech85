@@ -163,7 +163,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 
 <div class="topbar">
   <div class="brand">
-    <img id="brand-logo" src="logo-rodrigao.png" alt="Rodrigão — A Voz do Esporte" title="Clique para trocar a logo" style="cursor:pointer;" onclick="document.getElementById('logo-file').click()">
+    <img id="brand-logo" src="logo.jpeg" alt="Rodrigão — A Voz do Esporte" title="Clique para trocar a logo" style="cursor:pointer;" onclick="document.getElementById('logo-file').click()">
     <div class="brand-name">Rodrigão A Voz do Esporte</div>
     <div class="brand-tag">COPA DO MUNDO FIFA 2026</div>
     <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="trocarLogo(event)">
@@ -199,7 +199,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 <nav class="sidebar">
   <div>
     <div class="profile">
-      <div class="avatar-wrap"><img id="sidebar-logo" src="logo-rodrigao.png" alt="Rodrigão"></div>
+      <div class="avatar-wrap"><img id="sidebar-logo" src="logo.jpeg" alt="Rodrigão"></div>
       <div class="pname">RODRIGÃO</div>
       <div class="phandle">A VOZ DO ESPORTE OFICIAL</div>
     </div>
@@ -225,6 +225,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
 
 <div class="content">
 
+<!-- HOJE -->
 <div class="panel active" id="panel-hoje">
   <div class="tabs">
     <button class="tab active" onclick="nav('hoje')">HOJE</button>
@@ -242,6 +243,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   <div id="hoje-matches-container" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
 </div>
 
+<!-- PAINEL -->
 <div class="panel" id="panel-painel">
   <div class="tabs">
     <button class="tab" onclick="nav('hoje')">HOJE</button>
@@ -266,6 +268,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
+<!-- MATA-MATA -->
 <div class="panel" id="panel-matamata">
   <div class="tabs"><button class="tab" onclick="nav('hoje')">HOJE</button><button class="tab active" onclick="nav('matamata')">MATA-MATA</button><button class="tab" onclick="nav('jogos')">CALENDÁRIO</button></div>
   <div class="hoje-hero" style="border-color:var(--blue)"><div class="hoje-date">Chaveamento Oficial</div><div class="hoje-title">Fase Eliminatória 2026</div><div class="hoje-sub">O chaveamento é construído automaticamente com base na classificação dos grupos.</div></div>
@@ -278,21 +281,25 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
+<!-- CALENDÁRIO -->
 <div class="panel" id="panel-jogos">
   <div class="tabs"><button class="tab active" onclick="nav('jogos')">CALENDÁRIO COMPLETO</button><button class="tab" onclick="nav('grupos')">GRUPOS</button></div>
   <div class="card"><div class="ch"><span class="ct">Histórico e Agenda do Torneio</span><button onclick="doSync()" style="background:var(--gold);color:#000;border:none;padding:6px 12px;border-radius:6px;font-weight:800;font-size:11px;cursor:pointer;">↻ ATUALIZAR PARTIDAS</button></div><div class="cb" id="all-matches"></div></div>
 </div>
 
+<!-- GRUPOS -->
 <div class="panel" id="panel-grupos">
   <div class="tabs"><button class="tab" onclick="nav('painel')">VISÃO GERAL</button><button class="tab active" onclick="nav('grupos')">CLASSIFICAÇÃO DOS GRUPOS</button><button class="tab" onclick="nav('artilharia')">ARTILHARIA</button></div>
   <div id="standings-grid" class="gg"></div>
 </div>
 
+<!-- ARTILHARIA -->
 <div class="panel" id="panel-artilharia">
   <div class="tabs"><button class="tab" onclick="nav('hoje')">HOJE</button><button class="tab" onclick="nav('grupos')">GRUPOS</button><button class="tab active" onclick="nav('artilharia')">ARTILHEIROS</button></div>
   <div class="card" style="max-width:700px;"><div class="ch"><span class="ct">Chuteira de Ouro — Top 10</span></div><div class="cb" style="padding:.5rem 1.25rem;" id="scorers-full"></div></div>
 </div>
 
+<!-- NOTÍCIAS -->
 <div class="panel" id="panel-noticias">
   <div class="tabs"><button class="tab" onclick="nav('hoje')">HOJE</button><button class="tab active" onclick="nav('noticias')">NOTÍCIAS</button></div>
   <div class="card">
@@ -301,6 +308,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-page); color: var(
   </div>
 </div>
 
+<!-- ADMIN MANUAL -->
 <div class="panel" id="panel-api">
   <div class="tabs"><button class="tab" onclick="nav('painel')">VOLTAR</button><button class="tab active" onclick="nav('api')">AJUSTE MANUAL</button></div>
   <div class="card"><div class="ch"><span class="ct">Ajuste Manual de Emergência</span></div>
@@ -386,7 +394,7 @@ const DEFAULT_MATCHES=[
   {id:47,d:'23/06',g:'L',h:'Panamá',a:'Croácia',hs:'',as:'',status:'NS',time:'20h'},
   {id:48,d:'23/06',g:'K',h:'Colômbia',a:'RD Congo',hs:'',as:'',status:'NS',time:'23h'},
   {id:49,d:'24/06',g:'B',h:'Suíça',a:'Canadá',hs:'',as:'',status:'NS',time:'16h'},
-  {id:50,d:'24/06',g:'B',h:'Bósnia',a:'Catar',hs:'',as:'',status:'NS',time:'16h'},
+  {id:50,d:'24/06',g:'B',h:'Bósnia',a:'Catar',hs:'',as:'',time:'16h'},
   {id:51,d:'24/06',g:'C',h:'Escócia',a:'Brasil',hs:'',as:'',status:'NS',time:'19h'},
   {id:52,d:'24/06',g:'C',h:'Marrocos',a:'Haiti',hs:'',as:'',status:'NS',time:'19h'},
   {id:53,d:'24/06',g:'A',h:'República Tcheca',a:'México',hs:'',as:'',status:'NS',time:'22h'},
@@ -511,7 +519,6 @@ function showToast(msg,ok=true){
   setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),300);},3000);
 }
 
-// A FUNÇÃO CORRIGIDA ESTÁ AQUI
 async function doSync(){
   const overlay = document.getElementById('loading-overlay');
   const sub = document.getElementById('loading-subtext');
@@ -551,13 +558,14 @@ async function doSync(){
 async function doSyncNews(){
   const el=document.getElementById('news-container');
   el.innerHTML='<div style="color:var(--dim);text-align:center;padding:2rem;grid-column:1/-1;">Buscando notícias da Copa 2026...</div>';
+  
+  // ATUALIZAÇÃO REQUERIDA: Apenas times do dia (18/06) + Notícia obrigatória do Brasil
   NEWS = [
-    {title:'Brasil empata com o Marrocos em 1 a 1 na estreia do Grupo C',summary:'Seleção saiu na frente com Vinícius Jr. no 1º tempo, mas cedeu empate nos minutos finais. Próximo duelo é contra o Haiti.',source:'GE.GLOBO',url:'#'},
-    {title:'Áustria vence Jordânia por 3 a 1 e divide liderança com a Argentina',summary:'Arnautović, Sabitzer e Laimer marcaram para os austríacos. Confronto direto pelo Grupo J acontece dia 22/06.',source:'ESPN',url:'#'},
-    {title:'México se prepara para encarar a Coreia do Sul',summary:'Após vitória confortável na estreia, donos da casa enfrentam desafio mais duro em busca da classificação antecipada no Grupo A.',source:'FIFA',url:'#'},
-    {title:'Gana estreia com o pé direito e vence o Panamá',summary:'Com gol único de Jordan Ayew, seleção africana soma três pontos cruciais no competitivo Grupo L.',source:'BBC SPORT',url:'#'},
-    {title:'Estados Unidos abrem Copa com goleada sobre o Paraguai',summary:'Com grande atuação de Reyna e Pulisic, anfitriões animam torcida em Houston e vencem por 4 a 1.',source:'CAZÉTV',url:'#'},
-    {title:'Messi brilha, faz hat-trick e Argentina vence Argélia',summary:'Camisa 10 comanda a vitória por 3-0 e já se posiciona como um dos artilheiros isolados da competição.',source:'GE.GLOBO',url:'#'}
+    {title:'Foco total: Seleção Brasileira faz último treino antes do duelo contra o Haiti',summary:'Após o empate na estreia, o técnico ajusta os últimos detalhes táticos para o jogo de amanhã (19/06). Vitória é fundamental para liderar o Grupo C.',source:'GE.GLOBO',url:'#'},
+    {title:'Show canadense: Canadá atropela o Catar com goleada histórica por 6 a 0',summary:'Jonathan David brilha intensamente no Grupo B e anota um hat-trick espetacular, isolando-se na corrida pelos goleadores do torneio.',source:'ESPN',url:'#'},
+    {title:'Suíça domina completamente a Bósnia e aplica 4 a 1 em Boston',summary:'Com gols de Embolo, Shaqiri, Akanji e Xhaka, a seleção suíça assume uma posição confortável na tabela do Grupo B.',source:'CAZÉTV',url:'#'},
+    {title:'Empate eletrizante: República Tcheca e África do Sul ficam no 1 a 1',summary:'Souček abriu o placar para os europeus, mas Tau buscou a igualdade para os sul-africanos em um confronto físico pelo Grupo A.',source:'FIFA',url:'#'},
+    {title:'Expectativa máxima em Guadalajara: México enfrenta a Coreia do Sul logo mais',summary:'Anfitriões entram em campo às 22h buscando consolidar o favoritismo absoluto e garantir a classificação precoce diante de sua torcida.',source:'SPORTV',url:'#'}
   ];
   saveData();
   renderNews();
