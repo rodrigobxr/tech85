@@ -524,18 +524,27 @@ async function doSync(){
   DIA_DE_HOJE = getTodayStr(); 
 
   try {
+    // Pede os dados para o servidor
     const resposta = await fetch('/api/sync');
     const dados = await resposta.json();
 
-    if(dados.sucesso) {
-      console.log("Servidor respondeu:", dados.mensagem);
-    } else {
-      console.warn("Erro no servidor:", dados.erro);
+    if(dados.sucesso && dados.jogos) {
+      // Magia acontecendo: atualiza os placares vazios com os gols recebidos!
+      dados.jogos.forEach(jogoAtualizado => {
+        const index = RESULTS.findIndex(m => m.id === jogoAtualizado.id);
+        if(index !== -1) {
+          RESULTS[index].hs = jogoAtualizado.hs;
+          RESULTS[index].as = jogoAtualizado.as;
+          RESULTS[index].status = jogoAtualizado.status;
+          if(jogoAtualizado.goals) RESULTS[index].goals = jogoAtualizado.goals;
+        }
+      });
     }
   } catch(e) {
     console.error("Erro de conexão com o backend Vercel", e);
   }
 
+  // Recalcula classificação, artilheiros e mata-mata com os novos gols!
   SCORERS = computeScorersFromMatches();
   saveData();
   renderAll();
@@ -543,6 +552,7 @@ async function doSync(){
   overlay.style.display = 'none';
   showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
   document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+}
 }
 
 // CORREÇÃO DAS NOTÍCIAS REAIS
