@@ -524,12 +524,10 @@ async function doSync(){
   DIA_DE_HOJE = getTodayStr(); 
 
   try {
-    // Pede os dados para o servidor
     const resposta = await fetch('/api/sync');
     const dados = await resposta.json();
 
     if(dados.sucesso && dados.jogos) {
-      // Magia acontecendo: atualiza os placares vazios com os gols recebidos!
       dados.jogos.forEach(jogoAtualizado => {
         const index = RESULTS.findIndex(m => m.id === jogoAtualizado.id);
         if(index !== -1) {
@@ -544,10 +542,15 @@ async function doSync(){
     console.error("Erro de conexão com o backend Vercel", e);
   }
 
-  // Recalcula classificação, artilheiros e mata-mata com os novos gols!
   SCORERS = computeScorersFromMatches();
   saveData();
   renderAll();
+  
+  // ESSAS LINHAS ABAIXO FALTARAM NO SEU CÓDIGO
+  overlay.style.display = 'none';
+  showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
+  document.getElementById('last-sync-label').textContent = 'Última sync: ' + new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+}
   
   overlay.style.display = 'none';
   showToast('✓ DADOS ATUALIZADOS COM SUCESSO');
